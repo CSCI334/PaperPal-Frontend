@@ -1,0 +1,3 @@
+This folder is used for components that are shared between pages.
+For example, you might want to put an input password HTML element in both sign up and sign in.
+Those components should be put into this folder

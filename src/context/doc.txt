@@ -1,0 +1,11 @@
+Stores all react context file.
+Context is used to pass down data that needs to be shared between many components
+
+For example, every button, form, etc. would need to know whether the user is using dark mode or light mode
+Rather than passing it down from "ExampleParent" > "ExampleChild.props.theme"
+You would just do 
+<ThemeProvider>
+    <ExampleParent>
+</ThemeProvider>
+
+This way parent and any child elements after that would still have access to the variable provided by themeprovider

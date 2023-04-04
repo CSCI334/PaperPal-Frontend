@@ -1,0 +1,2 @@
+// Stores pages, specific hooks, styling, etc. should be stored in their own folder
+// If they can be shared with other pages, check the other folders
