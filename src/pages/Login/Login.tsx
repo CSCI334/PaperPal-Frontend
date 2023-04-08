@@ -6,7 +6,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import Logo from "../../components/Logo/Logo";
 import LeftBanner from "../../components/LeftBanner/LeftBanner";
 function Login() {
   return (
@@ -53,8 +52,9 @@ function Login() {
             marginY: "20px",
           }}
           variant="contained"
+          color="secondary"
         >
-          Submit
+          Login
         </Button>
       </Box>
     </Box>

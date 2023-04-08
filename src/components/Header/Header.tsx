@@ -7,19 +7,13 @@ import {
   Button,
   Avatar,
   Container,
+  Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import { EmailOutlined, NotificationsOutlined } from "@mui/icons-material";
 
 function Home() {
   return (
-    <AppBar
-      position="sticky"
-      color="secondary"
-      sx={{
-        borderBottom: "solid 1px",
-      }}
-    >
+    <AppBar position="sticky" color="secondary">
       <Toolbar component={Container}>
         <Box
           sx={{ flexGrow: 1, display: "flex", justifyContent: "flex-start" }}
@@ -27,29 +21,18 @@ function Home() {
           <Button
             component={Link}
             to="/services"
+            variant="text"
             sx={{
               fontSize: "18px",
+              color: "white",
             }}
           >
-            PaperPal
+            Link that goes somewhere
           </Button>
         </Box>
-        <Button component={Link} to="/services">
-          SERVICES
-        </Button>
-        <Button sx={{ marginX: "10px" }} component={Link} to="/membership">
-          MEMBERSHIP
-        </Button>
-        <IconButton size="medium">
-          <NotificationsOutlined color="primary"></NotificationsOutlined>
-        </IconButton>
-        <IconButton size="medium">
-          <EmailOutlined color="primary"></EmailOutlined>
-        </IconButton>
-        <Button sx={{ marginX: "10px" }} component={Link} to="/orders">
-          ORDERS
-        </Button>
-        <IconButton sx={{ p: 0 }}>
+
+        <Typography color={"white"}> System Administrator </Typography>
+        <IconButton sx={{ p: 0, marginX: "20px" }}>
           <Avatar>A</Avatar>
         </IconButton>
       </Toolbar>

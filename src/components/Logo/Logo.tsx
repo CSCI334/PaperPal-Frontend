@@ -1,10 +1,10 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Button, Container, Typography } from "@mui/material";
 import "@fontsource/poppins/600-italic.css";
 import { Link } from "react-router-dom";
 
 function Logo() {
   return (
-    <Typography
+    <Button
       sx={{
         fontFamily: "Poppins",
         fontWeight: "600",
@@ -19,7 +19,7 @@ function Logo() {
       to="/"
     >
       Paper Pal
-    </Typography>
+    </Button>
   );
 }
 
