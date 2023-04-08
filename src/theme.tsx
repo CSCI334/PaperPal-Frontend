@@ -1,17 +1,22 @@
-import { createTheme } from '@mui/material/styles';
-import { blue, red } from '@mui/material/colors';
+import { createTheme } from "@mui/material/styles";
+import { blue, red } from "@mui/material/colors";
 
 // https://mui.com/material-ui/customization/theming/
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#256F3D',
+      main: "#000000",
     },
     secondary: {
-      main: '#72BAD1',
+      main: "#FFFFFF",
     },
     error: {
       main: red.A400,
+    },
+  },
+  typography: {
+    button: {
+      textTransform: "none",
     },
   },
 });

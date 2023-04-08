@@ -1,8 +1,8 @@
-// Similar to components folder, but for hooks
-// Use this for reusable logic that can be used in mutliple pages.
+Similar to components folder, but for hooks
+Use this for reusable logic that can be used in mutliple pages.
 
-// For example, in a blog website, multiple pages might want access to list of articles, or list of commenters
-// Those logic can be put in this folder
+For example, in a blog website, multiple pages might want access to list of articles, or list of commenters
+Those logic can be put in this folder
 
-// For more info on hooks : https://legacy.reactjs.org/docs/hooks-overview.html
-// (The site says it's legacy but the new one was literally just made two weeks ago and has nothing)
+For more info on hooks : https://legacy.reactjs.org/docs/hooks-overview.html
+(The site says it's legacy but the new one was literally just made two weeks ago and has nothing)
