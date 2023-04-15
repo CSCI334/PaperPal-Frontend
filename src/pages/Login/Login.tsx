@@ -8,12 +8,6 @@ import {
 } from "@mui/material";
 import LeftBanner from "../../components/LeftBanner/LeftBanner";
 
-declare module "@mui/material/Button" {
-  interface ButtonPropsColorOverrides {
-    neutral: true;
-  }
-}
-
 function Login() {
   return (
     <Box

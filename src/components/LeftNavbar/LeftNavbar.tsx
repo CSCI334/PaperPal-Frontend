@@ -12,6 +12,7 @@ import {
   Toolbar,
 } from "@mui/material";
 import { Inbox, Mail } from "@mui/icons-material";
+import NavbarButton from "./NavbarButton";
 
 const drawerWidth = 240;
 function LeftNavbar() {
@@ -30,7 +31,7 @@ function LeftNavbar() {
       PaperProps={{
         sx: {
           backgroundColor: "primary.main",
-          color: "white",
+          color: "primary.contrastText",
         },
       }}
     >
@@ -39,24 +40,8 @@ function LeftNavbar() {
       </Toolbar>
       <Divider />
       <List>
-        <ListItem disablePadding>
-          <ListItemButton
-            sx={{
-              width: "80%",
-              paddingY: "10px",
-              borderTopRightRadius: "25px",
-              borderBottomRightRadius: "25px",
-              borderBottomLeftRadius: "0px",
-              borderTopLeftRadius: "0px",
-              justifyContent: "left",
-            }}
-          >
-            <ListItemIcon>
-              <Inbox />
-            </ListItemIcon>
-            <ListItemText primary={"Inbox"} />
-          </ListItemButton>
-        </ListItem>
+        <NavbarButton title="Inbox" selected={true}></NavbarButton>
+        <NavbarButton title="Mail"></NavbarButton>
       </List>
     </Drawer>
   );
