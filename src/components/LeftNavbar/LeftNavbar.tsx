@@ -1,37 +1,64 @@
 import { Box } from "@mui/system";
 import Logo from "../Logo/Logo";
-import { Button } from "@mui/material";
+import {
+  Button,
+  Divider,
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Toolbar,
+} from "@mui/material";
+import { Inbox, Mail } from "@mui/icons-material";
 
+const drawerWidth = 240;
 function LeftNavbar() {
   return (
-    <Box
-      sx={{ position: "sticky" }}
-      bgcolor={"primary.main"}
-      display={"flex"}
-      flexDirection={"column"}
-      minWidth={"220px"}
-      alignItems={"flex-start"}
-    >
-      <Box padding={"20px"}>
-        <Logo></Logo>
-      </Box>
-      <Button
-        sx={{
+    <Drawer
+      sx={{
+        width: drawerWidth,
+        flexShrink: 0,
+        "& .MuiDrawer-paper": {
+          width: drawerWidth,
+          boxSizing: "border-box",
+        },
+      }}
+      variant="permanent"
+      anchor="left"
+      PaperProps={{
+        sx: {
+          backgroundColor: "primary.main",
           color: "white",
-          width: "80%",
-          paddingY: "10px",
-          borderTopRightRadius: "25px",
-          borderBottomRightRadius: "25px",
-          borderBottomLeftRadius: "0px",
-          borderTopLeftRadius: "0px",
-          justifyContent: "left",
-        }}
-        variant="contained"
-        color="secondary"
-      >
-        All Papers
-      </Button>
-    </Box>
+        },
+      }}
+    >
+      <Toolbar>
+        <Logo></Logo>
+      </Toolbar>
+      <Divider />
+      <List>
+        <ListItem disablePadding>
+          <ListItemButton
+            sx={{
+              width: "80%",
+              paddingY: "10px",
+              borderTopRightRadius: "25px",
+              borderBottomRightRadius: "25px",
+              borderBottomLeftRadius: "0px",
+              borderTopLeftRadius: "0px",
+              justifyContent: "left",
+            }}
+          >
+            <ListItemIcon>
+              <Inbox />
+            </ListItemIcon>
+            <ListItemText primary={"Inbox"} />
+          </ListItemButton>
+        </ListItem>
+      </List>
+    </Drawer>
   );
 }
 export default LeftNavbar;

@@ -7,6 +7,13 @@ import {
   Typography,
 } from "@mui/material";
 import LeftBanner from "../../components/LeftBanner/LeftBanner";
+
+declare module "@mui/material/Button" {
+  interface ButtonPropsColorOverrides {
+    neutral: true;
+  }
+}
+
 function Login() {
   return (
     <Box
@@ -52,7 +59,7 @@ function Login() {
             marginY: "20px",
           }}
           variant="contained"
-          color="secondary"
+          color="button"
         >
           Login
         </Button>

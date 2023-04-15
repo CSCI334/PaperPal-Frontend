@@ -24,14 +24,13 @@ function Home() {
             variant="text"
             sx={{
               fontSize: "18px",
-              color: "white",
             }}
           >
             Link that goes somewhere
           </Button>
         </Box>
 
-        <Typography color={"white"}> System Administrator </Typography>
+        <Typography> System Administrator </Typography>
         <IconButton sx={{ p: 0, marginX: "20px" }}>
           <Avatar>A</Avatar>
         </IconButton>
