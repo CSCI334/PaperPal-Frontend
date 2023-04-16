@@ -1,4 +1,4 @@
-import { Inbox } from "@mui/icons-material";
+//import {Home, PostAdd, People, Logout, Layers, Description, Article} from "@mui/icons-material";
 import {
   ListItem,
   ListItemButton,
@@ -8,6 +8,7 @@ import {
 
 interface Props {
   title: string;
+  icon: JSX.Element;
   selected?: boolean;
 }
 
@@ -40,7 +41,7 @@ const style = (selected: boolean | undefined) => {
 };
 
 console.log(style(true));
-export default function NavbarButton({ title, selected }: Props) {
+export default function NavbarButton({ title, icon, selected }: Props) {
   return (
     <ListItem disablePadding>
       <ListItemButton sx={style(selected)}>
@@ -49,7 +50,7 @@ export default function NavbarButton({ title, selected }: Props) {
             color: "inherit",
           }}
         >
-          <Inbox />
+          {icon}
         </ListItemIcon>
         <ListItemText primary={title} />
       </ListItemButton>

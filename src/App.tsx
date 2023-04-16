@@ -8,7 +8,7 @@ import LeftNavbar from "./components/LeftNavbar/LeftNavbar";
 function App() {
   return (
     <>
-      <LeftNavbar></LeftNavbar>
+      <LeftNavbar userType={"Admin"}></LeftNavbar>
       <Box
         sx={{
           flexGrow: "1",
