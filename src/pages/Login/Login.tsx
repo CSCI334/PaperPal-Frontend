@@ -7,6 +7,8 @@ import {
   Typography,
 } from "@mui/material";
 import LeftBanner from "../../components/LeftBanner/LeftBanner";
+import ContainerForm from "../../components/FormContainer/ContainerForm";
+import PasswordForm from "../../components/PasswordForm/PasswordForm";
 
 function Login() {
   return (
@@ -18,46 +20,19 @@ function Login() {
       }}
     >
       <LeftBanner></LeftBanner>
-      <Box
-        sx={{
-          flexGrow: "1",
-          padding: "20px",
-          display: "flex",
-          alignItems: "start",
-          justifyContent: "center",
-          flexDirection: "column",
-          minWidth: "50%",
-        }}
-      >
-        <Typography fontWeight={"bold"} variant="h5" marginY={"20px"}>
-          Login
-        </Typography>
+      <ContainerForm title={"Login"} buttonText="Login">
         <TextField
           sx={{
             width: "100%",
+            borderRadius: "20px",
           }}
           variant={"outlined"}
           label="Email"
           margin="normal"
           required
         />
-        <TextField
-          sx={{ width: "100%" }}
-          margin="normal"
-          label="Password"
-          required
-          variant={"outlined"}
-        />
-        <Button
-          sx={{
-            marginY: "20px",
-          }}
-          variant="contained"
-          color="button"
-        >
-          Login
-        </Button>
-      </Box>
+        <PasswordForm onChange={() => {}}></PasswordForm>
+      </ContainerForm>
     </Box>
   );
 }

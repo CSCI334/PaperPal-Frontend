@@ -13,6 +13,9 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import Login from "./pages/Login/Login";
+import CreateConference from "./pages/Admin/CreateConference";
+import AddNewContact from "./pages/Admin/AddNewContact";
+import ContactList from "./pages/Admin/ContactList";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
@@ -22,6 +25,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         <Routes>
           <Route element={<App />}>
             <Route path="/" element={<Home />} />
+            <Route path="/create" element={<CreateConference />} />
+            <Route path="/addcontact" element={<AddNewContact />} />
+            <Route path="/contactlist" element={<ContactList />} />
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="*" element={<NotFound />} />
