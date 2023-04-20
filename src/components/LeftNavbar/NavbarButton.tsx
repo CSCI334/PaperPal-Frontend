@@ -1,4 +1,4 @@
-//import {Home, PostAdd, People, Logout, Layers, Description, Article} from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 import {
   ListItem,
   ListItemButton,
@@ -6,54 +6,47 @@ import {
   ListItemText,
 } from "@mui/material";
 
-interface Props {
+export interface Props {
   title: string;
-  icon: JSX.Element;
   selected?: boolean;
+  icon?: React.ReactElement;
+  onClick?: () => void;
+  
+  onSelected?: () => void;
 }
 
-const btnStyle = {
-  width: "80%",
-  mb: "5px",
-  borderTopRightRadius: "25px",
-  borderBottomRightRadius: "25px",
-  borderBottomLeftRadius: "0px",
-  borderTopLeftRadius: "0px",
-  justifyContent: "left",
-};
+const NavbarButton = ({ title, selected = false, icon, onClick }: Props) => {
 
-const style = (selected: boolean | undefined) => {
-  if (selected != undefined ? selected : false)
-    return {
-      ...btnStyle,
-      backgroundColor: "#72BAD1",
-      "&.Mui-selected": {
-        backgroundColor: "#72BAD1",
-      },
-      "&.Mui-focusVisible": {
-        backgroundColor: "#72BAD1",
-      },
-      ":hover": {
-        backgroundColor: "#72BAD1",
-      },
-    };
-  return btnStyle;
-};
-
-console.log(style(true));
-export default function NavbarButton({ title, icon, selected }: Props) {
   return (
     <ListItem disablePadding>
-      <ListItemButton sx={style(selected)}>
-        <ListItemIcon
-          sx={{
-            color: "inherit",
-          }}
-        >
-          {icon}
-        </ListItemIcon>
+      <ListItemButton
+        selected={selected}
+        onClick={onClick}
+        sx={{
+          width: "80%",
+          mb: "5px",
+          borderTopRightRadius: "25px",
+          borderBottomRightRadius: "25px",
+          borderBottomLeftRadius: "0px",
+          borderTopLeftRadius: "0px",
+          justifyContent: "left",
+          backgroundColor: selected ? "#72BAD1" : undefined,
+          "&.Mui-selected": {
+            backgroundColor: "#72BAD1",
+          },
+          "&.Mui-focusVisible": {
+            backgroundColor: "#72BAD1",
+          },
+          ":hover": {
+            backgroundColor: "#72BAD1",
+          },
+        }}
+      >
+        {icon && <ListItemIcon sx={{ color: "inherit" }}>{icon}</ListItemIcon>}
         <ListItemText primary={title} />
       </ListItemButton>
     </ListItem>
   );
-}
+};
+
+export default NavbarButton;
