@@ -39,7 +39,7 @@ const rows = [
 const headCells: readonly HeadCell[] = [
   {
     id: "name",
-    label: "Dessert (100g serving)",
+    label: "You can put anything here",
   },
   {
     id: "calories",
@@ -68,9 +68,7 @@ const rowComponent = (row: Data) => {
       <TableCell>{row.calories}</TableCell>
       <TableCell>{row.fat}</TableCell>
       <TableCell>{row.carbs}</TableCell>
-      <TableCell>
-        <Button>{row.protein}</Button>
-      </TableCell>
+      <TableCell>{row.protein}</TableCell>
     </TableRow>
   );
 };
