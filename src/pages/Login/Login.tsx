@@ -9,18 +9,31 @@ import {
 import LeftBanner from "../../components/LeftBanner/LeftBanner";
 import ContainerForm from "../../components/FormContainer/ContainerForm";
 import PasswordForm from "../../components/PasswordForm/PasswordForm";
+import Logo from "../../components/Logo/Logo";
 
 function Login() {
   return (
-    <Box
+    <Box sx={{ position: "fixed",
+    paddingTop:"15vh",
+    
+    width: "100%",
+    height: "100%",
+    backgroundColor: "primary.main",}}>
+      <Logo sx={{ position: "absolute", top: 0, left: 0, margin: "20px" }}></Logo>
+        <Box
       sx={{
-        display: "flex",
-        flexGrow: "1",
-        flexDirection: "row",
+        
+        marginLeft: "auto",
+        marginRight: "auto",
+        marginTop: "auto",
+        marginBottom: "auto",
+        height: "70vh",
+        width: "80vh",
+        backgroundColor : "white"
       }}
     >
-      <LeftBanner></LeftBanner>
-      <ContainerForm title={"Login"} buttonText="Login">
+      
+      <ContainerForm title={"Login to your account"} buttonText="Login" needRoutingLink={true} isRegistered={false} sx={{alignItems:"center"}} >
         <TextField
           sx={{
             width: "100%",
@@ -32,8 +45,12 @@ function Login() {
           required
         />
         <PasswordForm onChange={() => {}}></PasswordForm>
+      
       </ContainerForm>
+      
     </Box>
+    </Box>
+    
   );
 }
 

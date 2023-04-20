@@ -16,6 +16,9 @@ import Login from "./pages/Login/Login";
 import CreateConference from "./pages/Admin/CreateConference";
 import AddNewContact from "./pages/Admin/AddNewContact";
 import ContactList from "./pages/Admin/ContactList";
+import AuthorRegister from "./pages/Register/AuthorRegister";
+import ReviewerRegister from "./pages/Register/ReviewerRegister";
+import ChairRegister from "./pages/Register/ChairRegister";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
@@ -23,13 +26,18 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       <CssBaseline />
       <BrowserRouter>
         <Routes>
+          {/* routing with left nav bar , header, and footer */}
           <Route element={<App />}>
             <Route path="/" element={<Home />} />
             <Route path="/create" element={<CreateConference />} />
             <Route path="/addcontact" element={<AddNewContact />} />
             <Route path="/contactlist" element={<ContactList />} />
           </Route>
+          {/* Routing for login or register */}
           <Route path="/login" element={<Login />} />
+          <Route path="/registerauthor" element={<AuthorRegister />} />
+          <Route path="/registerreviewer" element={<ReviewerRegister />} />
+          <Route path="/registerchair" element={<ChairRegister />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
