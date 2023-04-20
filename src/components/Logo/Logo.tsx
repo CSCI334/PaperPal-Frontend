@@ -1,8 +1,10 @@
-import { Box, Button, Container, Typography } from "@mui/material";
+import { Box, Button, Container, SxProps, Typography } from "@mui/material";
 import "@fontsource/poppins/600-italic.css";
 import { Link } from "react-router-dom";
-
-function Logo() {
+interface Props {
+  sx?: SxProps;
+}
+function Logo({ sx }: Props) {
   return (
     <Button
       sx={{
@@ -14,6 +16,7 @@ function Logo() {
         textAlign: "left",
         width: "fit-content",
         color: "white",
+        ...sx,
       }}
       component={Link}
       to="/"
