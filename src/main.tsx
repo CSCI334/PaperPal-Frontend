@@ -16,6 +16,7 @@ import Login from "./pages/Login/Login";
 import CreateConference from "./pages/Admin/CreateConference";
 import AddNewContact from "./pages/Admin/AddNewContact";
 import ContactList from "./pages/Admin/ContactList";
+import AuthorViewRatings from "./pages/Author/AuthorViewRatings"
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
@@ -28,6 +29,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
             <Route path="/create" element={<CreateConference />} />
             <Route path="/addcontact" element={<AddNewContact />} />
             <Route path="/contactlist" element={<ContactList />} />
+            <Route path="/AuthorViewRatings" element={<AuthorViewRatings />} />
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="*" element={<NotFound />} />
