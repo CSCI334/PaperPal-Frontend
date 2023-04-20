@@ -10,7 +10,7 @@ function Footer() {
       }}
     >
       <Container>
-        <Typography textAlign={"left"}>TradieLog</Typography>
+        <Typography textAlign={"left"}>Paper Pal</Typography>
       </Container>
     </Box>
   );
