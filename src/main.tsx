@@ -17,6 +17,7 @@ import CreateConference from "./pages/Admin/CreateConference";
 import AddNewContact from "./pages/Admin/AddNewContact";
 import ContactList from "./pages/Admin/ContactList";
 import AuthorViewRatings from "./pages/Author/AuthorViewRatings"
+import AuthorSubmittedPaper from "./pages/Author/AuthorSubmittedPaper"
 import AuthorRegister from "./pages/Register/AuthorRegister";
 import ReviewerRegister from "./pages/Register/ReviewerRegister";
 import ChairRegister from "./pages/Register/ChairRegister";
@@ -35,6 +36,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
             <Route path="/addcontact" element={<AddNewContact />} />
             <Route path="/contactlist" element={<ContactList />} />
             <Route path="/AuthorViewRatings" element={<AuthorViewRatings />} />
+            <Route path="/authorsubmittedpaper" element={<AuthorSubmittedPaper />} />
           </Route>
           {/* Routing for login or register */}
           <Route path="/login" element={<Login />} />
