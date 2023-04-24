@@ -14,8 +14,11 @@
     "@fontsource/poppins": "^4.5.10",
     "@fontsource/roboto": "^4.5.8",
     "@mui/icons-material": "^5.11.16",
+    "@mui/lab": "^5.0.0-alpha.127",
     "@mui/material": "^5.11.15",
+    "@mui/x-date-pickers": "^6.2.1",
     "@types/react-router-dom": "^5.3.3",
+    "dayjs": "^1.11.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.10.0"
