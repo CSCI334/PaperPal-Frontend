@@ -1,0 +1,5 @@
+Normal functions that can be shared in multiple pages.
+This is different than the hooks folder because it doesn't store any persistent variable,
+and is generally unrelated with anything react.
+
+Common example of this would be stuff like HTTP requests.
