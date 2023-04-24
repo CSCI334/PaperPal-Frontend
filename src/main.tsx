@@ -17,10 +17,13 @@ import CreateConference from "./pages/Admin/CreateConference";
 import AddNewContact from "./pages/Admin/AddNewContact";
 import ContactList from "./pages/Admin/ContactList";
 import AuthorViewRatings from "./pages/Author/AuthorViewRatings";
+import AuthorSubmittedPaper from "./pages/Author/AuthorSubmittedPaper";
 import AuthorRegister from "./pages/Register/AuthorRegister";
+import AuthProvider from "./context/AuthContext";
 import ReviewerRegister from "./pages/Register/ReviewerRegister";
 import ChairRegister from "./pages/Register/ChairRegister";
-import AuthProvider from "./context/AuthContext";
+
+import ConferenceDetails from "./pages/Admin/ConferenceDetail";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
@@ -39,6 +42,11 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
                 path="/AuthorViewRatings"
                 element={<AuthorViewRatings />}
               />
+              <Route
+                path="/authorsubmittedpaper"
+                element={<AuthorSubmittedPaper />}
+              />
+              <Route path="/conferencedetail" element={<ConferenceDetails />} />
             </Route>
             {/* Routing for login or register */}
             <Route path="/login" element={<Login />} />

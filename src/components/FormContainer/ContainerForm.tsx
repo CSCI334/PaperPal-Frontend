@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 // if need a text below the form such have dont have an account, set the needRoutingLink to true, and give isRegistered boolean to give the relevant text
 interface Props {
   title: string;
-  buttonText: string;
+  buttonText?: string;
   children?: ReactNode;
   sx?: SxProps<Theme>;
   onSubmit?: FormEventHandler<HTMLFormElement>;
@@ -56,16 +56,16 @@ export default function ContainerForm({
           }}
         >
           {children}
-          <Button
+          {buttonText? (<Button
             sx={{
               marginY: "20px",
             }}
             variant="contained"
             color="button"
             type="submit"
-          >
-            {buttonText}
-          </Button>
+          > {buttonText}</Button>
+          )   : null}
+          
           {needRoutingLink? (
             <Typography variant="body2">
               {routingLink.text}{" "}

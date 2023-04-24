@@ -3,7 +3,6 @@ import ContainerForm from "../../components/FormContainer/ContainerForm";
 
 export default function AddNewContact() {
   return (
-    <Container sx={{ flexGrow: "1" }}>
       <Container sx={{ flexGrow: "1" }}>
         <ContainerForm
           title={"Add New Contact"}
@@ -26,6 +25,5 @@ export default function AddNewContact() {
           />
         </ContainerForm>
       </Container>
-    </Container>
   );
 }
