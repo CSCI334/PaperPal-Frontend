@@ -10,7 +10,7 @@ import { adminButtonList } from "./components/LeftNavbar/NavBarButtonList";
 import { useState } from "react";
 
 function App() {
-  const buttons :NavbarButtonProps[] = adminButtonList;
+  const buttons:NavbarButtonProps[] = adminButtonList;
  
   return (
     <>

@@ -13,6 +13,8 @@ export const buttonRoutes :ButtonPathMap   = {
   "Logout" : "/logout"
 };
 
+//TODO: change icon and route
+
 // Admin left navigation bar
 export const adminButtonList: NavbarButtonProps[] = [
   { title: "Home Page", selected: true, icon: <Home /> },
@@ -22,8 +24,20 @@ export const adminButtonList: NavbarButtonProps[] = [
 
 // Reviewer left navigation bar
 export const reviewerButtonList: NavbarButtonProps[] = [
-  { title: "Home Page", selected: true, icon: <Home /> },
-  { title: "Reviewer Contact List", selected: false, icon: <ContactMail /> },
+  { title: "Allocated Paper", selected: true, icon: <Home /> },
+  { title: "Bidding", selected: false, icon: <ContactMail /> },
+  { title: "Logout", selected: false, icon: <Logout /> },
+];
+
+// Reviewer left navigation bar
+export const authorButtonList: NavbarButtonProps[] = [
+  { title: "Submitted Paper", selected: true, icon: <Home /> },
+  { title: "Logout", selected: false, icon: <Logout /> },
+];
+
+// Reviewer left navigation bar
+export const chairButtonList: NavbarButtonProps[] = [
+  { title: "All Paper", selected: true, icon: <Home /> },
   { title: "Logout", selected: false, icon: <Logout /> },
 ];
 

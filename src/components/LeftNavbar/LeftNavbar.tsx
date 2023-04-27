@@ -16,9 +16,16 @@ import { Props as NavbarButtonProps } from "./NavbarButton";
 import NavbarButton from "./NavbarButton";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { buttonRoutes } from "./NavBarButtonList";
+import { adminButtonList, authorButtonList, buttonRoutes, chairButtonList, reviewerButtonList } from "./NavBarButtonList";
 
 
+
+interface ButtonLists {
+  admin:NavbarButtonProps[];
+  reviewer: NavbarButtonProps[];
+  chair: NavbarButtonProps[];
+  author: NavbarButtonProps[];
+}
 
 interface LeftNavbarProps {
   buttons: NavbarButtonProps[];
@@ -29,6 +36,18 @@ const drawerWidth = 240;
 function LeftNavbar({ buttons }: LeftNavbarProps) {
   const [selectedButton, setSelectedButton] = useState(buttons[0].title);
   const navigate = useNavigate();
+
+  const buttonLists : ButtonLists = {
+    admin: adminButtonList,
+    reviewer: reviewerButtonList,
+    chair: chairButtonList,
+    author: authorButtonList,
+  };
+  
+  
+  // const navBarButtonList  = buttonLists[status as keyof ButtonLists] || [];
+  // still hard coded need to change this
+  const navBarButtonList  = buttonLists["admin"] || [];
 
   // When the button clicked, it will navigate to the relevant page
   const handleButtonClick = (title: string) => {
@@ -67,7 +86,7 @@ function LeftNavbar({ buttons }: LeftNavbarProps) {
       </Toolbar>
       <Divider />
       <List>
-        {buttons.map((button) => (
+        {navBarButtonList.map((button) => (
           <NavbarButton
             key={button.title}
             title={button.title}

@@ -23,6 +23,7 @@ import ReviewerRegister from "./pages/Register/ReviewerRegister";
 import ChairRegister from "./pages/Register/ChairRegister";
 
 import ConferenceDetails from "./pages/Admin/ConferenceDetail";
+import Dummy from "./pages/Admin/ContactList copy";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
@@ -36,6 +37,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
             <Route path="/create" element={<CreateConference />} />
             <Route path="/addcontact" element={<AddNewContact />} />
             <Route path="/contactlist" element={<ContactList />} />
+            <Route path="/dummy" element={<Dummy />} />
             <Route path="/AuthorViewRatings" element={<AuthorViewRatings />} />
             <Route path="/authorsubmittedpaper" element={<AuthorSubmittedPaper />} />
             <Route path="/conferencedetail" element={<ConferenceDetails />} />

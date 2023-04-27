@@ -10,6 +10,7 @@ import dayjs, { Dayjs } from "dayjs";
 
 
 
+
 interface ConferenceInfoProps {
   name: string;
   location: string;
@@ -17,11 +18,13 @@ interface ConferenceInfoProps {
   chairEmail: string;
   paperSubmissionDeadline: Dayjs;
   paperBiddingDeadline: Dayjs;
+  paperReviewDeadline: Dayjs;
   paperAnnouncement: Dayjs;
-  conferenceCommenced: Dayjs;
+  
 }
 
 export default function ConferenceDetail() {
+
 
   // TODO: change each property to fetch it from database 
   const conferencedetail: ConferenceInfoProps = {
@@ -32,7 +35,7 @@ export default function ConferenceDetail() {
     paperSubmissionDeadline: dayjs('2023-05-17'),
     paperBiddingDeadline: dayjs('2023-05-17'),
     paperAnnouncement: dayjs('2023-05-17'),
-    conferenceCommenced: dayjs('2023-05-17')
+    paperReviewDeadline: dayjs('2023-05-17')
   }
 
 
@@ -52,7 +55,7 @@ function ConferenceInformation({
   paperSubmissionDeadline,
   paperBiddingDeadline,
   paperAnnouncement,
-  conferenceCommenced,
+  paperReviewDeadline,
 }: ConferenceInfoProps) {
  
 
@@ -72,18 +75,18 @@ function ConferenceInformation({
           <Typography variant="body1"sx={{marginBottom: 4}}>Conference Chair Email:</Typography>
           <Typography variant="body1"sx={{marginBottom: 4}}>Paper Submission Deadline:</Typography>
           <Typography variant="body1"sx={{marginBottom: 4}}>Paper Bidding Deadline:</Typography>
+          <Typography variant="body1"sx={{marginBottom: 4}}>Paper Review Deadline:</Typography>
           <Typography variant="body1"sx={{marginBottom: 4}}>Paper Announcement:</Typography>
-          <Typography variant="body1"sx={{marginBottom: 4}}>Conference Commenced:</Typography>
         </Box>
         <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', alignItems: 'start', justifyContent: 'start', p: 6}}>
           <Typography variant="body1"  sx={{marginBottom:4}}>{name}</Typography>
           <Typography variant="body1"sx={{marginBottom: 4}}>{location}</Typography>
-          <Typography variant="body1"sx={{marginBottom: 4}}>{chairName}:</Typography>
+          <Typography variant="body1"sx={{marginBottom: 4}}>{chairName}</Typography>
           <Typography variant="body1"sx={{marginBottom: 4}}>{chairEmail}</Typography>
           {renderDateDisplayOrEdit({title: "submission", deadlineDate: paperSubmissionDeadline })}
           {renderDateDisplayOrEdit({title: "bidding", deadlineDate: paperBiddingDeadline})}
           {renderDateDisplayOrEdit({title: "annoucement", deadlineDate: paperAnnouncement})}
-          {renderDateDisplayOrEdit({title: "commenced", deadlineDate: conferenceCommenced})}
+          {renderDateDisplayOrEdit({title: "review", deadlineDate: paperReviewDeadline})}
         
           {/* {editMode ? (
             <>
