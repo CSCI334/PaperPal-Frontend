@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useRef } from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography, IconButton, Icon } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography, IconButton,TextField } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import InsertDriveFile from '@mui/icons-material/InsertDriveFile';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -21,19 +21,25 @@ const Dropzone = styled('div')`
 interface DragDropProps {
     open: boolean;
     onClose: () => void;
-    onUpload: (files: File[]) => void;
+    onUpload: (file: File | null, paperName: string, coAuthors: string[]) => void;
 }
 
 //This class deals with the rendering of the DragDrop Dialog and also deals with the functions necessary for its operation
 const DragDrop: React.FC<DragDropProps> = ({ open, onClose, onUpload }) => {
-    const [files, setFiles] = useState<File[]>([]);
+    const [file, setFile] = useState<File | null>(null);
+    const [paperName, setPaperName] = useState('');
+    const [coAuthors, setCoAuthors] = useState('');
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     //This function deals with files being dropped on the Dropzone
     const onDrop = useCallback((e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
         const droppedFiles = Array.from(e.dataTransfer.files);
-        setFiles((prevFiles) => [...prevFiles, ...droppedFiles]);
+        if (droppedFiles.length === 1) {
+            setFile(droppedFiles[0]);
+        } else if (droppedFiles.length > 1) {
+            alert('Please drop only one file at a time.');
+        }
     }, []);
 
     //This function deals with a Drag event on a Dropzone
@@ -42,10 +48,10 @@ const DragDrop: React.FC<DragDropProps> = ({ open, onClose, onUpload }) => {
     }, []);
 
     //This function deals with the upload of the files.
-    //FURTHER IMPLEMENTATION REQUIRED
     const handleUpload = () => {
-        onUpload(files);
-        setFiles([]);
+        const authorsArray = coAuthors.split(',').map((author) => author.trim());
+        onUpload(file, paperName, authorsArray);
+        setFile(null);
         onClose();
     };
 
@@ -59,17 +65,14 @@ const DragDrop: React.FC<DragDropProps> = ({ open, onClose, onUpload }) => {
     //This function handles what happens when files are added using the file selection screen
     const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
-            const newFiles = Array.from(e.target.files);
-            setFiles((prevFiles) => [...prevFiles, ...newFiles]);
+           if (e.target.files.length === 1) {
+                const newFile = e.target.files.item(0);
+                setFile(newFile);
+            } else if (e.target.files.length > 1) {
+               alert('Please select only one file at a time.');
+           }
         }
     };
-
-
-    //This function handles what happens when a file is removed
-    const removeFile = (indexToRemove: number) => {
-        setFiles((prevFiles) => prevFiles.filter((_, index) => index !== indexToRemove));
-    };
-
 
     //Renders a Dialog that has a drag and drop feature for a user to upload files
     return (
@@ -87,12 +90,12 @@ const DragDrop: React.FC<DragDropProps> = ({ open, onClose, onUpload }) => {
                 width: '100%',
                 minHeight: '50vh' }}>
                 <Dropzone onDrop={onDrop} onDragOver={onDragOver}>
-                    {files.length === 0 && (
+                    {!file && (
                         <Typography variant="h6">
                             Drag and drop here or
                         </Typography>
                     )}
-                    {files.length === 0 && (
+                    {!file && (
                         <Typography variant="h6"
                                     onClick={handleFileInputClick}
                                     style={{
@@ -104,54 +107,59 @@ const DragDrop: React.FC<DragDropProps> = ({ open, onClose, onUpload }) => {
                     )}
                         <input ref={fileInputRef}
                             type="file"
-                            multiple
+                            hidden
                             onChange={handleFileInputChange}
                             style={{ display: 'none' }}
                         />
-                    <ul style={{
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        gap: '8px',
-                        listStyle: 'none' }}>
-                        {files.map((file, index) => (
-                            <li key={index}
-                                style={{
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'center',
-                                    position: 'relative',
-                                    padding: 15
-                            }}>
-                                <Icon>
-                                    <InsertDriveFile />
-                                </Icon>
-                                <IconButton size="small"
-                                            onClick={() => removeFile(index)}
-                                            sx={{
-                                                position: 'absolute',
-                                                top: 13,
-                                                right: 5 }}>
-                                    <DeleteIcon fontSize="small" />
-                                </IconButton>
-                                <Typography
-                                    style={{
-                                        wordWrap: 'break-word',
-                                        textAlign: 'center',
-                                        maxWidth: '50px'
-                                    }}
-                                >
-                                    {file.name}
-                                </Typography>
-                            </li>
-                        ))}
-                    </ul>
+                    {file && (
+                    <div
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            position: 'relative',
+                            maxWidth: '150px',
+                            margin: '8px',
+                        }}
+                    >
+                        <InsertDriveFile />
+                        <IconButton
+                            size="small"
+                            onClick={() => setFile(null)}
+                            sx={{ position: 'absolute', top: -3, right: 35, color: 'red' }}
+                        >
+                            <DeleteIcon fontSize="small" />
+                        </IconButton>
+                        <Typography
+                            style={{
+                                wordWrap: 'break-word',
+                                textAlign: 'center',
+                            }}
+                        >
+                            {file.name}
+                        </Typography>
+                    </div>
+                    )}
                 </Dropzone>
+                <TextField
+                    label="Paper Name"
+                    fullWidth
+                    margin="dense"
+                    value={paperName}
+                    onChange={(e) => setPaperName(e.target.value)}
+                />
+                <TextField
+                    label="Co-authors"
+                    fullWidth
+                    margin="dense"
+                    value={coAuthors}
+                    onChange={(e) => setCoAuthors(e.target.value)}
+                />
             </DialogContent>
             <DialogActions sx={{ justifyContent: 'center' }}>
-                <Button onClick={handleUpload} disabled={files.length === 0}>Submit Files</Button>
+                <Button onClick={handleUpload} disabled={!file || !paperName}>Submit Files</Button>
             </DialogActions>
         </Dialog>
     );
 };
-
 export default DragDrop;

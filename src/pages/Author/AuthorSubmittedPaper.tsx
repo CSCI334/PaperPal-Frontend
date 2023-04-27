@@ -18,8 +18,11 @@ const AuthorSubmittedPaper: React.FC = () => {
     };
 
     //Deals with what happens when files are uploaded in a DragDrop component
-    const handleUpload = (files: File[]) => {
-        console.log('Files uploaded:', files);
+    //FURTHER IMPLEMENTATION REQUIRED
+    const handleUpload = (file: File | null, paperName: string, coAuthors: string[]) => {
+        console.log('File uploaded:', file);
+        console.log('Paper Name:', paperName);
+        console.log('Co Authors:', coAuthors);
     };
 
 
