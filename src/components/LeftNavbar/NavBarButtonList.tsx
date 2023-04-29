@@ -8,9 +8,17 @@ type ButtonPathMap = {
 // Button title with their respective Route 
 // routes needs to be fixed for the homepage
 export const buttonRoutes :ButtonPathMap   = {
+  // Admin
   "Home Page": "/create",
   "Reviewer Contact List": "/contactlist",
-  "Submitted Paper": "/authorSubmittedPaper"
+
+  // Author
+  "Submitted Paper": "/authorSubmittedPaper",
+
+  
+  // Conference Chair
+  "All Papers" : "/allpaperslist",
+  "Accept Or Reject Paper": "/acceptrejectpaper"
 };
 
 
