@@ -8,8 +8,10 @@ import { Props as NavbarButtonProps } from "./components/LeftNavbar/NavbarButton
 import { Inbox, Mail, ThumbDown  } from "@mui/icons-material";
 import { adminButtonList } from "./components/LeftNavbar/NavBarButtonList";
 import { useState } from "react";
+import { useAuth } from "./context/AuthContext";
 
 function App() {
+  const { authState: { userData, isAuth } } = useAuth();
   const buttons:NavbarButtonProps[] = adminButtonList;
  
   return (

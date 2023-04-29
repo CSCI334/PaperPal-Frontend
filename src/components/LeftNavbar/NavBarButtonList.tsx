@@ -10,8 +10,9 @@ type ButtonPathMap = {
 export const buttonRoutes :ButtonPathMap   = {
   "Home Page": "/create",
   "Reviewer Contact List": "/contactlist",
-  "Logout" : "/logout"
+  "Submitted Paper": "/authorSubmittedPaper"
 };
+
 
 //TODO: change icon and route
 

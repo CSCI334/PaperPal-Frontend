@@ -17,6 +17,7 @@ import NavbarButton from "./NavbarButton";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { adminButtonList, authorButtonList, buttonRoutes, chairButtonList, reviewerButtonList } from "./NavBarButtonList";
+import { useAuth } from "../../context/AuthContext";
 
 
 
@@ -47,7 +48,12 @@ function LeftNavbar({ buttons }: LeftNavbarProps) {
   
   // const navBarButtonList  = buttonLists[status as keyof ButtonLists] || [];
   // still hard coded need to change this
-  const navBarButtonList  = buttonLists["admin"] || [];
+  const { authState: { userData, isAuth } } = useAuth();
+  const accountType:string = userData.accountType
+  const navBarButtonList  = buttonLists[accountType.toLowerCase() as keyof ButtonLists] || [];
+  // const navBarButtonList  = buttonLists["admin"] || [];
+
+
 
   // When the button clicked, it will navigate to the relevant page
   const handleButtonClick = (title: string) => {
@@ -55,6 +61,10 @@ function LeftNavbar({ buttons }: LeftNavbarProps) {
     const path = buttonRoutes[title];
     if (path) {
       navigate(path);
+    }
+    else if (title == "Logout") {
+      localStorage.removeItem("loggedUser")
+      navigate(`/login`)
     }
     else {
       navigate(`/${title.toLowerCase}`)

@@ -17,7 +17,7 @@ interface Props {
   children?: ReactNode;
 }
 
-const AuthContext = createContext<any>(AuthState.createFromString(""));
+export const AuthContext = createContext<any>(AuthState.createFromString(""));
 function AuthProvider({ children }: Props) {
   const [authState, setAuthState] = useState(
     AuthState.createFromString(localStorage.getItem("loggedUser") || "")
@@ -25,7 +25,7 @@ function AuthProvider({ children }: Props) {
 
   useEffect(() => {
     if (Object.keys(authState.headers).length === 0) return;
-
+    console.log("how many");
     axios.defaults.headers.common.Authorization =
       authState.headers.Authorization;
     getUser()

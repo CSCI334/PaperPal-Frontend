@@ -99,7 +99,7 @@ export default function ContactList() {
   };
 
   return (
-    <Container sx={{  display: "flex", flexDirection: "column"}}>
+    <Box sx={{  display: "flex", flexDirection: "column"}}>
       <Box sx={{ mt: 2, marginLeft: "auto"  }}>
     <Button variant="contained" >
       My Button
@@ -112,7 +112,7 @@ export default function ContactList() {
     rowComponent={rowComponent}
   />
   
- </Container>
+ </Box>
     
   );
 }
