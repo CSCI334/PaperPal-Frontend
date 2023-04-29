@@ -27,6 +27,7 @@ import ConferenceDetails from "./pages/Admin/ConferenceDetail";
 import Dummy from "./pages/Admin/ContactList copy";
 import AllPapersList from "./pages/ConferenceChair/AllPapersListView";
 import AcceptOrRejectPaperView from "./pages/ConferenceChair/AcceptOrRejectPaperView";
+import BiddingSystem from "./pages/Reviewer/BiddingSystem";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
@@ -54,6 +55,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
               {/* Conference Chair */}
               <Route path="/allpaperslist" element={<AllPapersList />} />
               <Route path="/acceptrejectpaper" element={<AcceptOrRejectPaperView />} />
+              <Route path="/biddingSystem" element={<BiddingSystem />} />
             </Route>
             {/* Routing for login or register */}
             <Route path="/login" element={<Login />} />
