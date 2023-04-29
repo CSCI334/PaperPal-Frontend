@@ -57,7 +57,16 @@ const PDFView: React.FC<PDFViewerProps> = ({ file }) => {
                 {numPages && (
                     <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ mt: 0 }}>
                         <Grid item>
-                            <Button variant="contained" color="primary" onClick={prevPage} disabled={pageNumber === 1}>
+                            <Button
+                                sx={{
+                                    backgroundColor: "#72BAD1",
+                                    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.075)",
+                                    borderRadius: "20px",
+                                    width: "150px",
+                                    color: "white"
+                                }}
+                                onClick={prevPage} disabled={pageNumber === 1}
+                            >
                                 Previous
                             </Button>
                         </Grid>
@@ -67,7 +76,16 @@ const PDFView: React.FC<PDFViewerProps> = ({ file }) => {
                             </Typography>
                         </Grid>
                         <Grid item>
-                            <Button variant="contained" color="primary" onClick={nextPage} disabled={pageNumber === numPages}>
+                            <Button
+                                sx={{
+                                    backgroundColor: "#72BAD1",
+                                    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.075)",
+                                    borderRadius: "20px",
+                                    width: "150px",
+                                    color: "white"
+                                }}
+                                onClick={nextPage} disabled={pageNumber === numPages}
+                            >
                                 Next
                             </Button>
                         </Grid>
