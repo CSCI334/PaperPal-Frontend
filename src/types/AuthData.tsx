@@ -13,7 +13,7 @@ class AuthState {
         isAuth: false,
         userData: {
           email: "",
-          userType: "PRO",
+          userType: "ADMIN",
           username: "",
         },
       };

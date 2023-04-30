@@ -35,7 +35,7 @@ interface LeftNavbarProps {
 const drawerWidth = 240;
 
 function LeftNavbar({ buttons }: LeftNavbarProps) {
-  const [selectedButton, setSelectedButton] = useState(buttons[0].title);
+ 
   const navigate = useNavigate();
 
   const buttonLists : ButtonLists = {
@@ -46,12 +46,14 @@ function LeftNavbar({ buttons }: LeftNavbarProps) {
   };
   
   
+  
   // const navBarButtonList  = buttonLists[status as keyof ButtonLists] || [];
   // still hard coded need to change this
   const { authState: { userData, isAuth } } = useAuth();
-  const accountType:string = userData.accountType
+  const accountType:string = userData.accountType || ""
   const navBarButtonList  = buttonLists[accountType.toLowerCase() as keyof ButtonLists] || [];
   // const navBarButtonList  = buttonLists["admin"] || [];
+  const [selectedButton, setSelectedButton] = useState(navBarButtonList[0].title);
 
 
 
