@@ -1,7 +1,6 @@
 import React from "react";
 import PDFView from "../../components/PDFView/PDFView";
-import { Box } from "@mui/system";
-import { Container } from "@mui/material";
+import { Container, Box } from "@mui/material";
 
 
 //This class Renders the AuthorView ratings page and deals with all components necessary for render

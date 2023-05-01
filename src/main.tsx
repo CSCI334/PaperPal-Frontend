@@ -28,6 +28,10 @@ import Dummy from "./pages/Admin/ContactList copy";
 import AllPapersList from "./pages/ConferenceChair/AllPapersListView";
 import AcceptOrRejectPaperView from "./pages/ConferenceChair/AcceptOrRejectPaperView";
 import BiddingSystem from "./pages/Reviewer/BiddingSystem";
+
+import ReviewerAllocatedPaper from "./pages/Reviewer/ReviewerAllocatedPaper";
+import ReviewerAddReview from "./pages/Reviewer/ReviewerAddReview";
+import ReviewerViewReviews from "./pages/Reviewer/ReviewerViewReviews";
 import {
   AdminProtectedRoute,
   AuthorProtectedRoute,
@@ -127,7 +131,30 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
                   </ReviewerProtectedRoute>
                 }
               />
-            </Route>
+              <Route 
+                path="/reviewerAllocatedPapers" 
+                element={
+                  <ReviewerProtectedRoute>
+                    <ReviewerAllocatedPaper />
+                  </ReviewerProtectedRoute>
+                }
+              />
+              <Route 
+                path="/reviewerAddReview" 
+                element={
+                  <ReviewerProtectedRoute>
+                    <ReviewerAddReview />
+                  </ReviewerProtectedRoute>
+                }
+              />
+              <Route 
+                path="/reviewerView" 
+                element={
+                  <ReviewerProtectedRoute>
+                    <ReviewerViewRevieww />
+                  </ReviewerProtectedRoute>
+                }
+              />
             {/* Routing for login or register */}
             <Route path="/login" element={<Login />} />
             <Route path="/registerauthor" element={<AuthorRegister />} />

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Box } from "@mui/system";
-import {Button, Grid, Container, Typography} from '@mui/material';
+import {Button, Grid, Container, Typography, Box} from '@mui/material';
 import { Document, Page, pdfjs } from "react-pdf";
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
@@ -15,7 +14,7 @@ interface PDFViewerProps {
 //This class deals with the actual rendering of PDFView and anything else it needs to render
 const PDFView: React.FC<PDFViewerProps> = ({ file }) => {
     const [numPages, setNumPages] = useState<number | null>(null);
-    const [pageNumber, setPageNumber] = useState(1);
+    const [pageNumber, setPageNumber] = useState<number>(1);
 
     //Function to set the number of pages upon a successful PDF load
     function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
@@ -30,7 +29,8 @@ const PDFView: React.FC<PDFViewerProps> = ({ file }) => {
         if (pageNumber > 1) setPageNumber(pageNumber - 1);
     };
 
-    //PDF render
+    //Renders the pdf
+    // TODO:: code needs to be moved from main pages to here as there are 3 instances of the same div
     return (
         <Container>
             <Box
@@ -43,8 +43,8 @@ const PDFView: React.FC<PDFViewerProps> = ({ file }) => {
                     py: 4,
                     flexGrow: 1
             }}>
-                <Box flexGrow={1} sx={{ display: "flex", justifyContent: "center", alignItems: "center", marginBottom: 2 }}>
-                    <Document file={{ url: file }}
+                <Box flexGrow={1} sx={{ display: "flex", justifyContent: "center", alignItems: "center", marginBottom: 2 }} tabIndex={-1}>
+                    <Document file={file}
                               renderMode="canvas"
                               onLoadSuccess={onDocumentLoadSuccess}
                     >
