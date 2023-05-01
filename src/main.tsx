@@ -151,10 +151,11 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
                 path="/reviewerView" 
                 element={
                   <ReviewerProtectedRoute>
-                    <ReviewerViewRevieww />
+                    <ReviewerViewReviews />
                   </ReviewerProtectedRoute>
                 }
               />
+            </Route>
             {/* Routing for login or register */}
             <Route path="/login" element={<Login />} />
             <Route path="/registerauthor" element={<AuthorRegister />} />
