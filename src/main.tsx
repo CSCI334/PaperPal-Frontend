@@ -28,9 +28,17 @@ import Dummy from "./pages/Admin/ContactList copy";
 import AllPapersList from "./pages/ConferenceChair/AllPapersListView";
 import AcceptOrRejectPaperView from "./pages/ConferenceChair/AcceptOrRejectPaperView";
 import BiddingSystem from "./pages/Reviewer/BiddingSystem";
+
 import ReviewerAllocatedPaper from "./pages/Reviewer/ReviewerAllocatedPaper";
 import ReviewerAddReview from "./pages/Reviewer/ReviewerAddReview";
 import ReviewerViewReviews from "./pages/Reviewer/ReviewerViewReviews";
+import {
+  AdminProtectedRoute,
+  AuthorProtectedRoute,
+  ChairProtectedRoute,
+  ProtectedRoute,
+  ReviewerProtectedRoute,
+} from "./services/routeGuard";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
@@ -42,27 +50,111 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
             {/* routing with left nav bar , header, and footer */}
             <Route element={<App />}>
               <Route path="/" element={<Home />} />
-              <Route path="/create" element={<CreateConference />} />
-              <Route path="/addcontact" element={<AddNewContact />} />
-              <Route path="/contactlist" element={<ContactList />} />
+
+              {/* Admin  */}
+              <Route
+                path="/create"
+                element={
+                  <AdminProtectedRoute>
+                    <CreateConference />
+                  </AdminProtectedRoute>
+                }
+              />
+              <Route
+                path="/addcontact"
+                element={
+                  <AdminProtectedRoute>
+                    <AddNewContact />
+                  </AdminProtectedRoute>
+                }
+              />
+              <Route
+                path="/contactlist"
+                element={
+                  <AdminProtectedRoute>
+                    <ContactList />
+                  </AdminProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/conferencedetail"
+                element={
+                  <AdminProtectedRoute>
+                    <ConferenceDetails />
+                  </AdminProtectedRoute>
+                }
+              />
+
+              {/* Author */}
               <Route
                 path="/AuthorViewRatings"
-                element={<AuthorViewRatings />}
+                element={
+                  <AuthorProtectedRoute>
+                    <AuthorViewRatings />
+                  </AuthorProtectedRoute>
+                }
               />
               <Route
                 path="/authorsubmittedpaper"
-                element={<AuthorSubmittedPaper />}
+                element={
+                  <AuthorProtectedRoute>
+                    <AuthorSubmittedPaper />
+                  </AuthorProtectedRoute>
+                }
               />
-              <Route path="/conferencedetail" element={<ConferenceDetails />} />
-              <Route path="/reviewerAllocatedPapers" element={<ReviewerAllocatedPaper />} />
-              <Route path="/reviewerAddReview" element={<ReviewerAddReview />} />
-              <Route path="/biddingSystem" element={<BiddingSystem />} />
-              <Route path="/reviewerView" element={<ReviewerViewReviews />} />
-              
+
               {/* Conference Chair */}
-              <Route path="/allpaperslist" element={<AllPapersList />} />
-              <Route path="/acceptrejectpaper" element={<AcceptOrRejectPaperView />} />
-            </Route>
+              <Route
+                path="/allpaperslist"
+                element={
+                  <ChairProtectedRoute>
+                    <AllPapersList />
+                  </ChairProtectedRoute>
+                }
+              />
+              <Route
+                path="/acceptrejectpaper"
+                element={
+                  <ChairProtectedRoute>
+                    <AcceptOrRejectPaperView />
+                  </ChairProtectedRoute>
+                }
+              />
+
+              {/* Reviewer */}
+              <Route
+                path="/biddingSystem"
+                element={
+                  <ReviewerProtectedRoute>
+                    <BiddingSystem />
+                  </ReviewerProtectedRoute>
+                }
+              />
+              <Route 
+                path="/reviewerAllocatedPapers" 
+                element={
+                  <ReviewerProtectedRoute>
+                    <ReviewerAllocatedPaper />
+                  </ReviewerProtectedRoute>
+                }
+              />
+              <Route 
+                path="/reviewerAddReview" 
+                element={
+                  <ReviewerProtectedRoute>
+                    <ReviewerAddReview />
+                  </ReviewerProtectedRoute>
+                }
+              />
+              <Route 
+                path="/reviewerView" 
+                element={
+                  <ReviewerProtectedRoute>
+                    <ReviewerViewRevieww />
+                  </ReviewerProtectedRoute>
+                }
+              />
             {/* Routing for login or register */}
             <Route path="/login" element={<Login />} />
             <Route path="/registerauthor" element={<AuthorRegister />} />

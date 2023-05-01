@@ -8,6 +8,8 @@ import ContactList from '../Admin/ContactList';
 import AuthorSubmittedPaper from '../Author/AuthorSubmittedPaper';
 import ConferenceDetail from '../Admin/ConferenceDetail';
 import { Login } from '@mui/icons-material';
+import AllPapersList from '../ConferenceChair/AllPapersListView';
+import BiddingSystem from '../Reviewer/BiddingSystem';
 
 ;
 
@@ -31,10 +33,9 @@ const Home = () => {
       return <AuthorSubmittedPaper />;
       // todo: change reviewer home page
     case 'REVIEWER':
-      return <AddNewContact />;
-      // todo: change chair home page
+      return <BiddingSystem />;
     case 'CHAIR':
-      return <AddNewContact />;
+      return <AllPapersList />;
     default:
       return <Login/>;
   }
