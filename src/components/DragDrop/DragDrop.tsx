@@ -27,8 +27,8 @@ interface DragDropProps {
 //This class deals with the rendering of the DragDrop Dialog and also deals with the functions necessary for its operation
 const DragDrop: React.FC<DragDropProps> = ({ open, onClose, onUpload }) => {
     const [file, setFile] = useState<File | null>(null);
-    const [paperName, setPaperName] = useState('');
-    const [coAuthors, setCoAuthors] = useState('');
+    const [paperName, setPaperName] = useState<string>('');
+    const [coAuthors, setCoAuthors] = useState<string>('');
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     //This function deals with files being dropped on the Dropzone

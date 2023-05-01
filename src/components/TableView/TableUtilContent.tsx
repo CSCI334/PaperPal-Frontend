@@ -3,7 +3,8 @@ import { Box } from "@mui/material";
 export default function createStatusMessage(message:String) {
     
     const bgColor = message.toLowerCase() === "accepted" ? "green" : message.toLowerCase() === "rejected" ? "red": message.toLowerCase() === "pending" ? "#E7DD00" :
-        message.toLowerCase() === "not invited" ? "grey" : message.toLowerCase() === "ready to bid" ? "green": message.toLowerCase() === "already bid" ? "red": undefined;
+        message.toLowerCase() === "not invited" ? "grey" : message.toLowerCase() === "ready to bid" ? "green": message.toLowerCase() === "already bid" ? "red":
+            message.toLowerCase() === "reviewed" ? "red": message.toLowerCase() === "ready for review" ? "green": undefined;
 
     return (
     <Box

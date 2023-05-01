@@ -28,6 +28,9 @@ import Dummy from "./pages/Admin/ContactList copy";
 import AllPapersList from "./pages/ConferenceChair/AllPapersListView";
 import AcceptOrRejectPaperView from "./pages/ConferenceChair/AcceptOrRejectPaperView";
 import BiddingSystem from "./pages/Reviewer/BiddingSystem";
+import ReviewerAllocatedPaper from "./pages/Reviewer/ReviewerAllocatedPaper";
+import ReviewerAddReview from "./pages/Reviewer/ReviewerAddReview";
+import ReviewerViewReviews from "./pages/Reviewer/ReviewerViewReviews";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
@@ -51,11 +54,14 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
                 element={<AuthorSubmittedPaper />}
               />
               <Route path="/conferencedetail" element={<ConferenceDetails />} />
+              <Route path="/reviewerAllocatedPapers" element={<ReviewerAllocatedPaper />} />
+              <Route path="/reviewerAddReview" element={<ReviewerAddReview />} />
+              <Route path="/biddingSystem" element={<BiddingSystem />} />
+              <Route path="/reviewerView" element={<ReviewerViewReviews />} />
               
               {/* Conference Chair */}
               <Route path="/allpaperslist" element={<AllPapersList />} />
               <Route path="/acceptrejectpaper" element={<AcceptOrRejectPaperView />} />
-              <Route path="/biddingSystem" element={<BiddingSystem />} />
             </Route>
             {/* Routing for login or register */}
             <Route path="/login" element={<Login />} />
