@@ -6,26 +6,34 @@ interface CountdownTimerProps {
   deadline: Date;
 }
 
+// Change the list into api request to backend
+const countdowns = [
+  {
+    phase: "Submission",
+    deadline: new Date(Date.parse("2023-05-02T12:13:00")),
+  },
+  {
+    phase: "Bidding",
+    deadline: new Date(Date.parse("2023-05-02T12:16:00")),
+  },
+  {
+    phase: "Reviewing",
+    deadline: new Date(Date.parse("2023-05-02T12:40:00")),
+  },
+  {
+    phase: "Annoucement",
+    deadline: new Date(Date.parse("2023-05-02T12:45:00")),
+  },
+];
+
+
+function getCurrentCountdownPhase(): string {
+  const now = new Date();
+  const currentCountdown = countdowns.find((countdown) => countdown.deadline.getTime() > now.getTime());
+  return currentCountdown ? currentCountdown.phase : "Countdown ended";
+}
 function CountdownTimer() {
-    // Change the list into api request to backend
-    const countdowns = [
-      {
-        phase: "Submission",
-        deadline: new Date(Date.parse("2023-05-02T12:13:00")),
-      },
-      {
-        phase: "Bidding",
-        deadline: new Date(Date.parse("2023-05-02T12:16:00")),
-      },
-      {
-        phase: "Reviewing",
-        deadline: new Date(Date.parse("2023-05-02T12:17:00")),
-      },
-      {
-        phase: "Annoucement",
-        deadline: new Date(Date.parse("2023-05-02T12:18:00")),
-      },
-    ];
+    
     
     const [currentCountdownIndex, setCurrentCountdownIndex] = useState(0);
     const [time, setTime] = useState<{ phase: string; hours: number; minutes: number; seconds: number }>({
