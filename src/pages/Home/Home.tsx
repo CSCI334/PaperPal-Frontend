@@ -10,6 +10,7 @@ import ConferenceDetail from '../Admin/ConferenceDetail';
 import { Login } from '@mui/icons-material';
 import AllPapersList from '../ConferenceChair/AllPapersListView';
 import BiddingSystem from '../Reviewer/BiddingSystem';
+import ReviewerAllocatedPaper from '../Reviewer/ReviewerAllocatedPaper';
 
 ;
 
@@ -33,7 +34,7 @@ const Home = () => {
       return <AuthorSubmittedPaper />;
       // todo: change reviewer home page
     case 'REVIEWER':
-      return <BiddingSystem />;
+      return <ReviewerAllocatedPaper />;
     case 'CHAIR':
       return <AllPapersList />;
     default:

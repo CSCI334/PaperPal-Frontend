@@ -18,7 +18,12 @@ export const buttonRoutes :ButtonPathMap   = {
   
   // Conference Chair
   "All Papers" : "/allpaperslist",
-  "Accept Or Reject Paper": "/acceptrejectpaper"
+  "Accept Or Reject Paper": "/acceptrejectpaper",
+
+  // Reviewer
+  "Allocated Paper" : "/reviewerAllocatedPapers",
+  "Bidding" : "/biddingSystem"
+
 };
 
 

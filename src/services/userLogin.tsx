@@ -16,7 +16,7 @@ async function userLogin({ email ="", password ="" }) {
     
 // TODO: API endpoint, return a token of jwt, need to decrypt 
   
-    const jwtToken = tokenList.author;
+    const jwtToken = tokenList.reviewer;
     // Decripting JWT token
     const decodedJWT = jwtDecode(jwtToken);
     const headers = { Authorization: jwtToken };
