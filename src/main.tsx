@@ -39,6 +39,7 @@ import {
   ProtectedRoute,
   ReviewerProtectedRoute,
 } from "./services/routeGuard";
+import CountdownTimer from "./components/LeftNavbar/TImer";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
@@ -155,12 +156,14 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
                   </ReviewerProtectedRoute>
                 }
               />
+              
             </Route>
             {/* Routing for login or register */}
             <Route path="/login" element={<Login />} />
             <Route path="/registerauthor" element={<AuthorRegister />} />
             <Route path="/registerreviewer" element={<ReviewerRegister />} />
             <Route path="/registerchair" element={<ChairRegister />} />
+            
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>

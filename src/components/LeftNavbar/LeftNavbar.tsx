@@ -18,6 +18,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { adminButtonList, authorButtonList, buttonRoutes, chairButtonList, reviewerButtonList } from "./NavBarButtonList";
 import { useAuth } from "../../context/AuthContext";
+import CountdownTimer from "./TImer";
+import CountdownTimerContainer from "./TImer";
 
 
 
@@ -107,6 +109,7 @@ function LeftNavbar({ buttons }: LeftNavbarProps) {
             onClick={() => handleButtonClick(button.title)}
           />
         ))}
+        <CountdownTimer></CountdownTimer>
         {/* TODO: add remaining phase timer */}
       </List>
     </Drawer>
