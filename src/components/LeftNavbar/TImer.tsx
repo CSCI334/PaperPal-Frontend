@@ -6,26 +6,31 @@ interface CountdownTimerProps {
   deadline: Date;
 }
 
-// Change the list into api request to backend
-const countdowns = [
+// TODO: Change the list into api request to backend
+ const countdowns = [
   {
     phase: "Submission",
-    deadline: new Date(Date.parse("2023-05-02T12:13:00")),
+    deadline: new Date(Date.parse("2023-05-02T16:38:00")),
   },
   {
     phase: "Bidding",
-    deadline: new Date(Date.parse("2023-05-02T12:16:00")),
+    deadline: new Date(Date.parse("2023-05-02T17:00:00")),
   },
   {
     phase: "Reviewing",
-    deadline: new Date(Date.parse("2023-05-02T12:40:00")),
+    deadline: new Date(Date.parse("2023-05-02T17:01:00")),
   },
   {
     phase: "Annoucement",
-    deadline: new Date(Date.parse("2023-05-02T12:45:00")),
+    deadline: new Date(Date.parse("2023-05-02T17:02:00")),
   },
 ];
 
+
+export function updateCountdown() {
+  // TODO impement this
+  countdowns[0].deadline = new Date(Date.parse("2023-05-02T16:58:00"))
+}
 
 function getCurrentCountdownPhase(): string {
   const now = new Date();

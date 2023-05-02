@@ -141,7 +141,6 @@ function BiddingSystem() {
             </TableRow>
         );
     };
-
     //Renders the page
     return (
         <Container sx={{ display: "flex", flexDirection: "column" }}>

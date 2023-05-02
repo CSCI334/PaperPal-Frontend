@@ -39,7 +39,6 @@ import {
   ProtectedRoute,
   ReviewerProtectedRoute,
 } from "./services/routeGuard";
-import CountdownTimer from "./components/LeftNavbar/TImer";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>

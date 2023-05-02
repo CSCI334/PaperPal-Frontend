@@ -18,8 +18,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { adminButtonList, authorButtonList, buttonRoutes, chairButtonList, reviewerButtonList } from "./NavBarButtonList";
 import { useAuth } from "../../context/AuthContext";
-import CountdownTimer from "./TImer";
-import CountdownTimerContainer from "./TImer";
+import CountdownTimer from "./Timer";
+
 
 
 
