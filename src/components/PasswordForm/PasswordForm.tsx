@@ -16,6 +16,7 @@ interface Props {
   name?: string;
   error?: boolean;
   errorMsg?: string;
+  value?: string;
 }
 
 export default function PasswordForm({
@@ -24,6 +25,7 @@ export default function PasswordForm({
   name,
   error,
   errorMsg,
+  value,
 }: Props) {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -43,6 +45,7 @@ export default function PasswordForm({
         name={name ? name : "password"}
         required={true}
         type={showPassword ? "text" : "password"}
+        value={value}
         endAdornment={
           <InputAdornment position="end">
             <IconButton
