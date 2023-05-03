@@ -12,9 +12,12 @@ interface PDFViewerProps {
     file: string;
 }
 //This class deals with the actual rendering of PDFView and anything else it needs to render
+// TODO:: probably needs an author and date variable passed into this function or can pass a paperId and get everything from db
 const PDFView: React.FC<PDFViewerProps> = ({ file }) => {
     const [numPages, setNumPages] = useState<number | null>(null);
     const [pageNumber, setPageNumber] = useState<number>(1);
+    const aName = "Lorem Ipsum";
+    const sDate = new Date();
 
     //Function to set the number of pages upon a successful PDF load
     function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
@@ -30,9 +33,12 @@ const PDFView: React.FC<PDFViewerProps> = ({ file }) => {
     };
 
     //Renders the pdf
-    // TODO:: code needs to be moved from main pages to here as there are 3 instances of the same div
     return (
         <Container>
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <p style={{ marginRight: '10px' }}>Author: {aName}</p>
+                <p>Submitted on: {sDate.toLocaleDateString()}</p>
+            </div>
             <Box
                 sx={{
                     display: "flex",
