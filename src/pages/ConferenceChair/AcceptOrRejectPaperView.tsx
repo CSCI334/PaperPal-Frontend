@@ -4,8 +4,10 @@ import TabMenu, { ITabs } from "../../components/TabMenu/TabMenu";
 import AcceptOrRejectForm from "../../components/TabMenu/Content/AcceptOrRejectForm";
 import ReviewForm from "../../components/TabMenu/Content/ReviewForm";
 import CommentForm from "../../components/TabMenu/Content/CommentForm";
+import PDFView from "../../components/PDFView/PDFView";
 
 function AcceptOrRejectPaperView() {
+	const pdfFile = "https://cdn.filestackcontent.com/wcrjf9qPTCKXV3hMXDwK";
 	// TODO:: connect to backend and DB
 	const handleAcceptOrReject = (event: BaseSyntheticEvent) => {
 		event?.preventDefault();
@@ -22,7 +24,7 @@ function AcceptOrRejectPaperView() {
 		<div style={{ display: "flex", height: "100%" }}>
 			{/* TODO:: add PDF viewer */}
 			<Container sx={{ flexGrow: "1" }}>
-				<div>Content goes here</div>
+				<PDFView file={pdfFile} />
 			</Container>
 			<TabMenu tabs={example} />
 		</div>
