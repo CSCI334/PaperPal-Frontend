@@ -157,7 +157,20 @@ const DragDrop: React.FC<DragDropProps> = ({ open, onClose, onUpload }) => {
                 />
             </DialogContent>
             <DialogActions sx={{ justifyContent: 'center' }}>
-                <Button onClick={handleUpload} disabled={!file || !paperName}>Submit Files</Button>
+                <Button
+                    sx={{
+                        backgroundColor: "#72BAD1",
+                        boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.075)",
+                        borderRadius: "20px",
+                        margin: "16px 0 0 auto",
+                        width: "150px",
+                        color: "white"
+                    }}
+                    onClick={handleUpload}
+                    disabled={!file || !paperName}
+                >
+                    Submit Files
+                </Button>
             </DialogActions>
         </Dialog>
     );
