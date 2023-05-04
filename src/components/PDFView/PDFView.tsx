@@ -12,10 +12,12 @@ interface PDFViewerProps {
     file: string;
 }
 //This class deals with the actual rendering of PDFView and anything else it needs to render
-// TODO:: probably needs an author and date variable passed into this function or can pass a paperId and get everything from db
+// TODO:: Update this to take a paperID and request from backend once that is available
 const PDFView: React.FC<PDFViewerProps> = ({ file }) => {
     const [numPages, setNumPages] = useState<number | null>(null);
     const [pageNumber, setPageNumber] = useState<number>(1);
+    // TODO:: all these from request
+    const fileName = '';
     const aName = "Lorem Ipsum";
     const sDate = new Date();
 
