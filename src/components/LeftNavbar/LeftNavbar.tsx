@@ -55,7 +55,7 @@ function LeftNavbar({ buttons }: LeftNavbarProps) {
   const accountType:string = userData.accountType || ""
   const navBarButtonList  = buttonLists[accountType.toLowerCase() as keyof ButtonLists] || [];
   // const navBarButtonList  = buttonLists["admin"] || [];
-  const [selectedButton, setSelectedButton] = useState(navBarButtonList[0].title);
+  const [selectedButton, setSelectedButton] = useState(navBarButtonList[0]?.title);
 
 
 
