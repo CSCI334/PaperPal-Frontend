@@ -5,15 +5,14 @@ import AuthState from "../types/AuthData";
 // Get user, check if token is legit or not 
 async function getUser() {
   try {
-    // const { data } = await axios({ url: "/user" });
-  //  const data =  AuthState.createFromString(localStorage.getItem("loggedUser") || "")
+  // const { data } = await axios({ url: "/user" });
+  // const data =  AuthState.createFromString(localStorage.getItem("loggedUser") || "")
   console.log("try blokc");
 
   } catch (error) {
     errorHandler(error);
   }
   const isExpired = false; 
-
     if (isExpired) {
       localStorage.removeItem("loggedUser");
       

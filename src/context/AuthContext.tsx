@@ -24,11 +24,10 @@ function AuthProvider({ children }: Props) {
   );
     
   useEffect(() => {
-    console.log("HELLO")
-    console.log(AuthState.createFromString(""))
     if (Object.keys(authState.headers).length === 0) return;
     axios.defaults.headers.common.Authorization =
       authState.headers.Authorization;
+      
     getUser()
       .then((loggedUser) => {
         setAuthState((prev: any) => ({ ...prev, loggedUser }));
