@@ -11,8 +11,8 @@ import { useState } from "react";
 import { useAuth } from "./context/AuthContext";
 
 function App() {
-  const { authState: { userData, isAuth } } = useAuth();
-  const buttons:NavbarButtonProps[] = adminButtonList;
+  const { authState, setAuthState } = useAuth();
+  const buttons: NavbarButtonProps[] = adminButtonList;
  
   return (
     <>

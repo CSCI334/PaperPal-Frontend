@@ -4,7 +4,7 @@ class AuthState {
       Authorization?: string;
     },
     public isAuth: boolean,
-    public userData: {}
+    public userData: any
   ) {}
   static createFromString(json: string): AuthState {
     if (!json || json === "") {

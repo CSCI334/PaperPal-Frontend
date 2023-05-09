@@ -21,8 +21,6 @@ import { useAuth } from "../../context/AuthContext";
 import CountdownTimer from "./Timer";
 
 
-
-
 interface ButtonLists {
   admin:NavbarButtonProps[];
   reviewer: NavbarButtonProps[];
@@ -47,17 +45,12 @@ function LeftNavbar({ buttons }: LeftNavbarProps) {
     author: authorButtonList,
   };
   
-  
-  
   // const navBarButtonList  = buttonLists[status as keyof ButtonLists] || [];
   // still hard coded need to change this
-  const { authState: { userData, isAuth } } = useAuth();
-  const accountType:string = userData.accountType || ""
-  const navBarButtonList  = buttonLists[accountType.toLowerCase() as keyof ButtonLists] || [];
-  // const navBarButtonList  = buttonLists["admin"] || [];
+  const { authState, setAuthState } = useAuth();
+  const accountType = authState.userData.userType ?? ""
+  const navBarButtonList  = buttonLists[accountType.toLowerCase() as keyof ButtonLists] ?? [];
   const [selectedButton, setSelectedButton] = useState(navBarButtonList[0].title);
-
-
 
   // When the button clicked, it will navigate to the relevant page
   const handleButtonClick = (title: string) => {
