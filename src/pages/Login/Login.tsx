@@ -21,7 +21,9 @@ function Login() {
   const navigate = useNavigate();
   const handleSubmit = () => {
     userLogin({ email, password })
-      .then(setAuthState)
+      .then((value) => {
+        // setAuthState(value)
+      })
       .then(() => navigate("/"))
   };
   const inputHandler = (e: { target: { name: any; value: any; }; }) => {
