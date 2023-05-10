@@ -14,15 +14,19 @@ import userLogin from "../../services/userLogin";
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import AuthState from "../../types/AuthData";
 
 function Login() {
   const [{ email, password }, setForm] = useState({ email: "", password: "" });
   const { setAuthState } = useAuth();
   const navigate = useNavigate();
-  const handleSubmit = () => {
+  const handleSubmit = (event: { preventDefault: () => void; }) => {
+    event.preventDefault();
+   
     userLogin({ email, password })
       .then((value) => {
-        // setAuthState(value)
+        console.log("hello");
+        setAuthState(AuthState.createFromString(localStorage.getItem("loggedUser") || ""));
       })
       .then(() => navigate("/"))
   };

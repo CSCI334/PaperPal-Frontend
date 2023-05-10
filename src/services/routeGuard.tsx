@@ -29,7 +29,7 @@ export const AdminProtectedRoute: React.FC<ProtectedRouteProps> = ({
     },
   } = useAuth();
   if (!isAuth || accountType != "ADMIN") {
-    // return <Navigate to="/login" replace />;
+    return <Navigate to="/" replace />;
   }
   return <>{children}</>;
 };
@@ -44,7 +44,7 @@ export const ReviewerProtectedRoute: React.FC<ProtectedRouteProps> = ({
     },
   } = useAuth();
   if (!isAuth || accountType != "REVIEWER") {
-    // return <Navigate to="/login" replace />;
+    return <Navigate to="/" replace />;
   }
   return <>{children}</>;
 };
@@ -59,7 +59,7 @@ export const ChairProtectedRoute: React.FC<ProtectedRouteProps> = ({
     },
   } = useAuth();
   if (!isAuth || accountType != "CHAIR") {
-    // return <Navigate to="/login" replace />;
+    return <Navigate to="/" replace />;
   }
   return <>{children}</>;
 };
@@ -74,7 +74,7 @@ export const AuthorProtectedRoute: React.FC<ProtectedRouteProps> = ({
     },
   } = useAuth();
   if (!isAuth || accountType != "AUTHOR") {
-    // return <Navigate to="/login" replace />;
+    return <Navigate to="/" replace />;
   }
   return <>{children}</>;
 };

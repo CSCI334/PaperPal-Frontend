@@ -7,7 +7,7 @@ async function getUser() {
   try {
   // const { data } = await axios({ url: "/user" });
   // const data =  AuthState.createFromString(localStorage.getItem("loggedUser") || "")
-  console.log("try blokc");
+  console.log("get user runned");
 
   } catch (error) {
     errorHandler(error);

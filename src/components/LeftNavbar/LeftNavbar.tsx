@@ -48,8 +48,8 @@ function LeftNavbar({ buttons }: LeftNavbarProps) {
   // const navBarButtonList  = buttonLists[status as keyof ButtonLists] || [];
   // still hard coded need to change this
   const { authState, setAuthState } = useAuth();
-  const accountType = authState.userData.userType ?? ""
-  const navBarButtonList  = buttonLists[accountType.toLowerCase() as keyof ButtonLists] ?? [];
+  const accountType = authState.userData.accountType ?? ""
+  const navBarButtonList  = buttonLists[accountType.toLowerCase() as keyof ButtonLists] ?? [{title:" "}];
   const [selectedButton, setSelectedButton] = useState(navBarButtonList[0].title);
 
   // When the button clicked, it will navigate to the relevant page
