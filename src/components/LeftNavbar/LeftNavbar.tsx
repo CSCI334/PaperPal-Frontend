@@ -19,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 import { adminButtonList, authorButtonList, buttonRoutes, chairButtonList, reviewerButtonList } from "./NavBarButtonList";
 import { useAuth } from "../../context/AuthContext";
 import CountdownTimer from "./Timer";
+import AuthState from "../../types/AuthData";
 
 
 interface ButtonLists {
@@ -61,6 +62,7 @@ function LeftNavbar({ buttons }: LeftNavbarProps) {
     }
     else if (title == "Logout") {
       localStorage.removeItem("loggedUser")
+      setAuthState(AuthState.createFromString(localStorage.getItem("loggedUser") || ""))
       navigate(`/login`)
     }
     else {
