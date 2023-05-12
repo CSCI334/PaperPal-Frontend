@@ -1,11 +1,15 @@
 import { Box, Button, Container, TableCell, TableRow } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TableView, {
   Data,
   HeadCell,
 } from "../../components/TableView/TableView";
 import createStatusMessage from "../../components/TableView/TableUtilContent";
 import { Email } from "@mui/icons-material";
+import getReviewerContact from "../../services/admin/getReviewerContact";
+import axios from "axios";
+
+
 
 function createContact(
   id:string,
@@ -23,21 +27,32 @@ function createContact(
   };
 }
 
-export default function ContactList() {
+export default  function ContactList() {
+
+
   const [rows, setRows] = useState<Data[]>([
-    createContact("1","John", "john@gmail.com", "Accepted", "SendEmail"),
-    createContact("2","Wickis", "john@gmail.com", "Accepted", "SendEmail"),
-    createContact("3","Keren", "john@gmail.com", "Accepted", "SendEmail"),
-    createContact("4","Luke", "john@gmail.com", "Accepted", "SendEmail"),
-    createContact("5","Bob", "john@gmail.com", "Accepted", "SendEmail"),
-    createContact("6","Ben", "john@gmail.com", "Rejected", "SendEmail"),
-    createContact("7","Ben", "john@gmail.com", "Rejected", "SendEmail"),
-    createContact("8","Dicky", "john@gmail.com", "Pending", "SendEmail"),
-    createContact("9","Lofi", "john@gmail.com", "Pending", "SendEmail"),
-    createContact("10","John", "john@gmail.com", "Pending", "SendEmail"),
-    createContact("11","Alpha", "john@gmail.com", "Not Invited", "SendEmail"),
-    createContact("12","Alpha", "john@gmail.com", "Not Invited", "SendEmail"),
   ]);
+  useEffect(() => {
+    
+    axios.get<Data[]>('http://localhost:8000/contact')
+        .then(response => {
+          const transformedData = response.data.map((item) =>
+          createContact(
+            item.id.toString(),
+            item.username.toString(),
+            item.email.toString(),
+            item.accountstatus.toString(),
+            "SendEmail"
+          )
+        );
+        console.log("test");
+        setRows(transformedData);
+        });
+
+  }, [])
+
+
+
 
   const handleEmailButtonClick = (id: string) => {
     // Find the index of the row with the given id
@@ -74,7 +89,7 @@ export default function ContactList() {
   const rowComponent = (row: Data) => {
     return (
       
-      <TableRow>
+      <TableRow key={row.id}>
         <TableCell component="th" scope="row">
           {row.name}
         </TableCell>

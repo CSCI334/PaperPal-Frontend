@@ -17,6 +17,8 @@ import {
 import EnhancedTableHead from "./TableHeader";
 import React from "react";
 
+
+
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -82,7 +84,7 @@ export default function EnhancedTable({
     );
 
     setVisibleRows(rowsOnMount);
-  }, []);
+  }, [rows, defaultOrderBy]);
 
   const handleRequestSort = useCallback(
     (event: MouseEvent<unknown>, newOrderBy: keyof Data) => {
