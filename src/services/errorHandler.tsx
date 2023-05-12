@@ -1,18 +1,17 @@
 import { AxiosError } from "axios";
-import HttpError from "../types/HttpError";
 
 function errorHandler(error: unknown) {
-  if (error instanceof HttpError) {
-    const [status, data] = [error.getStatus(), error.getData()];
-
-    if ([401, 403, 404, 422, 500].includes(status)) {
-      console.log(status, data.errors.body[0]);
-      throw data.errors.body[0];
+  if (error instanceof AxiosError) {
+    if (error.response) {
+      const { status, data } = error.response;
+      throw `HTTP Error ${status}: ${data.message}`;
+    } else if (error.request) {
+      throw "No response received from the server";
+    } else {
+      throw "An unknown error occurred";
     }
-    console.dir(error);
-  } else if (error instanceof AxiosError) {
-    if ((error.message = "NETWORK_ERROR")) error.stack = "";
-    throw "Can't connect to server";
+  } else {
+    throw error;
   }
 }
 

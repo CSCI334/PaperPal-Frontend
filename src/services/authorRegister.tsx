@@ -39,7 +39,7 @@ async function authorRegister({ email = "", password = "", username = "" }) {
     } catch (error) {
       errorHandler(error);
     }
-  } catch (error) { errorHandler(error)}
+  } catch (error) {errorHandler(error)}
 }
 
 export default authorRegister;
