@@ -14,7 +14,7 @@ import {
 import { Inbox, Mail } from "@mui/icons-material";
 import { Props as NavbarButtonProps } from "./NavbarButton";
 import NavbarButton from "./NavbarButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { adminButtonList, authorButtonList, buttonRoutes, chairButtonList, reviewerButtonList } from "./NavBarButtonList";
 import { useAuth } from "../../context/AuthContext";
@@ -51,7 +51,7 @@ function LeftNavbar({ buttons }: LeftNavbarProps) {
   const { authState, setAuthState } = useAuth();
   const accountType = authState.userData.accountType ?? ""
   const navBarButtonList  = buttonLists[accountType.toLowerCase() as keyof ButtonLists] ?? [{title:" "}];
-  const [selectedButton, setSelectedButton] = useState(navBarButtonList[0].title);
+  const [selectedButton, setSelectedButton] = useState(localStorage.getItem("selectedButton")||navBarButtonList[0].title);
 
   // When the button clicked, it will navigate to the relevant page
   const handleButtonClick = (title: string) => {
@@ -61,7 +61,8 @@ function LeftNavbar({ buttons }: LeftNavbarProps) {
       navigate(path);
     }
     else if (title == "Logout") {
-      localStorage.removeItem("loggedUser")
+      // localStorage.removeItem("loggedUser")
+      localStorage.clear();
       setAuthState(AuthState.createFromString(localStorage.getItem("loggedUser") || ""))
       navigate(`/login`)
     }
@@ -70,6 +71,10 @@ function LeftNavbar({ buttons }: LeftNavbarProps) {
     }
 
   };
+
+  useEffect(() => {
+    localStorage.setItem("selectedButton", selectedButton);
+  }, [selectedButton]);
 
   return (
     <Drawer

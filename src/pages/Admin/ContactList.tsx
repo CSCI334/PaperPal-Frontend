@@ -8,6 +8,7 @@ import createStatusMessage from "../../components/TableView/TableUtilContent";
 import { Email } from "@mui/icons-material";
 import getReviewerContact from "../../services/admin/getReviewerContact";
 import axios from "axios";
+import errorHandler from "../../services/utility/errorHandler";
 
 
 
@@ -47,7 +48,7 @@ export default  function ContactList() {
         );
         console.log("test");
         setRows(transformedData);
-        });
+        }).catch((error) => {errorHandler(error)});
 
   }, [])
 
