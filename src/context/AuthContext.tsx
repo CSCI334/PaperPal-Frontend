@@ -5,7 +5,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import getUser from "../services/getUser";
+import getUser from "../services/account/getUser";
 import AuthState from "../types/AuthData";
 import axios from "axios";
 import { HTTP } from "../data/HttpConfig";

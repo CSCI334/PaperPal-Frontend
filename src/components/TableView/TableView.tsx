@@ -15,19 +15,16 @@ import {
   ReactNode,
 } from "react";
 import EnhancedTableHead from "./TableHeader";
-
-
-
+import React from "react";
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
   }
-  
+
   if (b[orderBy] > a[orderBy]) {
     return 1;
   }
-
 
   return 0;
 }
@@ -107,8 +104,6 @@ export default function EnhancedTable({
     [order, orderBy, page, rowsPerPage]
   );
 
-
-
   const handleChangePage = useCallback(
     (event: unknown, newPage: number) => {
       setPage(newPage);
@@ -153,7 +148,14 @@ export default function EnhancedTable({
             />
             <TableBody>
               {/* TODO: Change this to a function provided by parent  */}
-              {visibleRows ? visibleRows.map(rowComponent) : null}
+              {visibleRows
+                ? visibleRows.map((row) => (
+                    <React.Fragment key={row.id}>
+                      {rowComponent(row)}
+                    </React.Fragment>
+                  ))
+                : null}
+              {/* {visibleRows ? visibleRows.map(rowComponent) : null} */}
             </TableBody>
           </Table>
         </TableContainer>

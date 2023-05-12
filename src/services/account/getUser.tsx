@@ -1,6 +1,6 @@
 import axios from "axios";
-import errorHandler from "./errorHandler";
-import AuthState from "../types/AuthData";
+import errorHandler from "../utility/errorHandler";
+import AuthState from "../../types/AuthData";
 
 // Get user, check if token is legit or not 
 async function getUser() {

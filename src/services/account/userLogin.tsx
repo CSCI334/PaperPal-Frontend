@@ -1,6 +1,6 @@
 
 import axios from "axios";
-import errorHandler from "./errorHandler";
+import errorHandler from "../utility/errorHandler";
 import jwtDecode from "jwt-decode";
 
 //todo: cleanup

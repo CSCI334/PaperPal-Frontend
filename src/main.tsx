@@ -38,7 +38,7 @@ import {
   ChairProtectedRoute,
   ProtectedRoute,
   ReviewerProtectedRoute,
-} from "./services/routeGuard";
+} from "./services/utility/routeGuard";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>

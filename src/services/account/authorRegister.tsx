@@ -1,9 +1,9 @@
 import axios from "axios";
-import errorHandler from "./errorHandler";
+import errorHandler from "../utility/errorHandler";
 import jwtDecode from "jwt-decode";
-import AuthState from "../types/AuthData";
+import AuthState from "../../types/AuthData";
 import { useState } from "react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 //todo: cleanup
 

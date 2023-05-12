@@ -11,7 +11,7 @@ import {
   import PasswordForm from "../../components/PasswordForm/PasswordForm";
 import { useState } from "react";
 import { usePasswordInput } from "../../hooks/Register";
-import authorRegister from "../../services/authorRegister";
+import authorRegister from "../../services/account/authorRegister";
 import { useAuth } from "../../context/AuthContext";
 import AuthState from "../../types/AuthData";
 import { useNavigate } from "react-router-dom";
