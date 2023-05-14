@@ -23,7 +23,7 @@ import AuthState from "../../types/AuthData";
 
 
 interface ButtonLists {
-  admin:NavbarButtonProps[];
+  admin: NavbarButtonProps[];
   reviewer: NavbarButtonProps[];
   chair: NavbarButtonProps[];
   author: NavbarButtonProps[];
@@ -33,30 +33,30 @@ interface LeftNavbarProps {
   buttons: NavbarButtonProps[];
 }
 
-const drawerWidth = 240;
+const drawerWidth = 300;
 
 function LeftNavbar({ buttons }: LeftNavbarProps) {
- 
+
   const navigate = useNavigate();
 
-  const buttonLists : ButtonLists = {
+  const buttonLists: ButtonLists = {
     admin: adminButtonList,
     reviewer: reviewerButtonList,
     chair: chairButtonList,
     author: authorButtonList,
   };
-  
+
   // const navBarButtonList  = buttonLists[status as keyof ButtonLists] || [];
   // still hard coded need to change this
   const { authState, setAuthState } = useAuth();
   const accountType = authState.userData.accountType ?? ""
-  const navBarButtonList  = buttonLists[accountType.toLowerCase() as keyof ButtonLists] ?? [{title:" "}];
-  const [selectedButton, setSelectedButton] = useState(localStorage.getItem("selectedButton")||navBarButtonList[0].title);
+  const navBarButtonList = buttonLists[ accountType.toLowerCase() as keyof ButtonLists ] ?? [ { title: " " } ];
+  const [ selectedButton, setSelectedButton ] = useState(localStorage.getItem("selectedButton") || navBarButtonList[ 0 ].title);
 
   // When the button clicked, it will navigate to the relevant page
   const handleButtonClick = (title: string) => {
     setSelectedButton(title);
-    const path = buttonRoutes[title];
+    const path = buttonRoutes[ title ];
     if (path) {
       navigate(path);
     }
@@ -74,24 +74,24 @@ function LeftNavbar({ buttons }: LeftNavbarProps) {
 
   useEffect(() => {
     localStorage.setItem("selectedButton", selectedButton);
-  }, [selectedButton]);
+  }, [ selectedButton ]);
 
   return (
     <Drawer
       sx={{
-        width: drawerWidth,
-        flexShrink: 0,
         "& .MuiDrawer-paper": {
-          width: drawerWidth,
           boxSizing: "border-box",
         },
       }}
+
       variant="permanent"
-      anchor="left"
+      anchor="right"
       PaperProps={{
         sx: {
+          position: "unset",
           backgroundColor: "primary.main",
           color: "primary.contrastText",
+          sx: { width: "90%" },
         },
       }}
     >
