@@ -12,7 +12,6 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   } = useAuth();
 
   if (!isAuth) {
-    console.log("something");
     return <Navigate to="/login" replace />;
   }
 

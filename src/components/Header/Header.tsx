@@ -9,23 +9,12 @@ import {
   Container,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import AuthState from "../../types/AuthData";
+import { useAuth } from "../../context/AuthContext";
 
-
-
-function Home() {
-  const [authState, setAuthState] = useState(
-    AuthState.createFromString(localStorage.getItem("loggedUser") || "")
-  );
-  
-  useEffect(() => {
-    console.log(authState);
-    console.log("header");
-    // const loggedUser = localStorage.getItem("loggedUser")
-    // console.log(authState);
-  }, [authState, setAuthState]);
+function Header() {
+  const { authState, setAuthState } = useAuth()
+  console.log(authState)
   return (
     <AppBar position="sticky" color="secondary">
       <Toolbar component={Container}>
@@ -44,12 +33,12 @@ function Home() {
           </Button>
         </Box>
 
-        <Typography> System Administrator </Typography>
+        <Typography> {authState.userData.username ?? ""} </Typography>
         <IconButton sx={{ p: 0, marginX: "20px" }}>
-          <Avatar>A</Avatar>
+          <Avatar>{(authState.userData.username ?? "A")[ 0 ]}</Avatar>
         </IconButton>
       </Toolbar>
     </AppBar>
   );
 }
-export default Home;
+export default Header;

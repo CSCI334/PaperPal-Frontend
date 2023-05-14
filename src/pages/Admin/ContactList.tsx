@@ -9,16 +9,18 @@ import { Email } from "@mui/icons-material";
 import axios from "axios";
 import errorHandler from "../../services/utility/errorHandler";
 import { useLocation } from "react-router-dom";
+import getContactList from "../../services/getContactList";
+import { GenericForm } from "../../types/GenericForm";
 
 
 
 function createContact(
-  id:string,
-  name: string, 
+  id: string,
+  name: string,
   email: string,
- status: string,
+  status: string,
   action: string,
-) : Data {
+): Data {
   return {
     id,
     name,
@@ -28,51 +30,48 @@ function createContact(
   };
 }
 
-export default  function ContactList() {
-
-
-  const [rows, setRows] = useState<Data[]>([
-  ]);
+export default function ContactList() {
+  const [ rows, setRows ] = useState<Data[]>([]);
   const location = useLocation();
   useEffect(() => {
-    if ( location.pathname !== '/contactlist') {
+    if (location.pathname !== '/contactlist') {
       return;
     }
-  
-    axios.get<Data[]>('http://localhost:8000/contact')
-        .then(response => {
-          const transformedData = response.data.map((item) =>
-          createContact(
+
+    getContactList()
+      .then((value) => {
+        const contactList = value?.map((item) => {
+          return createContact(
             item.id.toString(),
             item.username.toString(),
             item.email.toString(),
             item.accountstatus.toString(),
             "SendEmail"
           )
-        );
-        console.log("test");
-        setRows(transformedData);
-        }).catch((error) => {errorHandler(error)});
+        })
+        setRows(contactList ?? [])
+      })
+      .catch(() => {
+        console.log("sadf")
+      })
+
 
   }, [])
-
-
-
 
   const handleEmailButtonClick = (id: string) => {
     // Find the index of the row with the given id
     const rowIndex = rows.findIndex((row) => row.id === id);
     // If the row is found, update its status to "pending"
     if (rowIndex !== -1) {
-      const updatedRows = [...rows]; // create a copy of the rows array
-      updatedRows[rowIndex].status = "Pending";
+      const updatedRows = [ ...rows ]; // create a copy of the rows array
+      updatedRows[ rowIndex ].status = "Pending";
       setRows(updatedRows); // set the state of rows with updatedRows array
     }
     alert(`Button clicked for row with id: ${id}`);
   };
 
   const headCells: readonly HeadCell[] = [
-    
+
     {
       id: "name",
       label: "Name",
@@ -93,7 +92,7 @@ export default  function ContactList() {
 
   const rowComponent = (row: Data) => {
     return (
-      
+
       <TableRow key={row.id}>
         <TableCell component="th" scope="row">
           {row.name}
@@ -113,26 +112,26 @@ export default  function ContactList() {
           </Button>
         </TableCell>
       </TableRow>
-      
-     
+
+
     );
   };
 
   return (
-    <Box sx={{  display: "flex", flexDirection: "column"}}>
-      <Box sx={{ mt: 2, marginLeft: "auto"  }}>
-    <Button variant="contained" >
-      My Button
-    </Button>
-  </Box>
-  <TableView
-    rows={rows}
-    defaultOrderBy="name"
-    headCells={headCells}
-    rowComponent={rowComponent}
-  />
-  
- </Box>
-    
+    <Box sx={{ display: "flex", flexDirection: "column" }}>
+      <Box sx={{ mt: 2, marginLeft: "auto" }}>
+        <Button variant="contained" >
+          My Button
+        </Button>
+      </Box>
+      <TableView
+        rows={rows}
+        defaultOrderBy="name"
+        headCells={headCells}
+        rowComponent={rowComponent}
+      />
+
+    </Box>
+
   );
 }

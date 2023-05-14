@@ -1,15 +1,7 @@
 import { Box, Button, Grid, IconButton, Paper, TextField, Typography, styled } from "@mui/material";
 import ContainerForm from "../../components/FormContainer/ContainerForm";
-import { Cancel, Padding, Save, Title } from "@mui/icons-material";
-import { DatePicker } from '@mui/lab';
-import { SetStateAction, useState } from "react";
-import { Edit } from "@mui/icons-material";
 import renderDateDisplayOrEdit from "../../components/AdminEditableDeadline/editableDeadline";
 import dayjs, { Dayjs } from "dayjs";
-
-
-
-
 
 interface ConferenceInfoProps {
   name: string;
@@ -20,12 +12,10 @@ interface ConferenceInfoProps {
   paperBiddingDeadline: Dayjs;
   paperReviewDeadline: Dayjs;
   paperAnnouncement: Dayjs;
-  
+
 }
 
 export default function ConferenceDetail() {
-
-
   // TODO: change each property to fetch it from database 
   const conferencedetail: ConferenceInfoProps = {
     name: "International Conference on Computer Science",
@@ -40,12 +30,10 @@ export default function ConferenceDetail() {
 
 
   return (<ConferenceInformation
-   {...conferencedetail}
+    {...conferencedetail}
   />)
 
 }
-
-
 
 function ConferenceInformation({
   name,
@@ -57,8 +45,6 @@ function ConferenceInformation({
   paperAnnouncement,
   paperReviewDeadline,
 }: ConferenceInfoProps) {
- 
-
   return (
     <ContainerForm
       title={"Conference Detail"}
@@ -68,26 +54,26 @@ function ConferenceInformation({
       }}
     >
       <Box sx={{ display: 'flex', flexDirection: 'row', height: '100vh' }}>
-        <Box sx={{ width: '35%', display: 'flex', flexDirection: 'column', alignItems: 'start', justifyContent: 'start', p: 6}}>
-          <Typography variant="body1"  sx={{marginBottom: 4}}>Conference Name:</Typography>
-          <Typography variant="body1"sx={{marginBottom: 4}}>Conference Location:</Typography>
-          <Typography variant="body1"sx={{marginBottom: 4}}>Conference Chair Name:</Typography>
-          <Typography variant="body1"sx={{marginBottom: 4}}>Conference Chair Email:</Typography>
-          <Typography variant="body1"sx={{marginBottom: 4}}>Paper Submission Deadline:</Typography>
-          <Typography variant="body1"sx={{marginBottom: 4}}>Paper Bidding Deadline:</Typography>
-          <Typography variant="body1"sx={{marginBottom: 4}}>Paper Review Deadline:</Typography>
-          <Typography variant="body1"sx={{marginBottom: 4}}>Paper Announcement:</Typography>
+        <Box sx={{ width: '35%', display: 'flex', flexDirection: 'column', alignItems: 'start', justifyContent: 'start', p: 6 }}>
+          <Typography variant="body1" sx={{ marginBottom: 4 }}>Conference Name:</Typography>
+          <Typography variant="body1" sx={{ marginBottom: 4 }}>Conference Location:</Typography>
+          <Typography variant="body1" sx={{ marginBottom: 4 }}>Conference Chair Name:</Typography>
+          <Typography variant="body1" sx={{ marginBottom: 4 }}>Conference Chair Email:</Typography>
+          <Typography variant="body1" sx={{ marginBottom: 4 }}>Paper Submission Deadline:</Typography>
+          <Typography variant="body1" sx={{ marginBottom: 4 }}>Paper Bidding Deadline:</Typography>
+          <Typography variant="body1" sx={{ marginBottom: 4 }}>Paper Review Deadline:</Typography>
+          <Typography variant="body1" sx={{ marginBottom: 4 }}>Paper Announcement:</Typography>
         </Box>
-        <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', alignItems: 'start', justifyContent: 'start', p: 6}}>
-          <Typography variant="body1"  sx={{marginBottom:4}}>{name}</Typography>
-          <Typography variant="body1"sx={{marginBottom: 4}}>{location}</Typography>
-          <Typography variant="body1"sx={{marginBottom: 4}}>{chairName}</Typography>
-          <Typography variant="body1"sx={{marginBottom: 4}}>{chairEmail}</Typography>
-          {renderDateDisplayOrEdit({title: "submission", deadlineDate: paperSubmissionDeadline })}
-          {renderDateDisplayOrEdit({title: "bidding", deadlineDate: paperBiddingDeadline})}
-          {renderDateDisplayOrEdit({title: "annoucement", deadlineDate: paperAnnouncement})}
-          {renderDateDisplayOrEdit({title: "review", deadlineDate: paperReviewDeadline})}
-        
+        <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', alignItems: 'start', justifyContent: 'start', p: 6 }}>
+          <Typography variant="body1" sx={{ marginBottom: 4 }}>{name}</Typography>
+          <Typography variant="body1" sx={{ marginBottom: 4 }}>{location}</Typography>
+          <Typography variant="body1" sx={{ marginBottom: 4 }}>{chairName}</Typography>
+          <Typography variant="body1" sx={{ marginBottom: 4 }}>{chairEmail}</Typography>
+          {renderDateDisplayOrEdit({ title: "submission", deadlineDate: paperSubmissionDeadline })}
+          {renderDateDisplayOrEdit({ title: "bidding", deadlineDate: paperBiddingDeadline })}
+          {renderDateDisplayOrEdit({ title: "annoucement", deadlineDate: paperAnnouncement })}
+          {renderDateDisplayOrEdit({ title: "review", deadlineDate: paperReviewDeadline })}
+
           {/* {editMode ? (
             <>
               
@@ -119,15 +105,8 @@ function ConferenceInformation({
               </Box>
             </>
           )} */}
-
-
-
- 
         </Box>
-        
       </Box>
-
-
     </ContainerForm>
   );
 }
