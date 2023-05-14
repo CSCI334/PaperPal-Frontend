@@ -1,18 +1,26 @@
 import { Save, Cancel, Edit } from "@mui/icons-material";
 import { Box, IconButton, TextField, Typography } from "@mui/material";
 import { DateField } from "@mui/x-date-pickers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import dayjs, { Dayjs } from 'dayjs';
 
 interface NamedParameters {
   title: string;
   deadlineDate: Dayjs;
+
 }
 
-export default function renderDateDisplayOrEdit(props: NamedParameters) {
-  const [ value, setValue ] = useState<Dayjs | null>(props.deadlineDate);
+export default function RenderDateDisplayOrEdit(props: NamedParameters) {
+  const [value, setValue] = useState<Dayjs | null>(() =>
+    props.deadlineDate ? dayjs(props.deadlineDate) : null
+  );
 
-  const [ editMode, setEditMode ] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  useEffect(() => {
+    console.log("oke");
+    console.log(props.deadlineDate)
+    setValue(props.deadlineDate);
+  }, [props.deadlineDate]);
 
   const handleEdit = () => {
     setEditMode(true);
