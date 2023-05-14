@@ -29,12 +29,9 @@ function AuthProvider({ children }: Props) {
     if (Object.keys(authState.headers).length === 0) return;
 
     //todo: need to fix the auth state to show better data 
-    console.log(authState)
-
     getUser()
       .then((loggedUser) => {
         setAuthState((prev: any) => {
-          console.log({ ...prev })
           return ({
             ...prev, userData: {
               ...prev.userData,

@@ -16,6 +16,7 @@ import { useAuth } from "../../context/AuthContext";
 
 function Header() {
   const { authState, setAuthState } = useAuth()
+  console.log(authState)
   return (
     <AppBar position="sticky" color="secondary">
       <Toolbar component={Container}>
@@ -34,7 +35,7 @@ function Header() {
           </Button>
         </Box>
 
-        <Typography> System Administrator </Typography>
+        <Typography> {authState.userData.username} </Typography>
         <IconButton sx={{ p: 0, marginX: "20px" }}>
           <Avatar>A</Avatar>
         </IconButton>

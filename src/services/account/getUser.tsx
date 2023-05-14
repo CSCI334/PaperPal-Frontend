@@ -8,7 +8,7 @@ import { fetchClient } from "../axiosClient";
 async function getUser() {
     try {
         const { data } = await fetchClient().get('user');
-        return { userData: data };
+        return data;
     } catch (error) {
         errorHandler(error);
     }
