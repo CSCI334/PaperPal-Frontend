@@ -6,9 +6,9 @@ import TableView, {
 } from "../../components/TableView/TableView";
 import createStatusMessage from "../../components/TableView/TableUtilContent";
 import { Email } from "@mui/icons-material";
-import getReviewerContact from "../../services/admin/getReviewerContact";
 import axios from "axios";
 import errorHandler from "../../services/utility/errorHandler";
+import { useLocation } from "react-router-dom";
 
 
 
@@ -33,8 +33,12 @@ export default  function ContactList() {
 
   const [rows, setRows] = useState<Data[]>([
   ]);
+  const location = useLocation();
   useEffect(() => {
-    
+    if ( location.pathname !== '/contactlist') {
+      return;
+    }
+  
     axios.get<Data[]>('http://localhost:8000/contact')
         .then(response => {
           const transformedData = response.data.map((item) =>

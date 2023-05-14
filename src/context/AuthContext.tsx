@@ -28,10 +28,18 @@ function AuthProvider({ children }: Props) {
     axios.defaults.headers.common.Authorization =
       `Bearer ${authState.headers.Authorization}`;
       
+
+      //todo: need to fix the auth state to show better data 
     getUser()
       .then((loggedUser) => {
-        setAuthState((prev: any) => ({ ...prev, loggedUser }));
+        setAuthState((prev: any) => {
+          return ({
+            ...prev, loggedUser
+          });
+        });
+        console.log(authState);
       })
+      
       .catch(console.error);
   }, [authState.headers, setAuthState]);
 
