@@ -67,9 +67,10 @@ export default function ConferenceDetail() {
     const fetchData = async () => {
       try {
         const data = await getConferenceInfo();
+        console.log(data);
 
         const conferenceInfo: ConferenceInfoProps = createConferenceInfo(data.conferencename, data.conferencelocation, "Eric", "eric@email", dayjs(data.submissiondeadline), dayjs(data.biddingdeadline), dayjs(data.reviewdeadline), dayjs(data.announcementtime));
-        console.log(conferenceInfo.paperAnnouncement);
+        // console.log(conferenceInfo.paperAnnouncement);
         setConferenceDetail(conferenceInfo);
         // Handle the conference info as needed
       } catch (error) {
@@ -104,6 +105,7 @@ export default function ConferenceDetail() {
           <Typography variant="body1" sx={{ marginBottom: 4 }}>{conferenceDetail.location}</Typography>
           <Typography variant="body1" sx={{ marginBottom: 4 }}>{conferenceDetail.chairName}</Typography>
           <Typography variant="body1" sx={{ marginBottom: 4 }}>{conferenceDetail.chairEmail}</Typography>
+
           <RenderDateDisplayOrEdit title="submission" deadlineDate={conferenceDetail.paperSubmissionDeadline} />
           <RenderDateDisplayOrEdit title="bidding" deadlineDate={conferenceDetail.paperBiddingDeadline} />
           <RenderDateDisplayOrEdit title="review" deadlineDate={conferenceDetail.paperReviewDeadline} />

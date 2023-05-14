@@ -9,7 +9,7 @@ async function getConferenceInfo() {
             url: "conference",
             method: "GET"
         })
-        return data as GenericForm[]
+        return data;
     } catch (error) {
         errorHandler(error);
     }
