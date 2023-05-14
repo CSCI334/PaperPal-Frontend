@@ -8,28 +8,10 @@ import { fetchClient } from "../axiosClient";
 async function getUser() {
     try {
         const { data } = await fetchClient().get('user');
-        const jwtToken = data.token;
-        // Decripting JWT token
-        const decodedJWT: {} = jwtDecode(jwtToken);
-        const loggedUser = { ...decodedJWT, ...data };
-        const authState = new AuthState(
-            { Authorization: loggedUser.token },
-            true,
-            {
-                email: loggedUser.email,
-                username: loggedUser.username,
-            },
-            loggedUser.accountType,
-        );
-        localStorage.setItem("loggedUser", JSON.stringify(authState))
-
-        return authState;
+        return { userData: data };
     } catch (error) {
-        console.log(error)
         errorHandler(error);
     }
-    const data = AuthState.createFromString(localStorage.getItem("loggedUser") || "");
-    return data;
 }
 
 export default getUser;

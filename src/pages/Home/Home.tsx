@@ -17,6 +17,7 @@ const Home = () => {
   const userData = authState.userData
   const navigate = useNavigate();
   useEffect(() => {
+    console.log(authState.userData.accountType)
     if (!authState.isAuth) {
       navigate('/login');
     }
@@ -35,7 +36,6 @@ const Home = () => {
     case 'CHAIR':
       return <AllPapersList />;
     default:
-      navigate('/login');
       return <></>;
   }
 };

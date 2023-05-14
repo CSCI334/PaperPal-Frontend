@@ -20,7 +20,7 @@ import AuthState from "../../types/AuthData";
 
 function Login() {
   const [ { email, password }, setForm ] = useState({ email: "", password: "" });
-  const { setAuthState } = useAuth();
+  const { authState, setAuthState } = useAuth();
   const navigate = useNavigate();
   const handleSubmit = (event: { preventDefault: () => void; }) => {
     event.preventDefault();
@@ -31,6 +31,7 @@ function Login() {
       })
       .then(() => navigate("/"))
   };
+
   const inputHandler = (e: { target: { name: any; value: any; }; }) => {
     const name = e.target.name;
     const value = e.target.value;

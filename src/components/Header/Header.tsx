@@ -16,7 +16,6 @@ import { useAuth } from "../../context/AuthContext";
 
 function Header() {
   const { authState, setAuthState } = useAuth()
-
   return (
     <AppBar position="sticky" color="secondary">
       <Toolbar component={Container}>
