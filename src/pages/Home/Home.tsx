@@ -7,23 +7,20 @@ import AddNewContact from '../Admin/AddNewContact';
 import ContactList from '../Admin/ContactList';
 import AuthorSubmittedPaper from '../Author/AuthorSubmittedPaper';
 import ConferenceDetail from '../Admin/ConferenceDetail';
-import { Login } from '@mui/icons-material';
+import Login from '../Login/Login';
 import AllPapersList from '../ConferenceChair/AllPapersListView';
 import BiddingSystem from '../Reviewer/BiddingSystem';
 import ReviewerAllocatedPaper from '../Reviewer/ReviewerAllocatedPaper';
 
-;
-
 const Home = () => {
-  const { authState: { userData, isAuth } } = useAuth();
+  const { authState, setAuthState } = useAuth();
+  const userData = authState.userData
   const navigate = useNavigate();
-
   useEffect(() => {
-    if (!isAuth) {
+    if (!authState.isAuth) {
       navigate('/login');
     }
-    
-  }, [isAuth, navigate]);
+  }, []);
 
 
   // todo: change the routing for different type of home account
@@ -32,13 +29,14 @@ const Home = () => {
       return <ConferenceDetail />;
     case 'AUTHOR':
       return <AuthorSubmittedPaper />;
-      // todo: change reviewer home page
+    // todo: change reviewer home page
     case 'REVIEWER':
       return <ReviewerAllocatedPaper />;
     case 'CHAIR':
       return <AllPapersList />;
     default:
-      return <Login/>;
+      navigate('/login');
+      return <></>;
   }
 };
 
