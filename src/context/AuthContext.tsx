@@ -39,11 +39,12 @@ function AuthProvider({ children }: Props) {
             }
           });
         });
+        localStorage.setItem("loggedUser", JSON.stringify(authState))
       })
       .catch((error) => {
         console.log(error)
       });
-  }, []);
+  }, [ authState.headers ]);
 
   return (
     <AuthContext.Provider value={{ authState, setAuthState }}>

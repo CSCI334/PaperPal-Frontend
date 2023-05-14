@@ -9,9 +9,7 @@ import {
   Container,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import AuthState from "../../types/AuthData";
 import { useAuth } from "../../context/AuthContext";
 
 function Header() {
@@ -35,9 +33,9 @@ function Header() {
           </Button>
         </Box>
 
-        <Typography> {authState.userData.username} </Typography>
+        <Typography> {authState.userData.username ?? ""} </Typography>
         <IconButton sx={{ p: 0, marginX: "20px" }}>
-          <Avatar>A</Avatar>
+          <Avatar>{(authState.userData.username ?? "A")[ 0 ]}</Avatar>
         </IconButton>
       </Toolbar>
     </AppBar>
