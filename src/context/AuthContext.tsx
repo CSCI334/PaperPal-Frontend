@@ -37,6 +37,7 @@ function AuthProvider({ children }: Props) {
             ...prev, loggedUser
           });
         });
+        // console.log(loggedUser);
         console.log(authState);
       })
       

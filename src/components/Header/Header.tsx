@@ -9,9 +9,23 @@ import {
   Container,
   Typography,
 } from "@mui/material";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import AuthState from "../../types/AuthData";
+
+
 
 function Home() {
+  const [authState, setAuthState] = useState(
+    AuthState.createFromString(localStorage.getItem("loggedUser") || "")
+  );
+  
+  useEffect(() => {
+    console.log(authState);
+    console.log("header");
+    // const loggedUser = localStorage.getItem("loggedUser")
+    // console.log(authState);
+  }, [authState, setAuthState]);
   return (
     <AppBar position="sticky" color="secondary">
       <Toolbar component={Container}>
