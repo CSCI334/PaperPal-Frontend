@@ -1,18 +1,27 @@
 import { Save, Cancel, Edit } from "@mui/icons-material";
 import { Box, IconButton, TextField, Typography } from "@mui/material";
 import { DateField } from "@mui/x-date-pickers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import dayjs, { Dayjs } from 'dayjs';
+import { ConferenceInfoProps } from "../../pages/Admin/ConferenceDetail";
+import updateConference from "../../services/admin/updateConference";
 
 interface NamedParameters {
   title: string;
   deadlineDate: Dayjs;
+  conferenceInfo: ConferenceInfoProps;
+
 }
 
-export default function renderDateDisplayOrEdit(props: NamedParameters) {
-  const [ value, setValue ] = useState<Dayjs | null>(props.deadlineDate);
+export default function RenderDateDisplayOrEdit(props: NamedParameters) {
+  const [value, setValue] = useState<Dayjs | null>(() =>
+    props.deadlineDate ? dayjs(props.deadlineDate) : null
+  );
 
-  const [ editMode, setEditMode ] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  useEffect(() => {
+    setValue(props.deadlineDate);
+  }, [props.deadlineDate]);
 
   const handleEdit = () => {
     setEditMode(true);
@@ -22,14 +31,18 @@ export default function renderDateDisplayOrEdit(props: NamedParameters) {
     setEditMode(false);
   };
 
-  const handleSave = () => {
-    setEditMode(false);
-    // The title needs to correlate with the backend endpoint, so that it can save
-    // the value is the new value to be saved 
-    console.log(props.title);
-    console.log(value);
+  const handleSave = async () => {
 
+    if (props.title === "1") {
+      props.conferenceInfo.paperSubmissionDeadline = value ?? dayjs();
+    }
+    else if (props.title === "2") { props.conferenceInfo.paperBiddingDeadline = value ?? dayjs() }
+    else if (props.title === "3") { props.conferenceInfo.paperReviewDeadline = value ?? dayjs() }
+    else if (props.title === "4") { props.conferenceInfo.paperAnnouncement = value ?? dayjs() }
     // TODO : handle saving of the new date value here
+    await updateConference(props.conferenceInfo);
+    setEditMode(false);
+    console.log(props.conferenceInfo)
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
