@@ -6,14 +6,15 @@ import { SetStateAction, useEffect, useState } from "react";
 import { Edit } from "@mui/icons-material";
 import dayjs, { Dayjs } from "dayjs";
 import { useFetcher } from "react-router-dom";
-import getConferenceInfo from "../../services/getConferenceInfo";
+import getConferenceInfo from "../../services/admin/getConferenceInfo";
 import RenderDateDisplayOrEdit from "../../components/AdminEditableDeadline/editableDeadline";
 
 
 
 
 
-interface ConferenceInfoProps {
+export interface ConferenceInfoProps {
+  id: number;
   name: string;
   location: string;
   chairName: string;
@@ -26,6 +27,7 @@ interface ConferenceInfoProps {
 }
 
 function createConferenceInfo(
+  id: number,
   name: string,
   location: string,
   chairName: string,
@@ -36,6 +38,7 @@ function createConferenceInfo(
   paperAnnouncement: Dayjs,
 ): ConferenceInfoProps {
   return {
+    id,
     name,
     location,
     chairName,
@@ -52,6 +55,7 @@ function createConferenceInfo(
 export default function ConferenceDetail() {
 
   const [conferenceDetail, setConferenceDetail] = useState<ConferenceInfoProps>({
+    id: 1,
     name: "",
     location: "",
     chairName: "",
@@ -69,7 +73,7 @@ export default function ConferenceDetail() {
         const data = await getConferenceInfo();
         console.log(data);
 
-        const conferenceInfo: ConferenceInfoProps = createConferenceInfo(data.conferencename, data.conferencelocation, "Eric", "eric@email", dayjs(data.submissiondeadline), dayjs(data.biddingdeadline), dayjs(data.reviewdeadline), dayjs(data.announcementtime));
+        const conferenceInfo: ConferenceInfoProps = createConferenceInfo(data.id, data.conferencename, data.conferencelocation, "Eric", "eric@email", dayjs(data.submissiondeadline), dayjs(data.biddingdeadline), dayjs(data.reviewdeadline), dayjs(data.announcementtime));
         // console.log(conferenceInfo.paperAnnouncement);
         setConferenceDetail(conferenceInfo);
         // Handle the conference info as needed
@@ -106,10 +110,10 @@ export default function ConferenceDetail() {
           <Typography variant="body1" sx={{ marginBottom: 4 }}>{conferenceDetail.chairName}</Typography>
           <Typography variant="body1" sx={{ marginBottom: 4 }}>{conferenceDetail.chairEmail}</Typography>
 
-          <RenderDateDisplayOrEdit title="submission" deadlineDate={conferenceDetail.paperSubmissionDeadline} />
-          <RenderDateDisplayOrEdit title="bidding" deadlineDate={conferenceDetail.paperBiddingDeadline} />
-          <RenderDateDisplayOrEdit title="review" deadlineDate={conferenceDetail.paperReviewDeadline} />
-          <RenderDateDisplayOrEdit title="acceptance" deadlineDate={conferenceDetail.paperAnnouncement} />
+          <RenderDateDisplayOrEdit title="1" deadlineDate={conferenceDetail.paperSubmissionDeadline} conferenceInfo={conferenceDetail} />
+          <RenderDateDisplayOrEdit title="2" deadlineDate={conferenceDetail.paperBiddingDeadline} conferenceInfo={conferenceDetail} />
+          <RenderDateDisplayOrEdit title="3" deadlineDate={conferenceDetail.paperReviewDeadline} conferenceInfo={conferenceDetail} />
+          <RenderDateDisplayOrEdit title="4" deadlineDate={conferenceDetail.paperAnnouncement} conferenceInfo={conferenceDetail} />
 
         </Box>
 

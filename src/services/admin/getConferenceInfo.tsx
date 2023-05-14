@@ -1,7 +1,7 @@
 import axios from "axios";
-import errorHandler from "./utility/errorHandler";
-import { fetchClient } from "./axiosClient";
-import { GenericForm } from "../types/GenericForm";
+import errorHandler from "../utility/errorHandler";
+import { fetchClient } from "../axiosClient";
+import { GenericForm } from "../../types/GenericForm";
 
 async function getConferenceInfo() {
     try {
