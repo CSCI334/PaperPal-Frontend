@@ -8,6 +8,7 @@ export default function useHttpRequest(httpRequest: Promise<any>, callback: (val
     const { snackbar, setSnackbar } = useSnackbar()
 
     useEffect(() => {
+        setIsLoading(true)
         httpRequest
             .then(callback)
             .catch((value) => {
