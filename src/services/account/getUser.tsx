@@ -2,12 +2,12 @@ import axios from "axios";
 import errorHandler from "../utility/errorHandler";
 import AuthState from "../../types/AuthData";
 import jwtDecode from "jwt-decode";
-import { fetchClient } from "../axiosClient";
+import { authenticatedClient } from "../authenticatedClient";
 
 // Get user, check if token is legit or not 
 async function getUser() {
     try {
-        const { data } = await fetchClient().get('user');
+        const { data } = await authenticatedClient().get('user');
         return data;
     } catch (error) {
         errorHandler(error);

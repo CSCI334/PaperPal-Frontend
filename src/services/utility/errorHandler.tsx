@@ -4,11 +4,11 @@ function errorHandler(error: unknown) {
   if (error instanceof AxiosError) {
     if (error.response) {
       const { status, data } = error.response;
-      throw `HTTP Error ${status}: ${data.message}`;
+      throw { status: status, message: data.message };
     } else if (error.request) {
-      throw "No response received from the server";
+      throw { status: 500, message: "No response received from the server" };
     } else {
-      throw "An unknown error occurred";
+      throw { status: 500, message: "An unknown error occurred" };
     }
   } else {
     console.log(error)

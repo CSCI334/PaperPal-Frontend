@@ -46,8 +46,8 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <BrowserRouter>
-        <AuthProvider>
-          <FeedbackProvider>
+        <FeedbackProvider>
+          <AuthProvider>
             <Routes>
               {/* routing with left nav bar , header, and footer */}
               <Route element={<App />}>
@@ -81,8 +81,8 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
 
               <Route path="*" element={<NotFound />} />
             </Routes>
-          </FeedbackProvider>
-        </AuthProvider>
+          </AuthProvider>
+        </FeedbackProvider>
       </BrowserRouter>
     </ThemeProvider>
   </React.StrictMode >

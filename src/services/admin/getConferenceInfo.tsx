@@ -1,11 +1,11 @@
 import axios from "axios";
 import errorHandler from "../utility/errorHandler";
-import { fetchClient } from "../axiosClient";
+import { authenticatedClient } from "../authenticatedClient";
 import { GenericForm } from "../../types/GenericForm";
 
 async function getConferenceInfo() {
     try {
-        const { data } = await fetchClient()({
+        const { data } = await authenticatedClient()({
             url: "conference",
             method: "GET"
         })

@@ -1,11 +1,11 @@
 import axios from "axios";
 import errorHandler from "./utility/errorHandler";
 import jwtDecode from "jwt-decode";
-import { fetchClient } from "./axiosClient";
+import { authenticatedClient } from "./authenticatedClient";
 
 async function getAllPaper() {
     try {
-        const { data } = await fetchClient().get('/paper')
+        const { data } = await authenticatedClient().get('/paper')
         return data
     } catch (error) {
         errorHandler(error);

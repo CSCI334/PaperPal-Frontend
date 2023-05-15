@@ -10,6 +10,7 @@ import getAllPaper from "../../services/getAllPaper";
 import { GenericForm } from "../../types/GenericForm";
 import { useNavigate } from "react-router-dom";
 import { useLoading } from "../../context/FeedbackContext";
+import useAllPaper from "../../hooks/useAllPaper";
 
 function createPaper(
     id: number,
@@ -58,20 +59,13 @@ export default function AllPapersList() {
         }
     ];
 
-    useEffect(() => {
-        setIsLoading(true)
-        getAllPaper()
-            .then((value) => {
-                value = value ?? []
-                const rows = value.map((value: GenericForm) => {
-                    if (value.paperstatus === "TBD") value.paperstatus = "Pending"
-                    return createPaper(value.id, value.title, value.coauthors, value.author, value.paperstatus)
-                })
-                setRows(rows ?? [])
-            })
-            .finally(() => {
-                setIsLoading(false)
-            })
+    useAllPaper((value) => {
+        value = value ?? []
+        const rows = value.map((value: GenericForm) => {
+            if (value.paperstatus === "TBD") value.paperstatus = "Pending"
+            return createPaper(value.id, value.title, value.coauthors, value.author, value.paperstatus)
+        })
+        setRows(rows ?? [])
     }, [])
 
     const rowComponent = (row: Data) => {

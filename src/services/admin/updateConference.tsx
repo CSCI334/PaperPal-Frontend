@@ -1,5 +1,5 @@
 import { ConferenceInfoProps } from "../../pages/Admin/ConferenceDetail";
-import { fetchClient } from "../axiosClient";
+import { authenticatedClient } from "../authenticatedClient";
 import errorHandler from "../utility/errorHandler";
 
 
@@ -16,7 +16,7 @@ async function updateConference(props: ConferenceInfoProps) {
 
         };
 
-        const { data } = await fetchClient()({
+        const { data } = await authenticatedClient()({
             url: "admin/conference",
             method: "PUT",
             data: requestData,

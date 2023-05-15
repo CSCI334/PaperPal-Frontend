@@ -2,7 +2,7 @@ import axios from "axios";
 import { HTTP } from "../data/HttpConfig";
 
 // Different than a default axios client, use when you need to make an authenticated request
-export function fetchClient() {
+export function authenticatedClient() {
     const defaultOptions = {
         baseUrl: HTTP.dev.BASE_URL,
         headers: {

@@ -1,10 +1,10 @@
 import { GenericForm } from "../types/GenericForm";
-import { fetchClient } from "./axiosClient";
+import { authenticatedClient } from "./authenticatedClient";
 import errorHandler from "./utility/errorHandler";
 
 export default async function getContactList() {
     try {
-        const { data } = await fetchClient()({
+        const { data } = await authenticatedClient()({
             url: "contact",
             method: "GET"
         })

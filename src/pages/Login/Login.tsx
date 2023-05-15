@@ -17,6 +17,7 @@ import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import AuthState from "../../types/AuthData";
+import SnackBar from "../../components/Snackbar/Snackbar";
 
 function Login() {
   const [ { email, password }, setForm ] = useState({ email: "", password: "" });
@@ -47,6 +48,7 @@ function Login() {
       height: "100%",
       backgroundColor: "primary.main",
     }}>
+      <SnackBar></SnackBar>
       <Logo sx={{ position: "absolute", top: 0, left: 0, margin: "20px" }}></Logo>
       <Box
         sx={{

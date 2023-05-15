@@ -1,12 +1,12 @@
 import { useState } from "react";
 
-export function usePasswordInput(initialValue:string) {
-  const [value, setValue] = useState(initialValue);
-  const[retypeValue, setRetypeValue] = useState("");
-  const [matchError, setMatchError] = useState(false);
-  const [tooShortError, setTooShortError] = useState(false);
+export function usePasswordInput(initialValue: string) {
+  const [ value, setValue ] = useState(initialValue);
+  const [ retypeValue, setRetypeValue ] = useState("");
+  const [ matchError, setMatchError ] = useState(false);
+  const [ tooShortError, setTooShortError ] = useState(false);
 
-  const handlePasswordChange = (event:React.ChangeEvent<HTMLInputElement>) => {
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
     setTooShortError(event.target.value.length < 8);
     setMatchError(false);

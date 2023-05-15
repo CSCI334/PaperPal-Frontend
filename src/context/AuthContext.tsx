@@ -10,6 +10,7 @@ import AuthState from "../types/AuthData";
 import axios from "axios";
 import { HTTP } from "../data/HttpConfig";
 import { useNavigate } from "react-router-dom";
+import { useSnackbar } from "./FeedbackContext";
 
 axios.defaults.headers.common[ "Content-Type" ] = "application/json";
 axios.defaults.baseURL = HTTP.dev.BASE_URL;
@@ -21,14 +22,13 @@ interface Props {
 export const AuthContext = createContext<any>("");
 function AuthProvider({ children }: Props) {
   const navigate = useNavigate()
+  const { snackbar, setSnackbar } = useSnackbar()
   const [ authState, setAuthState ] = useState(
     AuthState.createFromString(localStorage.getItem("loggedUser") || "")
   );
 
   useEffect(() => {
     if (Object.keys(authState.headers).length === 0) return;
-
-    //todo: need to fix the auth state to show better data 
     getUser()
       .then((loggedUser) => {
         setAuthState((prev: any) => {
@@ -42,7 +42,7 @@ function AuthProvider({ children }: Props) {
         localStorage.setItem("loggedUser", JSON.stringify(authState))
       })
       .catch((error) => {
-        if (error === "No response received from the server") navigate("/login")
+        if (error === "No response received from the server") setSnackbar({ message: "Server is unreachable :c", severity: "error" })
       });
   }, [ authState.headers ]);
 
