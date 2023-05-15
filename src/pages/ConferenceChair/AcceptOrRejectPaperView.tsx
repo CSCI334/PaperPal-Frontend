@@ -26,12 +26,10 @@ function AcceptOrRejectPaperView() {
 
 	useEffect(() => {
 		if ((Object.keys(data).length == 0)) navigate("/")
-
 	}, [])
 
 	return (
 		<Box sx={{ display: "flex", flexDirection: "row" }}>
-			{/* TODO:: add PDF viewer */}
 			<PDFView paperId={data.id} />
 			<TabMenu tabs={example} />
 		</Box>

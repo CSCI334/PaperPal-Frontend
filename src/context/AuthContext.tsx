@@ -42,7 +42,7 @@ function AuthProvider({ children }: Props) {
         localStorage.setItem("loggedUser", JSON.stringify(authState))
       })
       .catch((error) => {
-        console.log(error)
+        if (error === "No response received from the server") navigate("/login")
       });
   }, [ authState.headers ]);
 

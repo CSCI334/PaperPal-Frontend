@@ -11,6 +11,7 @@ function errorHandler(error: unknown) {
       throw "An unknown error occurred";
     }
   } else {
+    console.log(error)
     throw error;
   }
 }

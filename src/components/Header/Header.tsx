@@ -8,12 +8,16 @@ import {
   Avatar,
   Container,
   Typography,
+  LinearProgress,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { useLoading } from "../../context/FeedbackContext";
 
 function Header() {
   const { authState, setAuthState } = useAuth()
+  const { isLoading, setIsLoading } = useLoading();
+
   return (
     <AppBar position="sticky" color="secondary">
       <Toolbar component={Container}>
@@ -35,6 +39,9 @@ function Header() {
           <Avatar>{(authState.userData.username ?? "A")[ 0 ]}</Avatar>
         </IconButton>
       </Toolbar>
+      <LinearProgress sx={{
+        display: isLoading ? 'block' : 'none'
+      }} />
     </AppBar>
   );
 }

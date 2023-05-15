@@ -9,6 +9,7 @@ import { Edit } from "@mui/icons-material";
 import getAllPaper from "../../services/getAllPaper";
 import { GenericForm } from "../../types/GenericForm";
 import { useNavigate } from "react-router-dom";
+import { useLoading } from "../../context/FeedbackContext";
 
 function createPaper(
     id: number,
@@ -28,6 +29,7 @@ function createPaper(
 
 export default function AllPapersList() {
     const [ rows, setRows ] = useState<Data[]>([]);
+    const { isLoading, setIsLoading } = useLoading()
     const navigate = useNavigate()
     const handleAcceptRejectButtonClick = (id: string, data: Data) => {
         navigate(`/judge`, { state: { data: data } })
@@ -57,6 +59,7 @@ export default function AllPapersList() {
     ];
 
     useEffect(() => {
+        setIsLoading(true)
         getAllPaper()
             .then((value) => {
                 value = value ?? []
@@ -65,6 +68,9 @@ export default function AllPapersList() {
                     return createPaper(value.id, value.title, value.coauthors, value.author, value.paperstatus)
                 })
                 setRows(rows ?? [])
+            })
+            .finally(() => {
+                setIsLoading(false)
             })
     }, [])
 

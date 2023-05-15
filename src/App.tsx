@@ -9,6 +9,7 @@ import { Inbox, Mail, ThumbDown } from "@mui/icons-material";
 import { adminButtonList } from "./components/LeftNavbar/NavBarButtonList";
 import { useState } from "react";
 import { useAuth } from "./context/AuthContext";
+import SnackBar from "./components/Snackbar/Snackbar";
 
 function App() {
   const { authState, setAuthState } = useAuth();
@@ -17,6 +18,7 @@ function App() {
   return (
     <>
       <LeftNavbar buttons={buttons} ></LeftNavbar>
+      <SnackBar></SnackBar>
       <Box
         sx={{
           flexShrink: 0,
