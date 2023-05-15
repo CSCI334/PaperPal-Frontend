@@ -53,6 +53,9 @@ const PDFView: React.FC<PDFViewerProps> = ({ paperId }) => {
                 className={"pdf-viewer"}
                 renderMode="canvas"
                 onLoadSuccess={onDocumentLoadSuccess}
+                onItemClick={(value) => {
+                    setPageNumber(Number(value.pageNumber))
+                }}
             >
                 <Page
                     pageNumber={pageNumber}

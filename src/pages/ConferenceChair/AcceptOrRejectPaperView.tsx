@@ -21,7 +21,7 @@ function AcceptOrRejectPaperView() {
 	const example: ITabs[] = [
 		{ label: "Accept / Reject", content: <AcceptOrRejectForm handleFormSubmission={handleAcceptOrReject} /> },
 		{ label: "Reviews", content: <ReviewForm /> },
-		{ label: "Comments", content: <CommentForm canAddComment={false} /> }
+		{ label: "Comments", content: <CommentForm canAddComment={true} /> }
 	];
 
 	useEffect(() => {

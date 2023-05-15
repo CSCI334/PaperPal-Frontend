@@ -19,10 +19,16 @@ export interface SnackbarProps {
 
 const LoadingContext = createContext<any>(false);
 const SnackbarContext = createContext<any>(false);
+
+// Context for providing user feedback
 export function FeedbackProvider({ children }: Props) {
+    // To use the snackbar, use the useSnackbar hook and trigger it by calling setSnackbar
+    // Argument for setSnackbar is in SnackbarProps
     const [ snackbar, setSnackbar ] = useState(
         false
     );
+
+    // Same with snackbar, but with boolean instead of props
     const [ isLoading, setIsLoading ] = useState(
         false
     );
