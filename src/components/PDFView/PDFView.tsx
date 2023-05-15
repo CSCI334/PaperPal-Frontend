@@ -1,24 +1,29 @@
 import React, { useState } from "react";
-import {Button, Grid, Container, Typography, Box} from '@mui/material';
+import { Button, Grid, Container, Typography, Box } from '@mui/material';
 import { Document, Page, pdfjs } from "react-pdf";
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+import { useAuth } from "../../context/AuthContext";
+import { HTTP } from "../../data/HttpConfig";
 
 // Set workerSrc to load PDF files
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 //Ensures file is always of type string
 interface PDFViewerProps {
-    file: string;
+    paperId: string;
 }
-//This class deals with the actual rendering of PDFView and anything else it needs to render
+// This class deals with the actual rendering of PDFView and anything else it needs to render
 // TODO:: Update this to take a paperID and request from backend once that is available
-const PDFView: React.FC<PDFViewerProps> = ({ file }) => {
-    const [numPages, setNumPages] = useState<number | null>(null);
-    const [pageNumber, setPageNumber] = useState<number>(1);
+const PDFView: React.FC<PDFViewerProps> = ({ paperId }) => {
+    const [ numPages, setNumPages ] = useState<number | null>(null);
+    const [ pageNumber, setPageNumber ] = useState<number>(1);
+    const { authState, setAuthState } = useAuth()
+
     // TODO:: all these from request
-    const fileName = '';
-    const aName = "Lorem Ipsum";
+    const paperLink = `${HTTP.dev.BASE_URL}/paper/${paperId}`;
+
+    const authorName = "Lorem Ipsum";
     const sDate = new Date();
 
     //Function to set the number of pages upon a successful PDF load
@@ -38,7 +43,7 @@ const PDFView: React.FC<PDFViewerProps> = ({ file }) => {
     return (
         <Container>
             <div style={{ display: 'flex', flexDirection: 'row' }}>
-                <p style={{ marginRight: '10px' }}>Author: {aName}</p>
+                <p style={{ marginRight: '10px' }}>Author: {authorName}</p>
                 <p>Submitted on: {sDate.toLocaleDateString()}</p>
             </div>
             <Box
@@ -50,11 +55,15 @@ const PDFView: React.FC<PDFViewerProps> = ({ file }) => {
                     minHeight: "100%",
                     py: 4,
                     flexGrow: 1
-            }}>
+                }}>
                 <Box flexGrow={1} sx={{ display: "flex", justifyContent: "center", alignItems: "center", marginBottom: 2 }} tabIndex={-1}>
-                    <Document file={file}
-                              renderMode="canvas"
-                              onLoadSuccess={onDocumentLoadSuccess}
+                    <Document file={{
+                        url: paperLink,
+                        httpHeaders: authState.headers
+                    }}
+                        renderMode="canvas"
+                        onLoadSuccess={onDocumentLoadSuccess}
+
                     >
                         <Page
                             pageNumber={pageNumber}

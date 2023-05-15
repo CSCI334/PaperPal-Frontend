@@ -22,14 +22,12 @@ function Header() {
           sx={{ flexGrow: 1, display: "flex", justifyContent: "flex-start" }}
         >
           <Button
-            component={Link}
-            to="/services"
             variant="text"
             sx={{
               fontSize: "18px",
             }}
           >
-            Link that goes somewhere
+            Header Title
           </Button>
         </Box>
 

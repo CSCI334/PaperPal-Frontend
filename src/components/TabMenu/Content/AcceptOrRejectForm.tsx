@@ -5,7 +5,7 @@ interface IAcceptOrRejectFormProps {
 }
 
 function AcceptOrRejectForm({ handleFormSubmission }: IAcceptOrRejectFormProps) {
-	{/* TODO:: add functionlity to load as edit form */}
+	{/* TODO:: add functionlity to load as edit form */ }
 	return (
 		<div>
 			<form onSubmit={handleFormSubmission}>
@@ -16,7 +16,7 @@ function AcceptOrRejectForm({ handleFormSubmission }: IAcceptOrRejectFormProps) 
 					<label style={{ color: "white" }} htmlFor="reject">Reject</label><br />
 					<br />
 				</div>
-				<input type="submit" value="Submit" style={{ backgroundColor: "#72BAD1", color: "white", border: "0", width: "150px", padding: "8px", borderRadius: "5px" }} />
+				<input type="submit" value="Submit" style={{ backgroundColor: "#72BAD1", cursor: "pointer", color: "white", border: "0", width: "150px", padding: "8px", borderRadius: "5px" }} />
 			</form>
 		</div>
 	)

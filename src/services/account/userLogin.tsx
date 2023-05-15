@@ -31,7 +31,7 @@ async function userLogin({ email = "", password = "" }) {
     const jwtToken = data.token;
     // Decripting JWT token
     const decodedJWT = jwtDecode(jwtToken);
-    const headers = { Authorization: jwtToken };
+    const headers = { Authorization: `Bearer ${jwtToken}` };
 
     const loggedIn = { headers, isAuth: true, userData: decodedJWT };
 

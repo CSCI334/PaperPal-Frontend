@@ -133,13 +133,13 @@ export default function EnhancedTable({
       );
       setVisibleRows(updatedRows);
     },
-    [ order, orderBy ]
+    [ order, orderBy, rows ]
   );
 
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
-        <TableContainer sx={{ minHeight: "60vh" }} >
+        <TableContainer sx={{ minHeight: "80vh" }} >
           <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
             <EnhancedTableHead
               order={order}

@@ -50,7 +50,7 @@ export const authorButtonList: NavbarButtonProps[] = [
 
 // Reviewer left navigation bar
 export const chairButtonList: NavbarButtonProps[] = [
-  { title: "All Paper", selected: true, icon: <Home /> },
+  { title: "All Papers", selected: true, icon: <Home /> },
   { title: "Logout", selected: false, icon: <Logout /> },
 ];
 

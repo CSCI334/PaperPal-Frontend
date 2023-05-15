@@ -1,14 +1,18 @@
 import { Box, Container, Tab, Tabs, Typography } from "@mui/material";
-import React, { BaseSyntheticEvent } from "react";
+import React, { BaseSyntheticEvent, useEffect } from "react";
 import TabMenu, { ITabs } from "../../components/TabMenu/TabMenu";
 import AcceptOrRejectForm from "../../components/TabMenu/Content/AcceptOrRejectForm";
 import ReviewForm from "../../components/TabMenu/Content/ReviewForm";
 import CommentForm from "../../components/TabMenu/Content/CommentForm";
 import PDFView from "../../components/PDFView/PDFView";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 function AcceptOrRejectPaperView() {
-	const pdfFile = "https://cdn.filestackcontent.com/wcrjf9qPTCKXV3hMXDwK";
-	// TODO:: connect to backend and DB
+	const { state } = useLocation()
+	const { data } = state
+
+	const navigate = useNavigate()
+
 	const handleAcceptOrReject = (event: BaseSyntheticEvent) => {
 		event?.preventDefault();
 		console.log("Event: ", event);
@@ -20,11 +24,16 @@ function AcceptOrRejectPaperView() {
 		{ label: "Comments", content: <CommentForm canAddComment={false} /> }
 	];
 
+	useEffect(() => {
+		if ((Object.keys(data).length == 0)) navigate("/")
+
+	}, [])
+
 	return (
 		<div style={{ display: "flex", height: "100%" }}>
 			{/* TODO:: add PDF viewer */}
 			<Container sx={{ flexGrow: "1" }}>
-				<PDFView file={pdfFile} />
+				<PDFView paperId={data.id} />
 			</Container>
 			<TabMenu tabs={example} />
 		</div>

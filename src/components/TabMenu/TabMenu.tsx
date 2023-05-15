@@ -12,7 +12,7 @@ interface ITabMenuProps {
 }
 
 function TabMenu({ tabs }: ITabMenuProps) {
-	const [value, setValue] = React.useState(0);
+	const [ value, setValue ] = React.useState(0);
 
 	function a11yProps(index: number) {
 		return {
