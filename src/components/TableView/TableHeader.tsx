@@ -33,6 +33,7 @@ export default function EnhancedTableHead({
           <TableCell
             key={headCell.id}
             sortDirection={orderBy === headCell.id ? order : false}
+            align={headCell.align ?? "left"}
           >
             <TableSortLabel
               active={orderBy === headCell.id}

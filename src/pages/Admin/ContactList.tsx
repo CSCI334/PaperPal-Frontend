@@ -6,16 +6,11 @@ import TableView, {
 } from "../../components/TableView/TableView";
 import createStatusMessage from "../../components/TableView/TableUtilContent";
 import { Email } from "@mui/icons-material";
-import axios from "axios";
-import errorHandler from "../../services/utility/errorHandler";
 import { useLocation } from "react-router-dom";
 import getContactList from "../../services/getContactList";
-import { GenericForm } from "../../types/GenericForm";
-
-
 
 function createContact(
-  id: string,
+  id: number,
   name: string,
   email: string,
   status: string,
@@ -42,20 +37,19 @@ export default function ContactList() {
       .then((value) => {
         const contactList = value?.map((item) => {
           return createContact(
-            item.id.toString(),
+            item.id,
             item.username.toString(),
             item.email.toString(),
             item.accountstatus.toString(),
-            "SendEmail"
+            "Send Email"
           )
         })
+        console.log(contactList)
         setRows(contactList ?? [])
       })
       .catch(() => {
         console.log("sadf")
       })
-
-
   }, [])
 
   const handleEmailButtonClick = (id: string) => {
@@ -71,7 +65,6 @@ export default function ContactList() {
   };
 
   const headCells: readonly HeadCell[] = [
-
     {
       id: "name",
       label: "Name",
@@ -92,7 +85,6 @@ export default function ContactList() {
 
   const rowComponent = (row: Data) => {
     return (
-
       <TableRow key={row.id}>
         <TableCell component="th" scope="row">
           {row.name}
@@ -112,8 +104,6 @@ export default function ContactList() {
           </Button>
         </TableCell>
       </TableRow>
-
-
     );
   };
 
@@ -130,7 +120,6 @@ export default function ContactList() {
         headCells={headCells}
         rowComponent={rowComponent}
       />
-
     </Box>
 
   );

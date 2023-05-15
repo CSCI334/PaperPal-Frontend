@@ -79,6 +79,7 @@ function LeftNavbar({ buttons }: LeftNavbarProps) {
   return (
     <Drawer
       sx={{
+        minWidth: "250px",
         "& .MuiDrawer-paper": {
           boxSizing: "border-box",
         },

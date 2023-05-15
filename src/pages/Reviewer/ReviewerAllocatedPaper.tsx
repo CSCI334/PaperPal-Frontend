@@ -1,8 +1,8 @@
-import { Container, TableCell, TableRow, IconButton } from "@mui/material";
+import { Container, TableCell, TableRow, IconButton, Box } from "@mui/material";
 import { useState } from "react";
-import TableView, {Data, HeadCell} from "../../components/TableView/TableView";
+import TableView, { Data, HeadCell } from "../../components/TableView/TableView";
 import createStatusMessage from "../../components/TableView/TableUtilContent";
-import { EditNote, Visibility  } from '@mui/icons-material';
+import { EditNote, Visibility } from '@mui/icons-material';
 import { createSearchParams, useNavigate } from 'react-router-dom';
 
 function createPaper(
@@ -24,7 +24,7 @@ function createPaper(
 function ReviewerAllocatedPaper() {
     const navigate = useNavigate();
     // TODO:: connect to backend and DB
-    const [rows, setRows] = useState<Data[]>([
+    const [ rows, setRows ] = useState<Data[]>([
         createPaper("1", "Paper 1", "September 9, 2020", "Billy Lambert", "Ready for Review"),
         createPaper("2", "Paper 2", "August 2, 2021", "Kiara Melendez", "Ready for Review"),
         createPaper("3", "Paper 3", "September 24, 2022", "Annalise Mccormick", "Ready for Review"),
@@ -70,7 +70,6 @@ function ReviewerAllocatedPaper() {
             id: "author",
             label: "Author"
         },
-
         {
             id: "status",
             label: "Status"
@@ -114,14 +113,14 @@ function ReviewerAllocatedPaper() {
     };
 
     return (
-        <Container sx={{ display: "flex", flexDirection: "column" }}>
+        <Box sx={{ display: "flex", flexDirection: "column" }}>
             <TableView
                 rows={rows}
                 defaultOrderBy="title"
                 headCells={headCells}
                 rowComponent={rowComponent}
             />
-        </Container>
+        </Box>
     );
 }
 export default ReviewerAllocatedPaper;

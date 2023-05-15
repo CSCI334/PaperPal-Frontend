@@ -2,12 +2,12 @@ import { Home, ContactMail, Logout } from "@mui/icons-material";
 import { Props as NavbarButtonProps } from "./NavbarButton";
 
 type ButtonPathMap = {
-  [key: string]: string;
+  [ key: string ]: string;
 }
 
 // Button title with their respective Route 
 // routes needs to be fixed for the homepage
-export const buttonRoutes :ButtonPathMap   = {
+export const buttonRoutes: ButtonPathMap = {
   // Admin
   "Home Page": "/create",
   "Reviewer Contact List": "/contactlist",
@@ -15,14 +15,13 @@ export const buttonRoutes :ButtonPathMap   = {
   // Author
   "Submitted Paper": "/authorSubmittedPaper",
 
-  
   // Conference Chair
-  "All Papers" : "/allpaperslist",
+  "All Papers": "/allpaperslist",
   "Accept Or Reject Paper": "/acceptrejectpaper",
 
   // Reviewer
-  "Allocated Paper" : "/reviewerAllocatedPapers",
-  "Bidding" : "/biddingSystem"
+  "Allocated Paper": "/reviewerAllocatedPapers",
+  "Bidding": "/biddingSystem"
 
 };
 
