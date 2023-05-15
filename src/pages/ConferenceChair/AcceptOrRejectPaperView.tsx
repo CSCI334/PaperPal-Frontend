@@ -30,13 +30,11 @@ function AcceptOrRejectPaperView() {
 	}, [])
 
 	return (
-		<div style={{ display: "flex", height: "100%" }}>
+		<Box sx={{ display: "flex", flexDirection: "row" }}>
 			{/* TODO:: add PDF viewer */}
-			<Container sx={{ flexGrow: "1" }}>
-				<PDFView paperId={data.id} />
-			</Container>
+			<PDFView paperId={data.id} />
 			<TabMenu tabs={example} />
-		</div>
+		</Box>
 	);
 }
 export default AcceptOrRejectPaperView;

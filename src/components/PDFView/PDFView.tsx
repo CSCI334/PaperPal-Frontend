@@ -13,8 +13,8 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 interface PDFViewerProps {
     paperId: string;
 }
+
 // This class deals with the actual rendering of PDFView and anything else it needs to render
-// TODO:: Update this to take a paperID and request from backend once that is available
 const PDFView: React.FC<PDFViewerProps> = ({ paperId }) => {
     const [ numPages, setNumPages ] = useState<number | null>(null);
     const [ pageNumber, setPageNumber ] = useState<number>(1);
@@ -41,74 +41,62 @@ const PDFView: React.FC<PDFViewerProps> = ({ paperId }) => {
 
     //Renders the pdf
     return (
-        <Container>
+        <Container sx={{ display: "flex", flexDirection: "column", py: "12px", alignItems: "center", flexShrink: 1, flexGrow: 0 }}>
             <div style={{ display: 'flex', flexDirection: 'row' }}>
                 <p style={{ marginRight: '10px' }}>Author: {authorName}</p>
                 <p>Submitted on: {sDate.toLocaleDateString()}</p>
             </div>
-            <Box
-                sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    background: "#f2f2f2",
-                    minHeight: "100%",
-                    py: 4,
-                    flexGrow: 1
-                }}>
-                <Box flexGrow={1} sx={{ display: "flex", justifyContent: "center", alignItems: "center", marginBottom: 2 }} tabIndex={-1}>
-                    <Document file={{
-                        url: paperLink,
-                        httpHeaders: authState.headers
-                    }}
-                        renderMode="canvas"
-                        onLoadSuccess={onDocumentLoadSuccess}
-
-                    >
-                        <Page
-                            pageNumber={pageNumber}
-                            scale={1.7}
-                        />
-                    </Document>
-                </Box>
-                {numPages && (
-                    <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ mt: 0 }}>
-                        <Grid item>
-                            <Button
-                                sx={{
-                                    backgroundColor: "#72BAD1",
-                                    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.075)",
-                                    borderRadius: "20px",
-                                    width: "150px",
-                                    color: "white"
-                                }}
-                                onClick={prevPage} disabled={pageNumber === 1}
-                            >
-                                Previous
-                            </Button>
-                        </Grid>
-                        <Grid item>
-                            <Typography>
-                                Page {pageNumber} of {numPages}
-                            </Typography>
-                        </Grid>
-                        <Grid item>
-                            <Button
-                                sx={{
-                                    backgroundColor: "#72BAD1",
-                                    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.075)",
-                                    borderRadius: "20px",
-                                    width: "150px",
-                                    color: "white"
-                                }}
-                                onClick={nextPage} disabled={pageNumber === numPages}
-                            >
-                                Next
-                            </Button>
-                        </Grid>
+            <Document file={{
+                url: paperLink,
+                httpHeaders: authState.headers
+            }}
+                className={"pdf-viewer"}
+                renderMode="canvas"
+                onLoadSuccess={onDocumentLoadSuccess}
+            >
+                <Page
+                    pageNumber={pageNumber}
+                    renderTextLayer={false}
+                    scale={1.7}
+                />
+            </Document>
+            {numPages && (
+                <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ mt: 0 }}>
+                    <Grid item>
+                        <Button
+                            sx={{
+                                backgroundColor: "#72BAD1",
+                                boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.075)",
+                                borderRadius: "20px",
+                                width: "150px",
+                                color: "white"
+                            }}
+                            onClick={prevPage} disabled={pageNumber === 1}
+                        >
+                            Previous
+                        </Button>
                     </Grid>
-                )}
-            </Box>
+                    <Grid item>
+                        <Typography>
+                            Page {pageNumber} of {numPages}
+                        </Typography>
+                    </Grid>
+                    <Grid item>
+                        <Button
+                            sx={{
+                                backgroundColor: "#72BAD1",
+                                boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.075)",
+                                borderRadius: "20px",
+                                width: "150px",
+                                color: "white"
+                            }}
+                            onClick={nextPage} disabled={pageNumber === numPages}
+                        >
+                            Next
+                        </Button>
+                    </Grid>
+                </Grid>
+            )}
         </Container>
     );
 };

@@ -54,7 +54,7 @@ function createConferenceInfo(
 
 export default function ConferenceDetail() {
 
-  const [conferenceDetail, setConferenceDetail] = useState<ConferenceInfoProps>({
+  const [ conferenceDetail, setConferenceDetail ] = useState<ConferenceInfoProps>({
     id: 1,
     name: "",
     location: "",

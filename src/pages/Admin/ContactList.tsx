@@ -44,7 +44,6 @@ export default function ContactList() {
             "Send Email"
           )
         })
-        console.log(contactList)
         setRows(contactList ?? [])
       })
       .catch(() => {
