@@ -10,37 +10,6 @@ interface CountdownTimerProps {
   deadline: Date;
 }
 
-// // TODO: Change the list into api request to backend
-// const countdowns = [
-//   {
-//     phase: "Submission",
-//     deadline: new Date(Date.parse("2023-05-02T16:38:00")),
-//   },
-//   {
-//     phase: "Bidding",
-//     deadline: new Date(Date.parse("2023-05-02T17:00:00")),
-//   },
-//   {
-//     phase: "Reviewing",
-//     deadline: new Date(Date.parse("2023-05-02T17:01:00")),
-//   },
-//   {
-//     phase: "Annoucement",
-//     deadline: new Date(Date.parse("2023-05-02T17:02:00")),
-//   },
-// ];
-
-
-// export function updateCountdown() {
-//   // TODO impement this
-//   countdowns[0].deadline = new Date(Date.parse("2023-05-02T16:58:00"))
-// }
-
-// function getCurrentCountdownPhase(): string {
-//   const now = new Date();
-//   const currentCountdown = countdowns.find((countdown) => countdown.deadline.getTime() > now.getTime());
-//   return currentCountdown ? currentCountdown.phase : "Countdown ended";
-// }
 
 function CountdownTimer() {
 
@@ -52,20 +21,9 @@ function CountdownTimer() {
     minutes: 0,
     seconds: 0,
   });
-  // useEffect(() => {
-  //   // Fetch countdowns from the API
-  //   const fetchCountdowns = async () => {
-  //     try {
-  //       const response = await fetch("your-api-endpoint");
-  //       const data = await response.json();
-  //       setCountdowns(data.countdowns); // Assuming the API response has a countdowns property
-  //     } catch (error) {
-  //       console.error("Error fetching countdowns:", error);
-  //     }
-  //   };
 
-  //   fetchCountdowns();
-  // }, []);
+
+
   useConferenceInfo((data) => {
     data = data ?? []
     const { submissiondeadline, biddingdeadline, reviewdeadline, announcementtime } = data;
