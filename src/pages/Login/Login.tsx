@@ -18,26 +18,36 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import AuthState from "../../types/AuthData";
 import SnackBar from "../../components/Snackbar/Snackbar";
+import { useLoading, useSnackbar } from "../../context/FeedbackContext";
 
 function Login() {
-  const [ { email, password }, setForm ] = useState({ email: "", password: "" });
+  const [{ email, password }, setForm] = useState({ email: "", password: "" });
   const { authState, setAuthState } = useAuth();
+  const { isLoading, setIsLoading } = useLoading()
+  const { snackbar, setSnackbar } = useSnackbar()
   const navigate = useNavigate();
   const handleSubmit = (event: { preventDefault: () => void; }) => {
     event.preventDefault();
-
+    setIsLoading(true);
     userLogin({ email, password })
       .then((value) => {
         setAuthState(AuthState.createFromString(localStorage.getItem("loggedUser") || ""));
       })
       .then(() => navigate("/"))
+      .catch((value) => {
+        const severity = value.status >= 500 ? "error" : "warning"
+        setSnackbar({ message: value.message, severity: severity })
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
   };
 
   const inputHandler = (e: { target: { name: any; value: any; }; }) => {
     const name = e.target.name;
     const value = e.target.value;
 
-    setForm((form) => ({ ...form, [ name ]: value }));
+    setForm((form) => ({ ...form, [name]: value }));
   };
 
   return (
