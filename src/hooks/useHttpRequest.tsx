@@ -13,7 +13,7 @@ export default function useHttpRequest(httpRequest: Promise<any>, callback: (val
             .then(callback)
             .catch((value) => {
                 const severity = value.status >= 500 ? "error" : "warning"
-                setSnackbar({ message: value.message, severity: severity })
+                setSnackbar({ message: value.message, severity: severity, statusCode: value.status })
             })
             .finally(() => {
                 setIsLoading(false)

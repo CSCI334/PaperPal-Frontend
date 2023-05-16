@@ -5,7 +5,7 @@ import { DatePicker } from '@mui/lab';
 import { SetStateAction, useEffect, useState } from "react";
 import { Edit } from "@mui/icons-material";
 import dayjs, { Dayjs } from "dayjs";
-import { useFetcher } from "react-router-dom";
+import { useFetcher, useNavigate } from "react-router-dom";
 import getConferenceInfo from "../../services/admin/getConferenceInfo";
 import RenderDateDisplayOrEdit from "../../components/AdminEditableDeadline/editableDeadline";
 import useAllPaper from "../../hooks/useAllPaper";
@@ -72,14 +72,19 @@ export default function ConferenceDetail() {
   });
 
 
+  const navigate = useNavigate();
 
 
   useConferenceInfo((data) => {
     data = data ?? []
+    if (Object.keys(data).length === 0) {
+      navigate("/create")
+    }
     const conferenceInfo: ConferenceInfoProps = createConferenceInfo(data.id, data.conferencename, data.conferencelocation, "Eric", "eric@email", dayjs(data.submissiondeadline), dayjs(data.biddingdeadline), dayjs(data.reviewdeadline), dayjs(data.announcementtime));
     setConferenceDetail(conferenceInfo);
-    console.log(snackbar.message);
   }, [])
+
+
 
   return (
     <ContainerForm

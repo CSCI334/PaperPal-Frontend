@@ -1,7 +1,52 @@
 import { Box, Container, TextField } from "@mui/material";
 import ContainerForm from "../../components/FormContainer/ContainerForm";
+import { ConferenceInfoProps } from "./ConferenceDetail";
+import { useState } from "react";
+import dayjs from "dayjs";
+import createConference from "../../services/admin/createConference";
+import { useNavigate } from "react-router-dom";
+import { useLoading, useSnackbar } from "../../context/FeedbackContext";
+
 
 export default function CreateConference() {
+  const { isLoading, setIsLoading } = useLoading()
+  const { snackbar, setSnackbar } = useSnackbar()
+  const [conferenceDetail, setConferenceDetail] = useState<ConferenceInfoProps>({
+    id: 1,
+    name: "",
+    location: "",
+    chairName: "",
+    chairEmail: "",
+    paperSubmissionDeadline: dayjs(''),
+    paperBiddingDeadline: dayjs(''),
+    paperAnnouncement: dayjs(''),
+    paperReviewDeadline: dayjs('')
+  });
+
+  const navigate = useNavigate();
+
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+    // Perform any validation or additional logic here before submitting
+    createConference(conferenceDetail).then(() => navigate("/")).catch((value) => {
+      const severity = value.status >= 500 ? "error" : "warning"
+      setSnackbar({ message: value.message, severity: severity, statusCode: value.status })
+    })
+      .finally(() => {
+        setIsLoading(false)
+      })
+    // Submit the form data
+    console.log(conferenceDetail.paperAnnouncement);
+  };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setConferenceDetail((prevConferenceDetail) => ({
+      ...prevConferenceDetail,
+      [name]: value,
+    }));
+  };
   return (
     <Container sx={{ flexGrow: "1" }}>
       <Container sx={{ flexGrow: "1" }}>
@@ -11,29 +56,43 @@ export default function CreateConference() {
           sx={{
             alignItems: "center",
           }}
+          onSubmit={handleSubmit}
         >
           <TextField
             variant={"outlined"}
             label="Conference Name"
             margin="normal"
+            name="name"
+            value={conferenceDetail.name}
+            onChange={handleChange}
+
             required
           />
           <TextField
             variant={"outlined"}
             label="Conference Location"
             margin="normal"
+            name="location"
+            value={conferenceDetail.location}
+            onChange={handleChange}
             required
           />
           <TextField
             variant={"outlined"}
             label="Conference Chair Name"
             margin="normal"
+            name="chairName"
+            value={conferenceDetail.chairName}
+            onChange={handleChange}
             required
           />
           <TextField
             variant={"outlined"}
             label="Conference Chair Email"
             margin="normal"
+            name="chairEmail"
+            value={conferenceDetail.chairEmail}
+            onChange={handleChange}
             required
           />
           <TextField
@@ -43,7 +102,9 @@ export default function CreateConference() {
             InputLabelProps={{ shrink: true }}
             type="date"
             required
-            value=""
+            name="paperSubmissionDeadline"
+            value={conferenceDetail.paperSubmissionDeadline}
+            onChange={handleChange}
           />
           <TextField
             variant={"outlined"}
@@ -52,16 +113,20 @@ export default function CreateConference() {
             InputLabelProps={{ shrink: true }}
             type="date"
             required
-            value=""
+            name="paperBiddingDeadline"
+            value={conferenceDetail.paperBiddingDeadline}
+            onChange={handleChange}
           />
           <TextField
             variant={"outlined"}
-            label="Paper Announcement Deadline"
+            label="Paper Review Deadline"
             margin="normal"
             InputLabelProps={{ shrink: true }}
             type="date"
             required
-            value=""
+            name="paperReviewDeadline"
+            value={conferenceDetail.paperReviewDeadline}
+            onChange={handleChange}
           />
           <TextField
             variant={"outlined"}
@@ -70,7 +135,9 @@ export default function CreateConference() {
             InputLabelProps={{ shrink: true }}
             type="date"
             required
-            value=""
+            name="paperAnnouncement"
+            value={conferenceDetail.paperAnnouncement}
+            onChange={handleChange}
           />
         </ContainerForm>
       </Container>
