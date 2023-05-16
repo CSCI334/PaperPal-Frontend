@@ -1,74 +1,69 @@
-import { Container, TableCell, TableRow, IconButton, Box } from "@mui/material";
-import { useState } from "react";
+import { TableCell, TableRow, IconButton, Box } from "@mui/material";
+import {useEffect, useState} from "react";
 import TableView, { Data, HeadCell } from "../../components/TableView/TableView";
 import createStatusMessage from "../../components/TableView/TableUtilContent";
+import getAllPaper from "../../services/getAllPaper";
 import { EditNote, Visibility } from '@mui/icons-material';
-import { createSearchParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import {GenericForm} from "../../types/GenericForm";
 
+//A function to create papers
 function createPaper(
     id: string,
     title: string,
-    date: string,
     author: string,
+    coauthors: string,
     status: string
 ): Data {
     return {
         id,
         title,
-        date,
         author,
+        coauthors,
         status
     };
 }
-
+//This deals with rendering all the allocated papers a reviewer has and other functionality such as moving to different pages related to this one
 function ReviewerAllocatedPaper() {
     const navigate = useNavigate();
-    // TODO:: connect to backend and DB
-    const [ rows, setRows ] = useState<Data[]>([
-        createPaper("1", "Paper 1", "September 9, 2020", "Billy Lambert", "Ready for Review"),
-        createPaper("2", "Paper 2", "August 2, 2021", "Kiara Melendez", "Ready for Review"),
-        createPaper("3", "Paper 3", "September 24, 2022", "Annalise Mccormick", "Ready for Review"),
-        createPaper("4", "Paper 4", "December 29, 2020", "Khalil Colon", "Ready for Review"),
-        createPaper("5", "Paper 5", "May 20, 2021", "Mercedes Patton", "Ready for Review"),
-        createPaper("6", "Paper 6", "May 15, 2022", "Faris Osborn", "Reviewed"),
-        createPaper("7", "Paper 7", "February 27, 2020", "Kaylum Perkins", "Reviewed"),
-        createPaper("8", "Paper 8", "October 24, 2021", "Asma Acevedo", "Ready for Review"),
-        createPaper("9", "Paper 9", "November 7, 2022", "Leonardo Edwards", "Ready for Review"),
-        createPaper("10", "Paper 10", "May 29, 2020", "David Gray", "Ready for Review"),
-        createPaper("11", "Paper 11", "July 14, 2021", "Miranda Barber", "Reviewed"),
-        createPaper("12", "Paper 12", "December 31, 2022", "Gladys Patrick", "Reviewed"),
-    ]);
+    const [ rows, setRows ] = useState<Data[]>([]);
 
-    const handleReviewClick = (paperId: string) => {
-        navigate({
-            pathname: "/reviewerAddReview",
-            search: createSearchParams({
-                id: paperId
-            }).toString()
-        })
+    //gets all papers from backend and creates paper objects out of them
+    useEffect(() => {
+        getAllPaper()
+            .then((value) => {
+                value = value ?? []
+                const rows = value.map((value: GenericForm) => {
+                    if (value.paperstatus === "TBD") value.paperstatus = "Ready for Review"
+                    return createPaper(value.id, value.title, value.author, value.coauthors, value.paperstatus)
+                })
+                setRows(rows ?? [])
+            })
+    }, [])
+
+    //Sends the user to the addReview page
+    const handleReviewClick = (data: Data) => {
+        navigate(`/reviewerAddReview`, { state: { data: data } })
     };
 
-    const handleViewClick = (paperId: string) => {
-        navigate({
-            pathname: "/reviewerView",
-            search: createSearchParams({
-                id: paperId
-            }).toString()
-        })
+    //Sends the user to the View page
+    const handleViewClick = (data: Data) => {
+        navigate(`/reviewerView`, { state: { data: data } })
     };
 
+    //Generates the table header cells
     const headCells: readonly HeadCell[] = [
         {
             id: "title",
             label: "Title",
         },
         {
-            id: "date",
-            label: "Date",
-        },
-        {
             id: "author",
             label: "Author"
+        },
+        {
+            id: "coauthors",
+            label: "Co-author(s)",
         },
         {
             id: "status",
@@ -84,18 +79,19 @@ function ReviewerAllocatedPaper() {
         }
     ];
 
+    //Generates all table rows except for the header row
     const rowComponent = (row: Data) => {
         return (
             <TableRow>
                 <TableCell component="th" scope="row">{row.title}</TableCell>
-                <TableCell>{row.date}</TableCell>
                 <TableCell>{row.author}</TableCell>
+                <TableCell>{row.coauthors}</TableCell>
                 <TableCell>
                     {createStatusMessage(row.status.toString())}
                 </TableCell>
                 <TableCell>
                     <IconButton
-                        onClick={() => handleReviewClick(row.id.toString())}
+                        onClick={() => handleReviewClick(row)}
                     >
                         <EditNote />
                     </IconButton>
@@ -103,7 +99,7 @@ function ReviewerAllocatedPaper() {
                 <TableCell>
                     <IconButton
                         disabled={row.status !== "Reviewed"}
-                        onClick={() => handleViewClick(row.id.toString())}
+                        onClick={() => handleViewClick(row)}
                     >
                         <Visibility />
                     </IconButton>
@@ -112,6 +108,7 @@ function ReviewerAllocatedPaper() {
         );
     };
 
+    //Renders all allocated papers
     return (
         <Box sx={{ display: "flex", flexDirection: "column" }}>
             <TableView

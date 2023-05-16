@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Grid, Container, Typography, Box } from '@mui/material';
+import { Button, Grid, Container, Typography } from '@mui/material';
 import { Document, Page, pdfjs } from "react-pdf";
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
@@ -12,20 +12,16 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 //Ensures file is always of type string
 interface PDFViewerProps {
     paperId: string;
+    author: string;
+    coAuthors: string;
 }
 
 // This class deals with the actual rendering of PDFView and anything else it needs to render
-const PDFView: React.FC<PDFViewerProps> = ({ paperId }) => {
+const PDFView: React.FC<PDFViewerProps> = React.memo(({ paperId , author, coAuthors}) => {
     const [ numPages, setNumPages ] = useState<number | null>(null);
     const [ pageNumber, setPageNumber ] = useState<number>(1);
     const { authState, setAuthState } = useAuth()
-
-    // TODO:: all these from request
     const paperLink = `${HTTP.dev.BASE_URL}/paper/${paperId}`;
-
-    const authorName = "Lorem Ipsum";
-    const sDate = new Date();
-
     //Function to set the number of pages upon a successful PDF load
     function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
         setNumPages(numPages);
@@ -43,8 +39,8 @@ const PDFView: React.FC<PDFViewerProps> = ({ paperId }) => {
     return (
         <Container sx={{ display: "flex", flexDirection: "column", py: "12px", alignItems: "center", flexShrink: 1, flexGrow: 0 }}>
             <div style={{ display: 'flex', flexDirection: 'row' }}>
-                <p style={{ marginRight: '10px' }}>Author: {authorName}</p>
-                <p>Submitted on: {sDate.toLocaleDateString()}</p>
+                <p style={{ marginRight: '10px' }}>Author: {author}</p>
+                <p>Co Authors: {coAuthors === "" ? 'No co-authors' : coAuthors}</p>
             </div>
             <Document file={{
                 url: paperLink,
@@ -102,7 +98,7 @@ const PDFView: React.FC<PDFViewerProps> = ({ paperId }) => {
             )}
         </Container>
     );
-};
+});
 
-export default PDFView;
+export default React.memo(PDFView);
 

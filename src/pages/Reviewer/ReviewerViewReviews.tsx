@@ -1,20 +1,33 @@
-import React, { useState } from "react";
+import React, {useEffect} from "react";
 import PDFView from "../../components/PDFView/PDFView";
-import { Container, Box } from "@mui/material";
-import { useSearchParams } from "react-router-dom";
+import { Box } from "@mui/material";
+import { useLocation, useNavigate } from 'react-router-dom';
+import TabMenu, { ITabs } from "../../components/TabMenu/TabMenu";
+import ReviewForm from "../../components/TabMenu/Content/ReviewForm";
+import CommentForm from "../../components/TabMenu/Content/CommentForm";
 
 
 //This class Renders the Reviewer view review page and deals with all components necessary for render
 const ReviewerViewReviews: React.FC = () => {
-    const [ searchparams ] = useSearchParams();
-    // TODO:: get this from db using searchparams
-    const pdfFile = "https://cdn.filestackcontent.com/wcrjf9qPTCKXV3hMXDwK";
+    const { state } = useLocation()
+    const { data } = state
+    const navigate = useNavigate()
 
-    // TODO:: add tabs component.
+    const example: ITabs[] = [
+        { label: "Reviews", content: <ReviewForm /> },
+        { label: "Comments", content: <CommentForm canAddComment={true} /> }
+    ];
+
+    useEffect(() => {
+        if ((Object.keys(data).length == 0)) navigate("/")
+
+    }, [])
+
     return (
-        <Container maxWidth="md" sx={{ display: "flex", flexDirection: "column", minHeight: "100%" }}>
-            <PDFView paperId={pdfFile} />
-        </Container>
+        <Box sx={{ display: "flex", flexDirection: "row" }}>
+            <PDFView paperId={data.id} author={data.author} coAuthors={data.coauthors} />
+            <TabMenu tabs={example} />
+        </Box>
     );
 };
 export default ReviewerViewReviews;

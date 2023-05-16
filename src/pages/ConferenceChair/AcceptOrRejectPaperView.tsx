@@ -30,7 +30,7 @@ function AcceptOrRejectPaperView() {
 
 	return (
 		<Box sx={{ display: "flex", flexDirection: "row" }}>
-			<PDFView paperId={data.id} />
+			<PDFView paperId={data.id} author={data.author} coAuthors={data.coauthors} />
 			<TabMenu tabs={example} />
 		</Box>
 	);
