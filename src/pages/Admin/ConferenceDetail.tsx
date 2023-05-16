@@ -8,6 +8,9 @@ import dayjs, { Dayjs } from "dayjs";
 import { useFetcher } from "react-router-dom";
 import getConferenceInfo from "../../services/admin/getConferenceInfo";
 import RenderDateDisplayOrEdit from "../../components/AdminEditableDeadline/editableDeadline";
+import useAllPaper from "../../hooks/useAllPaper";
+import useConferenceInfo from "../../hooks/useConfInfo";
+import { useLoading } from "../../context/FeedbackContext";
 
 
 
@@ -54,7 +57,8 @@ function createConferenceInfo(
 
 export default function ConferenceDetail() {
 
-  const [ conferenceDetail, setConferenceDetail ] = useState<ConferenceInfoProps>({
+
+  const [conferenceDetail, setConferenceDetail] = useState<ConferenceInfoProps>({
     id: 1,
     name: "",
     location: "",
@@ -67,22 +71,13 @@ export default function ConferenceDetail() {
   });
 
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getConferenceInfo();
-        console.log(data);
 
-        const conferenceInfo: ConferenceInfoProps = createConferenceInfo(data.id, data.conferencename, data.conferencelocation, "Eric", "eric@email", dayjs(data.submissiondeadline), dayjs(data.biddingdeadline), dayjs(data.reviewdeadline), dayjs(data.announcementtime));
-        // console.log(conferenceInfo.paperAnnouncement);
-        setConferenceDetail(conferenceInfo);
-        // Handle the conference info as needed
-      } catch (error) {
-        console.error(error);
-      }
 
-    };
-    fetchData();
+  useConferenceInfo((data) => {
+    data = data ?? []
+    const conferenceInfo: ConferenceInfoProps = createConferenceInfo(data.id, data.conferencename, data.conferencelocation, "Eric", "eric@email", dayjs(data.submissiondeadline), dayjs(data.biddingdeadline), dayjs(data.reviewdeadline), dayjs(data.announcementtime));
+    setConferenceDetail(conferenceInfo);
+
   }, [])
 
   return (
