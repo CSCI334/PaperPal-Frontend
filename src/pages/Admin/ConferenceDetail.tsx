@@ -29,7 +29,7 @@ export interface ConferenceInfoProps {
 
 }
 
-function createConferenceInfo(
+export function createConferenceInfo(
   id: number,
   name: string,
   location: string,
