@@ -4,6 +4,7 @@ import useConferenceInfo from "../../hooks/useConfInfo";
 import { ConferenceInfoProps, createConferenceInfo } from "../../pages/Admin/ConferenceDetail";
 import dayjs from "dayjs";
 import { useLoading } from "../../context/FeedbackContext";
+import getConferenceInfo from "../../services/admin/getConferenceInfo";
 
 interface CountdownTimerProps {
   phase: string;
@@ -23,19 +24,34 @@ function CountdownTimer() {
   });
 
 
+  useEffect(() => {
+    getConferenceInfo().then((data) => {
+      const { submissiondeadline, biddingdeadline, reviewdeadline, announcementtime } = data;
+      const countdownData: CountdownTimerProps[] = [
+        { phase: "Submission", deadline: new Date(submissiondeadline) },
+        { phase: "Bidding", deadline: new Date(biddingdeadline) },
+        { phase: "Reviewing", deadline: new Date(reviewdeadline) },
+        { phase: "Announcement", deadline: new Date(announcementtime) },
+      ];
 
-  useConferenceInfo((data) => {
-    data = data ?? []
-    const { submissiondeadline, biddingdeadline, reviewdeadline, announcementtime } = data;
-    const countdownData: CountdownTimerProps[] = [
-      { phase: "Submission", deadline: new Date(submissiondeadline) },
-      { phase: "Bidding", deadline: new Date(biddingdeadline) },
-      { phase: "Reviewing", deadline: new Date(reviewdeadline) },
-      { phase: "Announcement", deadline: new Date(announcementtime) },
-    ];
+      setCountdowns(countdownData);
+    })
+    // data = data ?? []
 
-    setCountdowns(countdownData);
   }, [])
+
+  // useConferenceInfo((data) => {
+  //   data = data ?? []
+  //   const { submissiondeadline, biddingdeadline, reviewdeadline, announcementtime } = data;
+  //   const countdownData: CountdownTimerProps[] = [
+  //     { phase: "Submission", deadline: new Date(submissiondeadline) },
+  //     { phase: "Bidding", deadline: new Date(biddingdeadline) },
+  //     { phase: "Reviewing", deadline: new Date(reviewdeadline) },
+  //     { phase: "Announcement", deadline: new Date(announcementtime) },
+  //   ];
+
+  //   setCountdowns(countdownData);
+  // }, [])
   useEffect(() => {
     if (countdowns.length === 0) {
       // Countdowns are still loading, do not show the time

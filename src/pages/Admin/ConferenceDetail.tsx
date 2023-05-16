@@ -10,7 +10,7 @@ import getConferenceInfo from "../../services/admin/getConferenceInfo";
 import RenderDateDisplayOrEdit from "../../components/AdminEditableDeadline/editableDeadline";
 import useAllPaper from "../../hooks/useAllPaper";
 import useConferenceInfo from "../../hooks/useConfInfo";
-import { useLoading } from "../../context/FeedbackContext";
+import { useLoading, useSnackbar } from "../../context/FeedbackContext";
 
 
 
@@ -57,6 +57,7 @@ export function createConferenceInfo(
 
 export default function ConferenceDetail() {
 
+  const { snackbar, setSnackbar } = useSnackbar()
 
   const [conferenceDetail, setConferenceDetail] = useState<ConferenceInfoProps>({
     id: 1,
@@ -77,7 +78,7 @@ export default function ConferenceDetail() {
     data = data ?? []
     const conferenceInfo: ConferenceInfoProps = createConferenceInfo(data.id, data.conferencename, data.conferencelocation, "Eric", "eric@email", dayjs(data.submissiondeadline), dayjs(data.biddingdeadline), dayjs(data.reviewdeadline), dayjs(data.announcementtime));
     setConferenceDetail(conferenceInfo);
-
+    console.log(snackbar.message);
   }, [])
 
   return (
