@@ -36,7 +36,7 @@ function Login() {
       .then(() => navigate("/"))
       .catch((value) => {
         const severity = value.status >= 500 ? "error" : "warning"
-        setSnackbar({ message: value.message, severity: severity, statusCode: value.status })
+        setSnackbar({ message: value.message, severity: severity })
       })
       .finally(() => {
         setIsLoading(false)
