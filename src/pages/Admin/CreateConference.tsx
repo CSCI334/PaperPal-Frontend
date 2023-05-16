@@ -30,15 +30,9 @@ export default function CreateConference() {
     e.preventDefault();
     setIsLoading(true);
     // Perform any validation or additional logic here before submitting
-    createConference(conferenceDetail).then(() => navigate("/")).catch((value) => {
-      const severity = value.status >= 500 ? "error" : "warning"
-      setSnackbar({ message: value.message, severity: severity, statusCode: value.status })
-    })
-      .finally(() => {
-        setIsLoading(false)
-      })
+    createConference(conferenceDetail).then(() => navigate("/"))
     // Submit the form data
-    console.log(conferenceDetail.paperAnnouncement);
+    console.log(conferenceDetail);
   };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
