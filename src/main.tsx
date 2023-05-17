@@ -36,7 +36,6 @@ import {
   AdminProtectedRoute,
   AuthorProtectedRoute,
   ChairProtectedRoute,
-  ProtectedRoute,
   ReviewerProtectedRoute,
 } from "./services/utility/routeGuard";
 import { FeedbackProvider } from "./context/FeedbackContext";

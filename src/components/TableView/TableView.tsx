@@ -148,7 +148,6 @@ export default function EnhancedTable({
               onRequestSort={handleRequestSort}
             />
             <TableBody>
-              {/* TODO: Change this to a function provided by parent  */}
               {visibleRows
                 ? visibleRows.map((row) => {
                   return <React.Fragment key={row.id}>

@@ -42,7 +42,8 @@ function AuthProvider({ children }: Props) {
         localStorage.setItem("loggedUser", JSON.stringify(authState))
       })
       .catch((error) => {
-        if (error === "No response received from the server") setSnackbar({ message: "Server is unreachable :c", severity: "error" })
+        if (error.status == 403) navigate("/login")
+        if (error.message === "No response received from the server") setSnackbar({ message: "Server is unreachable :c", severity: "error" })
       });
   }, [ authState.headers ]);
 

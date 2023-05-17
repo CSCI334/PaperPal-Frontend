@@ -12,10 +12,6 @@ import useAllPaper from "../../hooks/useAllPaper";
 import useConferenceInfo from "../../hooks/useConfInfo";
 import { useLoading, useSnackbar } from "../../context/FeedbackContext";
 
-
-
-
-
 export interface ConferenceInfoProps {
   id: number;
   name: string;
@@ -71,6 +67,13 @@ export default function ConferenceDetail() {
     paperReviewDeadline: dayjs('2023-05-17')
   });
 
+  // If any of the deadline is changed
+  // Push to backend
+
+  useEffect(() => {
+
+  }, [ conferenceDetail.paperBiddingDeadline ])
+
 
   const navigate = useNavigate();
 
@@ -111,10 +114,10 @@ export default function ConferenceDetail() {
           <Typography variant="body1" sx={{ marginBottom: 4 }}>{conferenceDetail.chairName}</Typography>
           <Typography variant="body1" sx={{ marginBottom: 4 }}>{conferenceDetail.chairEmail}</Typography>
 
-          <RenderDateDisplayOrEdit title="1" deadlineDate={conferenceDetail.paperSubmissionDeadline} conferenceInfo={conferenceDetail} />
-          <RenderDateDisplayOrEdit title="2" deadlineDate={conferenceDetail.paperBiddingDeadline} conferenceInfo={conferenceDetail} />
-          <RenderDateDisplayOrEdit title="3" deadlineDate={conferenceDetail.paperReviewDeadline} conferenceInfo={conferenceDetail} />
-          <RenderDateDisplayOrEdit title="4" deadlineDate={conferenceDetail.paperAnnouncement} conferenceInfo={conferenceDetail} />
+          <RenderDateDisplayOrEdit setConferenceInfo={setConferenceDetail} title="1" deadlineDate={conferenceDetail.paperSubmissionDeadline} conferenceInfo={conferenceDetail} />
+          <RenderDateDisplayOrEdit setConferenceInfo={setConferenceDetail} title="2" deadlineDate={conferenceDetail.paperBiddingDeadline} conferenceInfo={conferenceDetail} />
+          <RenderDateDisplayOrEdit setConferenceInfo={setConferenceDetail} title="3" deadlineDate={conferenceDetail.paperReviewDeadline} conferenceInfo={conferenceDetail} />
+          <RenderDateDisplayOrEdit setConferenceInfo={setConferenceDetail} title="4" deadlineDate={conferenceDetail.paperAnnouncement} conferenceInfo={conferenceDetail} />
 
         </Box>
 

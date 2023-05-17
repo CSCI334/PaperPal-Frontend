@@ -17,12 +17,10 @@ const Home = () => {
   const userData = authState.userData
   const navigate = useNavigate();
   useEffect(() => {
-    console.log(authState.userData.accountType)
     if (!authState.isAuth) {
       navigate('/login');
     }
   }, []);
-
 
   // todo: change the routing for different type of home account
   switch (userData.accountType) {
@@ -36,7 +34,8 @@ const Home = () => {
     case 'CHAIR':
       return <AllPapersList />;
     default:
-      return <></>;
+      navigate('/login')
+      return <Login></Login>;
   }
 };
 
