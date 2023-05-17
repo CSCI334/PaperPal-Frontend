@@ -55,7 +55,7 @@ export default function ConferenceDetail() {
 
   const { snackbar, setSnackbar } = useSnackbar()
 
-  const [conferenceDetail, setConferenceDetail] = useState<ConferenceInfoProps>({
+  const [ conferenceDetail, setConferenceDetail ] = useState<ConferenceInfoProps>({
     id: 1,
     name: "",
     location: "",
@@ -114,10 +114,10 @@ export default function ConferenceDetail() {
           <Typography variant="body1" sx={{ marginBottom: 4 }}>{conferenceDetail.chairName}</Typography>
           <Typography variant="body1" sx={{ marginBottom: 4 }}>{conferenceDetail.chairEmail}</Typography>
 
-          <RenderDateDisplayOrEdit setConferenceInfo={setConferenceDetail} title="1" deadlineDate={conferenceDetail.paperSubmissionDeadline} conferenceInfo={conferenceDetail} />
-          <RenderDateDisplayOrEdit setConferenceInfo={setConferenceDetail} title="2" deadlineDate={conferenceDetail.paperBiddingDeadline} conferenceInfo={conferenceDetail} />
-          <RenderDateDisplayOrEdit setConferenceInfo={setConferenceDetail} title="3" deadlineDate={conferenceDetail.paperReviewDeadline} conferenceInfo={conferenceDetail} />
-          <RenderDateDisplayOrEdit setConferenceInfo={setConferenceDetail} title="4" deadlineDate={conferenceDetail.paperAnnouncement} conferenceInfo={conferenceDetail} />
+          <RenderDateDisplayOrEdit title="1" deadlineDate={conferenceDetail.paperSubmissionDeadline} conferenceInfo={conferenceDetail} />
+          <RenderDateDisplayOrEdit title="2" deadlineDate={conferenceDetail.paperBiddingDeadline} conferenceInfo={conferenceDetail} />
+          <RenderDateDisplayOrEdit title="3" deadlineDate={conferenceDetail.paperReviewDeadline} conferenceInfo={conferenceDetail} />
+          <RenderDateDisplayOrEdit title="4" deadlineDate={conferenceDetail.paperAnnouncement} conferenceInfo={conferenceDetail} />
 
         </Box>
 
