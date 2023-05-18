@@ -10,6 +10,12 @@ import LeftBanner from "../../components/LeftBanner/LeftBanner";
 import ContainerForm from "../../components/FormContainer/ContainerForm";
 import PasswordForm from "../../components/PasswordForm/PasswordForm";
 import { usePasswordInput } from "../../hooks/Register";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import httpOnClick from "../../hooks/httpOnClick";
+import verifyAccount from "../../services/account/verifyAccount";
+import jwtDecode from "jwt-decode";
+import AuthState from "../../types/AuthData";
 
 
 function ChairRegister() {
@@ -19,15 +25,26 @@ function ChairRegister() {
     passwordError,
     matchError,
   } = usePasswordInput("");
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const navigate = useNavigate();
+  const { authState, setAuthState } = useAuth();
+  const [searchParams, setSearchParams] = useSearchParams({});
+  const onClick = httpOnClick(() => {
     if (passwordError || matchError) {
-      return;
+      return Promise.reject()
     }
+    const token = searchParams.get("token")
+    return verifyAccount(token, passwordInputProps.value)
+  }, value => {
+    const decodedJWT = jwtDecode(value.token);
+    console.log(value.token)
+    const headers = { Authorization: `Bearer ${value.token}` };
+    const loggedIn = { headers, isAuth: true, userData: decodedJWT };
+    localStorage.setItem("loggedUser", JSON.stringify(loggedIn));
+    localStorage.setItem("jwtToken", value.token)
+    setAuthState(AuthState.createFromString(localStorage.getItem("loggedUser") || ""));
+    navigate("/")
 
-    // Submit form
-  };
+  }, "Succesfully verified account")
 
   return (
     <Box
@@ -38,7 +55,7 @@ function ChairRegister() {
       }}
     >
       <LeftBanner></LeftBanner>
-      <ContainerForm title={"Create conference chair account"} buttonText="Create account" onSubmit={handleSubmit}>
+      <ContainerForm title={"Create conference chair account"} buttonText="Create account" onSubmit={onClick}>
         <PasswordForm name="password" {...passwordInputProps}></PasswordForm>
         {passwordError && (
           <span style={{ color: "red" }}>
