@@ -14,16 +14,21 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import verifyAccount from "../../services/account/verifyAccount";
 import { useLoading, useSnackbar } from "../../context/FeedbackContext";
 import httpOnClick from "../../hooks/httpOnClick";
+import jwtDecode from "jwt-decode";
+import AuthState from "../../types/AuthData";
+import { useAuth } from "../../context/AuthContext";
 
 function ReviewerRegister() {
   const navigate = useNavigate();
+  const { authState, setAuthState } = useAuth();
+
   const {
     passwordInputProps,
     retypeInputProps,
     passwordError,
     matchError,
   } = usePasswordInput("");
-  const [ searchParams, setSearchParams ] = useSearchParams({});
+  const [searchParams, setSearchParams] = useSearchParams({});
 
   const { isLoading, setIsLoading } = useLoading()
   const { snackbar, setSnackbar } = useSnackbar()
@@ -35,8 +40,15 @@ function ReviewerRegister() {
     const token = searchParams.get("token")
     return verifyAccount(token, passwordInputProps.value)
   }, value => {
-    console.log("verify success")
-    navigate("/login")
+    const decodedJWT = jwtDecode(value.token);
+    console.log(value.token)
+    const headers = { Authorization: `Bearer ${value.token}` };
+    const loggedIn = { headers, isAuth: true, userData: decodedJWT };
+    localStorage.setItem("loggedUser", JSON.stringify(loggedIn));
+    localStorage.setItem("jwtToken", value.token)
+    setAuthState(AuthState.createFromString(localStorage.getItem("loggedUser") || ""));
+    navigate("/")
+
   }, "Succesfully verified account")
 
   return (
