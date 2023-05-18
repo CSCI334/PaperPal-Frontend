@@ -5,8 +5,8 @@ import TableView, {
   HeadCell,
 } from "../../components/TableView/TableView";
 import createStatusMessage from "../../components/TableView/TableUtilContent";
-import { Email } from "@mui/icons-material";
-import { useLocation } from "react-router-dom";
+import { Email, Add } from "@mui/icons-material";
+import { useLocation, useNavigate } from "react-router-dom";
 import getContactList from "../../services/getContactList";
 
 function createContact(
@@ -14,20 +14,21 @@ function createContact(
   name: string,
   email: string,
   status: string,
-  action: string,
+
 ): Data {
   return {
     id,
     name,
     email,
     status,
-    action
+
   };
 }
 
 export default function ContactList() {
-  const [ rows, setRows ] = useState<Data[]>([]);
+  const [rows, setRows] = useState<Data[]>([]);
   const location = useLocation();
+  const navigate = useNavigate();
   useEffect(() => {
     if (location.pathname !== '/contactlist') {
       return;
@@ -41,7 +42,7 @@ export default function ContactList() {
             item.username.toString(),
             item.email.toString(),
             item.accountstatus.toString(),
-            "Send Email"
+
           )
         })
         setRows(contactList ?? [])
@@ -51,17 +52,7 @@ export default function ContactList() {
       })
   }, [])
 
-  const handleEmailButtonClick = (id: string) => {
-    // Find the index of the row with the given id
-    const rowIndex = rows.findIndex((row) => row.id === id);
-    // If the row is found, update its status to "pending"
-    if (rowIndex !== -1) {
-      const updatedRows = [ ...rows ]; // create a copy of the rows array
-      updatedRows[ rowIndex ].status = "Pending";
-      setRows(updatedRows); // set the state of rows with updatedRows array
-    }
-    alert(`Button clicked for row with id: ${id}`);
-  };
+
 
   const headCells: readonly HeadCell[] = [
     {
@@ -76,10 +67,7 @@ export default function ContactList() {
       id: "status",
       label: "Status",
     },
-    {
-      id: "action",
-      label: "Action",
-    },
+
   ];
 
   const rowComponent = (row: Data) => {
@@ -92,25 +80,17 @@ export default function ContactList() {
         <TableCell>
           {createStatusMessage(row.status.toString())}
         </TableCell>
-        <TableCell>
-          <Button
-            variant="contained"
-            endIcon={<Email />}
-            color="button"
-            onClick={() => handleEmailButtonClick(row.id.toString())}
-          >
-            Send Email
-          </Button>
-        </TableCell>
+
       </TableRow>
     );
   };
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
-      <Box sx={{ mt: 2, marginLeft: "auto" }}>
-        <Button variant="contained" >
-          My Button
+      <Box sx={{ mt: 2, marginRight: "auto", mb: 2, ml: 2 }}>
+        <Button variant="contained" endIcon={<Add />}
+          color="button" onClick={() => navigate("/addcontact")}>
+          Add New
         </Button>
       </Box>
       <TableView
