@@ -23,6 +23,7 @@ function createPaper(
         status
     };
 }
+// TODO :: implement a way to stop pages showing up in the bidding phase
 //This deals with rendering all the allocated papers a reviewer has and other functionality such as moving to different pages related to this one
 function ReviewerAllocatedPaper() {
     const navigate = useNavigate();
@@ -34,8 +35,13 @@ function ReviewerAllocatedPaper() {
             .then((value) => {
                 value = value ?? []
                 const rows = value.map((value: GenericForm) => {
-                    if (value.paperstatus === "TBD") value.paperstatus = "Ready for Review"
-                    return createPaper(value.id, value.title, value.author, value.coauthors, value.paperstatus)
+                    if (value.paperrating === null) {
+                        value.paperstatus = "Ready for Review"
+                    }
+                    else {
+                        value.paperstatus = "Reviewed"
+                    }
+                    return createPaper(value.id, value.title, value.username, value.coauthors, value.paperstatus)
                 })
                 setRows(rows ?? [])
             })
@@ -91,6 +97,7 @@ function ReviewerAllocatedPaper() {
                 </TableCell>
                 <TableCell>
                     <IconButton
+                        disabled={row.status === "Reviewed"}
                         onClick={() => handleReviewClick(row)}
                     >
                         <EditNote />

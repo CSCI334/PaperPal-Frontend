@@ -25,11 +25,9 @@ const ReviewerAddReview: React.FC = () => {
 
         const rating = event.target.elements.rating.value;
 
-        // Now you can do something with the rating
         addPaperReview(rating, data.id, textInput)
             .then(response => {
                 console.log(response);
-                // Navigate back
                 navigate(-1);
             })
             .catch(error => {
