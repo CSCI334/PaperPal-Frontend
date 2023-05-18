@@ -1,56 +1,68 @@
 import {
-    Box,
-    Button,
-    Container,
-    Input,
-    TextField,
-    Typography,
-  } from "@mui/material";
-  import LeftBanner from "../../components/LeftBanner/LeftBanner";
-  import ContainerForm from "../../components/FormContainer/ContainerForm";
-  import PasswordForm from "../../components/PasswordForm/PasswordForm";
+  Box,
+  Button,
+  Container,
+  Input,
+  TextField,
+  Typography,
+} from "@mui/material";
+import LeftBanner from "../../components/LeftBanner/LeftBanner";
+import ContainerForm from "../../components/FormContainer/ContainerForm";
+import PasswordForm from "../../components/PasswordForm/PasswordForm";
 import { usePasswordInput } from "../../hooks/Register";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import verifyAccount from "../../services/account/verifyAccount";
+import { useLoading, useSnackbar } from "../../context/FeedbackContext";
+import httpOnClick from "../../hooks/httpOnClick";
 
-  function ReviewerRegister() {
-    const {
-      passwordInputProps,
-      retypeInputProps,
-      passwordError,
-      matchError,
-    } = usePasswordInput("");
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
-  
-      if (passwordError || matchError) {
-        return;
-      }
-  
-      // Submit form
+function ReviewerRegister() {
+  const navigate = useNavigate();
+  const {
+    passwordInputProps,
+    retypeInputProps,
+    passwordError,
+    matchError,
+  } = usePasswordInput("");
+  const [ searchParams, setSearchParams ] = useSearchParams({});
+
+  const { isLoading, setIsLoading } = useLoading()
+  const { snackbar, setSnackbar } = useSnackbar()
+
+  const onClick = httpOnClick(() => {
+    if (passwordError || matchError) {
+      return Promise.reject()
     }
-    return (
-        <Box
-          sx={{
-            display: "flex",
-            flexGrow: "1",
-            flexDirection: "row",
-          }}
-        >
-          <LeftBanner></LeftBanner>
-          <ContainerForm title={"Create reviewer account"} buttonText="Create account" needRoutingLink={true} isRegistered={true} >
-          <PasswordForm name="password" {...passwordInputProps}></PasswordForm>
-            {passwordError && (
+    const token = searchParams.get("token")
+    return verifyAccount(token, passwordInputProps.value)
+  }, value => {
+    console.log("verify success")
+    navigate("/login")
+  }, "Succesfully verified account")
+
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        flexGrow: "1",
+        flexDirection: "row",
+      }}
+    >
+      <LeftBanner></LeftBanner>
+      <ContainerForm title={"Create reviewer account"} buttonText="Create account" onSubmit={onClick}  >
+        <PasswordForm name="password" {...passwordInputProps}></PasswordForm>
+        {passwordError && (
           <span style={{ color: "red" }}>
             Password needs to be at least 8 characters long
           </span>
         )}
-            <PasswordForm name="retype" label="Retype Password" {...retypeInputProps} ></PasswordForm>
-            {matchError && (
+        <PasswordForm name="retype" label="Retype Password" {...retypeInputProps} ></PasswordForm>
+        {matchError && (
           <span style={{ color: "red" }}>Passwords do not match</span>
         )}
-          </ContainerForm>
-          
-        </Box>
-      );
-  }
-  
-  export default ReviewerRegister;
+      </ContainerForm>
+
+    </Box>
+  );
+}
+
+export default ReviewerRegister;

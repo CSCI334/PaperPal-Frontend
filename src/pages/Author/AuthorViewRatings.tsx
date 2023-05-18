@@ -16,12 +16,9 @@ const AuthorViewRatings: React.FC = () => {
   ];
 
   return (
-    <div style={{ display: "flex", height: "100%" }}>
-      <Container maxWidth="md" sx={{ display: "flex", flexDirection: "column", minHeight: "100%" }}>
-        <PDFView key={pdfFile} file={pdfFile} />
-      </Container>
-      <TabMenu tabs={tabs} />
-    </div>
+    <Container maxWidth="md" sx={{ display: "flex", flexDirection: "column", minHeight: "100%" }}>
+      <PDFView key={pdfFile} paperId={pdfFile} author={""} coAuthors={""} />
+    </Container>
   );
 };
 export default AuthorViewRatings;

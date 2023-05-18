@@ -14,17 +14,16 @@ import {
 import { Inbox, Mail } from "@mui/icons-material";
 import { Props as NavbarButtonProps } from "./NavbarButton";
 import NavbarButton from "./NavbarButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { adminButtonList, authorButtonList, buttonRoutes, chairButtonList, reviewerButtonList } from "./NavBarButtonList";
 import { useAuth } from "../../context/AuthContext";
 import CountdownTimer from "./Timer";
-
-
+import AuthState from "../../types/AuthData";
 
 
 interface ButtonLists {
-  admin:NavbarButtonProps[];
+  admin: NavbarButtonProps[];
   reviewer: NavbarButtonProps[];
   chair: NavbarButtonProps[];
   author: NavbarButtonProps[];
@@ -34,30 +33,25 @@ interface LeftNavbarProps {
   buttons: NavbarButtonProps[];
 }
 
-const drawerWidth = 240;
+const drawerWidth = 300;
 
 function LeftNavbar({ buttons }: LeftNavbarProps) {
- 
+
   const navigate = useNavigate();
 
-  const buttonLists : ButtonLists = {
+  const buttonLists: ButtonLists = {
     admin: adminButtonList,
     reviewer: reviewerButtonList,
     chair: chairButtonList,
     author: authorButtonList,
   };
-  
-  
-  
+
   // const navBarButtonList  = buttonLists[status as keyof ButtonLists] || [];
   // still hard coded need to change this
-  const { authState: { userData, isAuth } } = useAuth();
-  const accountType:string = userData.accountType || ""
-  const navBarButtonList  = buttonLists[accountType.toLowerCase() as keyof ButtonLists] || [];
-  // const navBarButtonList  = buttonLists["admin"] || [];
-  const [selectedButton, setSelectedButton] = useState(navBarButtonList[0]?.title);
-
-
+  const { authState, setAuthState } = useAuth();
+  const accountType = authState.userData.accountType ?? ""
+  const navBarButtonList = buttonLists[accountType.toLowerCase() as keyof ButtonLists] ?? [{ title: " " }];
+  const [selectedButton, setSelectedButton] = useState(localStorage.getItem("selectedButton") || navBarButtonList[0].title);
 
   // When the button clicked, it will navigate to the relevant page
   const handleButtonClick = (title: string) => {
@@ -67,7 +61,9 @@ function LeftNavbar({ buttons }: LeftNavbarProps) {
       navigate(path);
     }
     else if (title == "Logout") {
-      localStorage.removeItem("loggedUser")
+      // localStorage.removeItem("loggedUser")
+      localStorage.clear();
+      setAuthState(AuthState.createFromString(localStorage.getItem("loggedUser") || ""))
       navigate(`/login`)
     }
     else {
@@ -76,22 +72,27 @@ function LeftNavbar({ buttons }: LeftNavbarProps) {
 
   };
 
+  useEffect(() => {
+    localStorage.setItem("selectedButton", selectedButton);
+  }, [selectedButton]);
+
   return (
     <Drawer
       sx={{
-        width: drawerWidth,
-        flexShrink: 0,
+        minWidth: "250px",
         "& .MuiDrawer-paper": {
-          width: drawerWidth,
           boxSizing: "border-box",
         },
       }}
+
       variant="permanent"
-      anchor="left"
+      anchor="right"
       PaperProps={{
         sx: {
+          position: "unset",
           backgroundColor: "primary.main",
           color: "primary.contrastText",
+          sx: { width: "90%" },
         },
       }}
     >

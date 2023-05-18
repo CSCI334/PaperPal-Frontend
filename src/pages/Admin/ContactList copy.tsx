@@ -20,8 +20,6 @@ function createData(
   };
 }
 
-
-
 const rows = [
   createData("Cupcake", 305, 3.7, 67, "a"),
   createData("Donut", 452, 25.0, 51, "b"),

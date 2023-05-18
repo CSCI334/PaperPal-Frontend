@@ -8,10 +8,16 @@ import {
   Avatar,
   Container,
   Typography,
+  LinearProgress,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import { useLoading } from "../../context/FeedbackContext";
 
-function Home() {
+function Header() {
+  const { authState, setAuthState } = useAuth()
+  const { isLoading, setIsLoading } = useLoading();
+
   return (
     <AppBar position="sticky" color="secondary">
       <Toolbar component={Container}>
@@ -19,23 +25,24 @@ function Home() {
           sx={{ flexGrow: 1, display: "flex", justifyContent: "flex-start" }}
         >
           <Button
-            component={Link}
-            to="/services"
             variant="text"
             sx={{
               fontSize: "18px",
             }}
           >
-            Link that goes somewhere
+            Header Title
           </Button>
         </Box>
 
-        <Typography> System Administrator </Typography>
+        <Typography> {authState.userData.username ?? ""} </Typography>
         <IconButton sx={{ p: 0, marginX: "20px" }}>
-          <Avatar>A</Avatar>
+          <Avatar>{(authState.userData.username ?? "A")[ 0 ]}</Avatar>
         </IconButton>
       </Toolbar>
+      <LinearProgress sx={{
+        display: isLoading ? 'block' : 'none'
+      }} />
     </AppBar>
   );
 }
-export default Home;
+export default Header;

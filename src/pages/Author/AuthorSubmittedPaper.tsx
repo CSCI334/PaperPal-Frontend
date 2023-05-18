@@ -5,6 +5,7 @@ import createStatusMessage from "../../components/TableView/TableUtilContent";
 import { Visibility } from '@mui/icons-material';
 import DragDrop from '../../components/DragDrop/DragDrop';
 import { createSearchParams, useNavigate } from 'react-router-dom';
+import getAllPaper from "../../services/getAllPaper";
 
 function createPaper(
     id: string,
@@ -44,7 +45,8 @@ const AuthorSubmittedPaper: React.FC = () => {
 
     //Deals with the opening of a DragDrop component
     const handleOpen = () => {
-        setOpen(true);
+        // setOpen(true);
+        getAllPaper();
     };
 
     //Deals with the closing of a DragDrop component

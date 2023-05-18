@@ -5,36 +5,47 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import getUser from "../services/getUser";
+import getUser from "../services/account/getUser";
 import AuthState from "../types/AuthData";
 import axios from "axios";
 import { HTTP } from "../data/HttpConfig";
+import { useNavigate } from "react-router-dom";
+import { useSnackbar } from "./FeedbackContext";
 
-axios.defaults.headers.common["Content-Type"] = "application/json";
+axios.defaults.headers.common[ "Content-Type" ] = "application/json";
 axios.defaults.baseURL = HTTP.dev.BASE_URL;
 
 interface Props {
   children?: ReactNode;
 }
 
-export const AuthContext = createContext<any>(AuthState.createFromString(""));
+export const AuthContext = createContext<any>("");
 function AuthProvider({ children }: Props) {
-  const [authState, setAuthState] = useState(
+  const navigate = useNavigate()
+  const { snackbar, setSnackbar } = useSnackbar()
+  const [ authState, setAuthState ] = useState(
     AuthState.createFromString(localStorage.getItem("loggedUser") || "")
   );
 
   useEffect(() => {
     if (Object.keys(authState.headers).length === 0) return;
-    console.log("how many");
-    axios.defaults.headers.common.Authorization =
-      authState.headers.Authorization;
     getUser()
       .then((loggedUser) => {
-        console.log(loggedUser);
-        setAuthState((prev: any) => ({ ...prev, loggedUser }));
+        setAuthState((prev: any) => {
+          return ({
+            ...prev, userData: {
+              ...prev.userData,
+              ...loggedUser
+            }
+          });
+        });
+        localStorage.setItem("loggedUser", JSON.stringify(authState))
       })
-      .catch(console.error);
-  }, [authState.headers, setAuthState]);
+      .catch((error) => {
+        if (error.status == 403) navigate("/login")
+        if (error.message === "No response received from the server") setSnackbar({ message: "Server is unreachable :c", severity: "error" })
+      });
+  }, [ authState.headers ]);
 
   return (
     <AuthContext.Provider value={{ authState, setAuthState }}>
@@ -44,7 +55,7 @@ function AuthProvider({ children }: Props) {
 }
 
 export function useAuth() {
-  return useContext(AuthContext);
+  return useContext<{ authState: AuthState, setAuthState: React.Dispatch<React.SetStateAction<AuthState>> }>(AuthContext);
 }
 
 export default AuthProvider;

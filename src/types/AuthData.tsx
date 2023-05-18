@@ -1,11 +1,22 @@
+const defaultAuthState = {
+  headers: {},
+  isAuth: false,
+  userData: {
+    email: "",
+    username: "",
+  },
+  userType: "ADMIN",
+};
+
 class AuthState {
   constructor(
     public headers: {
       Authorization?: string;
     },
     public isAuth: boolean,
-    public userData: {}
-  ) {}
+    public userData: any,
+    public userType: string
+  ) { }
   static createFromString(json: string): AuthState {
     if (!json || json === "") {
       return {
@@ -13,12 +24,17 @@ class AuthState {
         isAuth: false,
         userData: {
           email: "",
-          userType: "ADMIN",
           username: "",
         },
+        userType: "ADMIN",
       };
     }
-    return JSON.parse(json) as AuthState;
+    let authState = json
+    try {
+      return JSON.parse(json) as AuthState
+    } catch {
+      return defaultAuthState
+    }
   }
 }
 

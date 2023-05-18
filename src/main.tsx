@@ -37,146 +37,53 @@ import {
   AdminProtectedRoute,
   AuthorProtectedRoute,
   ChairProtectedRoute,
-  ProtectedRoute,
   ReviewerProtectedRoute,
-} from "./services/routeGuard";
+} from "./services/utility/routeGuard";
+import { FeedbackProvider } from "./context/FeedbackContext";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <BrowserRouter>
-        <AuthProvider>
-          <Routes>
-            {/* routing with left nav bar , header, and footer */}
-            <Route element={<App />}>
-              <Route path="/" element={<Home />} />
+        <FeedbackProvider>
+          <AuthProvider>
+            <Routes>
+              {/* routing with left nav bar , header, and footer */}
+              <Route element={<App />}>
+                <Route path="/" element={<Home />} />
 
-              {/* Admin  */}
-              <Route
-                path="/create"
-                element={
-                  <AdminProtectedRoute>
-                    <CreateConference />
-                  </AdminProtectedRoute>
-                }
-              />
-              <Route
-                path="/addcontact"
-                element={
-                  <AdminProtectedRoute>
-                    <AddNewContact />
-                  </AdminProtectedRoute>
-                }
-              />
-              <Route
-                path="/contactlist"
-                element={
-                  <AdminProtectedRoute>
-                    <ContactList />
-                  </AdminProtectedRoute>
-                }
-              />
+                {/* Admin  */}
+                <Route path="/create" element={<AdminProtectedRoute><CreateConference /></AdminProtectedRoute>} />
+                <Route path="/addcontact" element={<AdminProtectedRoute><AddNewContact /></AdminProtectedRoute>} />
+                <Route path="/contactlist" element={<AdminProtectedRoute><ContactList /></AdminProtectedRoute>} />
+                <Route path="/conferencedetail" element={<AdminProtectedRoute><ConferenceDetails /></AdminProtectedRoute>} />
 
-              <Route
-                path="/conferencedetail"
-                element={
-                  <AdminProtectedRoute>
-                    <ConferenceDetails />
-                  </AdminProtectedRoute>
-                }
-              />
+                {/* Author */}
+                <Route path="/AuthorViewRatings" element={<AuthorProtectedRoute><AuthorViewRatings /></AuthorProtectedRoute>} />
+                <Route path="/authorsubmittedpaper" element={<AuthorProtectedRoute><AuthorSubmittedPaper /></AuthorProtectedRoute>} />
 
-              {/* Author */}
-              <Route
-                path="/AuthorViewRatings"
-                element={
-                  <AuthorProtectedRoute>
-                    <AuthorViewRatings />
-                  </AuthorProtectedRoute>
-                }
-              />
-              <Route
-                path="/authorsubmittedpaper"
-                element={
-                  <AuthorProtectedRoute>
-                    <AuthorSubmittedPaper />
-                  </AuthorProtectedRoute>
-                }
-              />
+                {/* Conference Chair */}
+                <Route path="/allpaperslist" element={<ChairProtectedRoute><AllPapersList /></ChairProtectedRoute>} />
+                <Route path="/judge" element={<ChairProtectedRoute><AcceptOrRejectPaperView /></ChairProtectedRoute>} />
 
-              <Route
-                path="/authorratereview"
-                element={
-                  <AuthorProtectedRoute>
-                    <AuthorRateReview />
-                  </AuthorProtectedRoute>
-                }
-              />
+                {/* Reviewer */}
+                <Route path="/biddingSystem" element={<ReviewerProtectedRoute><BiddingSystem /></ReviewerProtectedRoute>} />
+                <Route path="/reviewerAllocatedPapers" element={<ReviewerProtectedRoute><ReviewerAllocatedPaper /></ReviewerProtectedRoute>} />
+                <Route path="/reviewerAddReview" element={<ReviewerProtectedRoute><ReviewerAddReview /></ReviewerProtectedRoute>} />
+                <Route path="/reviewerView" element={<ReviewerProtectedRoute><ReviewerViewReviews /></ReviewerProtectedRoute>} />
+              </Route>
+              {/* Routing for login or register */}
+              <Route path="/login" element={<Login />} />
+              <Route path="/register-author" element={<AuthorRegister />} />
+              <Route path="/register-reviewer" element={<ReviewerRegister />} />
+              <Route path="/register-chair" element={<ChairRegister />} />
 
-              {/* Conference Chair */}
-              <Route
-                path="/allpaperslist"
-                element={
-                  <ChairProtectedRoute>
-                    <AllPapersList />
-                  </ChairProtectedRoute>
-                }
-              />
-              <Route
-                path="/acceptrejectpaper"
-                element={
-                  <ChairProtectedRoute>
-                    <AcceptOrRejectPaperView />
-                  </ChairProtectedRoute>
-                }
-              />
-
-              {/* Reviewer */}
-              <Route
-                path="/biddingSystem"
-                element={
-                  <ReviewerProtectedRoute>
-                    <BiddingSystem />
-                  </ReviewerProtectedRoute>
-                }
-              />
-              <Route 
-                path="/reviewerAllocatedPapers" 
-                element={
-                  <ReviewerProtectedRoute>
-                    <ReviewerAllocatedPaper />
-                  </ReviewerProtectedRoute>
-                }
-              />
-              <Route 
-                path="/reviewerAddReview" 
-                element={
-                  <ReviewerProtectedRoute>
-                    <ReviewerAddReview />
-                  </ReviewerProtectedRoute>
-                }
-              />
-              <Route 
-                path="/reviewerView" 
-                element={
-                  <ReviewerProtectedRoute>
-                    <ReviewerViewReviews />
-                  </ReviewerProtectedRoute>
-                }
-              />
-              
-            </Route>
-            {/* Routing for login or register */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/registerauthor" element={<AuthorRegister />} />
-            <Route path="/registerreviewer" element={<ReviewerRegister />} />
-            <Route path="/registerchair" element={<ChairRegister />} />
-            
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </AuthProvider>
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </AuthProvider>
+        </FeedbackProvider>
       </BrowserRouter>
     </ThemeProvider>
-  </React.StrictMode>
+  </React.StrictMode >
 );

@@ -7,7 +7,7 @@ interface ICommentFormProps {
 }
 
 function CommentForm(props: ICommentFormProps) {
-    const [state, setState] = React.useState(false);
+    const [ state, setState ] = React.useState(false);
 
     // TODO:: connect to backend and DB
     const mockData = [
@@ -36,7 +36,7 @@ function CommentForm(props: ICommentFormProps) {
     return (
         <div style={{ marginBottom: "8px" }}>
             {mockData.map((x, index) => (
-                <textarea key={`comment-key-${index}`} id="comments" name={`comment-name-${index}`} value={x.comment} disabled cols={30} />
+                <textarea key={`comment-key-${index}`} style={{ resize: "none" }} id="comments" name={`comment-name-${index}`} value={x.comment} disabled cols={30} />
             ))}
             {props.canAddComment && (
                 <>

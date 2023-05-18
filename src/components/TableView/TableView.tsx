@@ -15,20 +15,17 @@ import {
   ReactNode,
 } from "react";
 import EnhancedTableHead from "./TableHeader";
-
-
-
+import React from "react";
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
-  if (b[orderBy] < a[orderBy]) {
+  const result = String(b[ orderBy ]).localeCompare(String(a[ orderBy ]), "en", { numeric: true })
+  if (result < 0) {
     return -1;
   }
-  
-  if (b[orderBy] > a[orderBy]) {
+
+  if (result > 0) {
     return 1;
   }
-
-
   return 0;
 }
 
@@ -36,8 +33,8 @@ function getComparator<Key extends keyof any>(
   order: "asc" | "desc",
   orderBy: Key
 ): (
-  a: { [key in Key]: number | string },
-  b: { [key in Key]: number | string }
+  a: { [ key in Key ]: number | string },
+  b: { [ key in Key ]: number | string }
 ) => number {
   return order === "desc"
     ? (a, b) => descendingComparator(a, b, orderBy)
@@ -45,12 +42,13 @@ function getComparator<Key extends keyof any>(
 }
 
 export interface Data {
-  [key: string]: string | number;
+  [ key: string ]: string | number;
 }
 
 export interface HeadCell {
   id: keyof Data;
   label: string;
+  align?: "left" | "center" | "right";
 }
 
 const DEFAULT_ORDER = "asc";
@@ -69,11 +67,11 @@ export default function EnhancedTable({
   defaultOrderBy,
   rowComponent,
 }: TableProps) {
-  const [order, setOrder] = useState<"asc" | "desc">(DEFAULT_ORDER);
-  const [orderBy, setOrderBy] = useState<keyof Data>(defaultOrderBy);
-  const [page, setPage] = useState(0);
-  const [visibleRows, setVisibleRows] = useState<Data[] | null>(null);
-  const [rowsPerPage, setRowsPerPage] = useState(DEFAULT_ROWS_PER_PAGE);
+  const [ order, setOrder ] = useState<"asc" | "desc">(DEFAULT_ORDER);
+  const [ orderBy, setOrderBy ] = useState<keyof Data>(defaultOrderBy);
+  const [ page, setPage ] = useState(0);
+  const [ visibleRows, setVisibleRows ] = useState<Data[] | null>(null);
+  const [ rowsPerPage, setRowsPerPage ] = useState(DEFAULT_ROWS_PER_PAGE);
 
   useEffect(() => {
     let rowsOnMount = rows
@@ -85,7 +83,7 @@ export default function EnhancedTable({
     );
 
     setVisibleRows(rowsOnMount);
-  }, []);
+  }, [ rows, defaultOrderBy ]);
 
   const handleRequestSort = useCallback(
     (event: MouseEvent<unknown>, newOrderBy: keyof Data) => {
@@ -104,10 +102,8 @@ export default function EnhancedTable({
       );
       setVisibleRows(updatedRows);
     },
-    [order, orderBy, page, rowsPerPage]
+    [ order, orderBy, page, rowsPerPage, rows ]
   );
-
-
 
   const handleChangePage = useCallback(
     (event: unknown, newPage: number) => {
@@ -120,7 +116,7 @@ export default function EnhancedTable({
       );
       setVisibleRows(updatedRows);
     },
-    [order, orderBy, rowsPerPage]
+    [ order, orderBy, rowsPerPage ]
   );
 
   const handleChangeRowsPerPage = useCallback(
@@ -137,13 +133,13 @@ export default function EnhancedTable({
       );
       setVisibleRows(updatedRows);
     },
-    [order, orderBy]
+    [ order, orderBy, rows ]
   );
 
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
-        <TableContainer>
+        <TableContainer sx={{ minHeight: "80vh" }} >
           <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
             <EnhancedTableHead
               order={order}
@@ -152,13 +148,19 @@ export default function EnhancedTable({
               onRequestSort={handleRequestSort}
             />
             <TableBody>
-              {/* TODO: Change this to a function provided by parent  */}
-              {visibleRows ? visibleRows.map(rowComponent) : null}
+              {visibleRows
+                ? visibleRows.map((row) => {
+                  return <React.Fragment key={row.id}>
+                    {rowComponent(row)}
+                  </React.Fragment>
+                })
+                : null}
+              {/* {visibleRows ? visibleRows.map(rowComponent) : null} */}
             </TableBody>
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[ 5, 10, 25 ]}
           component="div"
           count={rows.length}
           rowsPerPage={rowsPerPage}

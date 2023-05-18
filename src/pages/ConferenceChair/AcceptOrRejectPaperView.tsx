@@ -1,14 +1,18 @@
 import { Box, Container, Tab, Tabs, Typography } from "@mui/material";
-import React, { BaseSyntheticEvent } from "react";
+import React, { BaseSyntheticEvent, useEffect } from "react";
 import TabMenu, { ITabs } from "../../components/TabMenu/TabMenu";
 import AcceptOrRejectForm from "../../components/TabMenu/Content/AcceptOrRejectForm";
 import ReviewForm from "../../components/TabMenu/Content/ReviewForm";
 import CommentForm from "../../components/TabMenu/Content/CommentForm";
 import PDFView from "../../components/PDFView/PDFView";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 function AcceptOrRejectPaperView() {
-	const pdfFile = "https://cdn.filestackcontent.com/wcrjf9qPTCKXV3hMXDwK";
-	// TODO:: connect to backend and DB
+	const { state } = useLocation()
+	const { data } = state
+
+	const navigate = useNavigate()
+
 	const handleAcceptOrReject = (event: BaseSyntheticEvent) => {
 		event?.preventDefault();
 		console.log("Event: ", event);
@@ -17,17 +21,18 @@ function AcceptOrRejectPaperView() {
 	const example: ITabs[] = [
 		{ label: "Accept / Reject", content: <AcceptOrRejectForm handleFormSubmission={handleAcceptOrReject} /> },
 		{ label: "Reviews", content: <ReviewForm /> },
-		{ label: "Comments", content: <CommentForm canAddComment={false} /> }
+		{ label: "Comments", content: <CommentForm canAddComment={true} /> }
 	];
 
+	useEffect(() => {
+		if ((Object.keys(data).length == 0)) navigate("/")
+	}, [])
+
 	return (
-		<div style={{ display: "flex", height: "100%" }}>
-			{/* TODO:: add PDF viewer */}
-			<Container sx={{ flexGrow: "1" }}>
-				<PDFView file={pdfFile} />
-			</Container>
+		<Box sx={{ display: "flex", flexDirection: "row" }}>
+			<PDFView paperId={data.id} author={data.author} coAuthors={data.coauthors} />
 			<TabMenu tabs={example} />
-		</div>
+		</Box>
 	);
 }
 export default AcceptOrRejectPaperView;
