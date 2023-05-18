@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, BaseSyntheticEvent } from "react";
 import PDFView from "../../components/PDFView/PDFView";
 import { Box, TextField } from "@mui/material";
 import { useLocation, useNavigate } from 'react-router-dom';

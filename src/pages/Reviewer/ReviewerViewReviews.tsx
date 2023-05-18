@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { BaseSyntheticEvent, useEffect } from "react";
 import PDFView from "../../components/PDFView/PDFView";
 import { Box } from "@mui/material";
 import { useLocation, useNavigate } from 'react-router-dom';
