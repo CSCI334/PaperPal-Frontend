@@ -55,16 +55,16 @@ export default function ConferenceDetail() {
 
   const { snackbar, setSnackbar } = useSnackbar()
 
-  const [ conferenceDetail, setConferenceDetail ] = useState<ConferenceInfoProps>({
+  const [conferenceDetail, setConferenceDetail] = useState<ConferenceInfoProps>({
     id: 1,
     name: "",
     location: "",
     chairName: "",
     chairEmail: "",
-    paperSubmissionDeadline: dayjs('2023-05-17'),
-    paperBiddingDeadline: dayjs('2023-05-17'),
-    paperAnnouncement: dayjs('2023-05-17'),
-    paperReviewDeadline: dayjs('2023-05-17')
+    paperSubmissionDeadline: dayjs(''),
+    paperBiddingDeadline: dayjs(''),
+    paperAnnouncement: dayjs(''),
+    paperReviewDeadline: dayjs('')
   });
 
   // If any of the deadline is changed
@@ -72,7 +72,7 @@ export default function ConferenceDetail() {
 
   useEffect(() => {
 
-  }, [ conferenceDetail.paperBiddingDeadline ])
+  }, [conferenceDetail.paperBiddingDeadline])
 
 
   const navigate = useNavigate();
@@ -83,7 +83,7 @@ export default function ConferenceDetail() {
     if (Object.keys(data).length === 0) {
       navigate("/create")
     }
-    const conferenceInfo: ConferenceInfoProps = createConferenceInfo(data.id, data.conferencename, data.conferencelocation, "Eric", "eric@email", dayjs(data.submissiondeadline), dayjs(data.biddingdeadline), dayjs(data.reviewdeadline), dayjs(data.announcementtime));
+    const conferenceInfo: ConferenceInfoProps = createConferenceInfo(data.id, data.conferencename, data.conferencelocation, data.chair_name, data.chair_email, dayjs(data.submissiondeadline), dayjs(data.biddingdeadline), dayjs(data.reviewdeadline), dayjs(data.announcementtime));
     setConferenceDetail(conferenceInfo);
   }, [])
 
