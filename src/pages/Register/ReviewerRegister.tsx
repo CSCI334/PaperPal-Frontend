@@ -10,22 +10,48 @@ import LeftBanner from "../../components/LeftBanner/LeftBanner";
 import ContainerForm from "../../components/FormContainer/ContainerForm";
 import PasswordForm from "../../components/PasswordForm/PasswordForm";
 import { usePasswordInput } from "../../hooks/Register";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import verifyAccount from "../../services/account/verifyAccount";
+import { useLoading, useSnackbar } from "../../context/FeedbackContext";
 
 function ReviewerRegister() {
+  const navigate = useNavigate();
   const {
     passwordInputProps,
     retypeInputProps,
     passwordError,
     matchError,
   } = usePasswordInput("");
+  const [searchParams, setSearchParams] = useSearchParams({});
+
+  const { isLoading, setIsLoading } = useLoading()
+  const { snackbar, setSnackbar } = useSnackbar()
+
+
+
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (passwordError || matchError) {
       return;
     }
+    const token = searchParams.get("token")
 
-    // Submit form
+    console.log(searchParams.get("token"))
+    console.log(passwordInputProps.value)
+
+    verifyAccount(token, passwordInputProps.value)
+      .then(() => navigate("/"))
+      .catch((value) => {
+        const severity = value.status >= 500 ? "error" : "warning"
+        setSnackbar({ message: value.message, severity: severity })
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
+    navigate("/login");
+
   }
   return (
     <Box
@@ -36,7 +62,7 @@ function ReviewerRegister() {
       }}
     >
       <LeftBanner></LeftBanner>
-      <ContainerForm title={"Create reviewer account"} buttonText="Create account"  >
+      <ContainerForm title={"Create reviewer account"} buttonText="Create account" onSubmit={handleSubmit}  >
         <PasswordForm name="password" {...passwordInputProps}></PasswordForm>
         {passwordError && (
           <span style={{ color: "red" }}>
