@@ -1,8 +1,9 @@
-import { TableCell, TableRow, IconButton, Box } from "@mui/material";
-import {useEffect, useState} from "react";
+import {TableCell, TableRow, IconButton, Box, Typography} from "@mui/material";
+import React, {useEffect, useState} from "react";
 import TableView, { Data, HeadCell } from "../../components/TableView/TableView";
 import createStatusMessage from "../../components/TableView/TableUtilContent";
 import getAllPaper from "../../services/getAllPaper";
+import getConferenceInfo from "../../services/admin/getConferenceInfo";
 import { EditNote, Visibility } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import {GenericForm} from "../../types/GenericForm";
@@ -23,11 +24,64 @@ function createPaper(
         status
     };
 }
-// TODO :: implement a way to stop pages showing up in the bidding phase
+
+interface ReviewerAllocatedPaperProps {
+    phase: string;
+    deadline: Date;
+}
 //This deals with rendering all the allocated papers a reviewer has and other functionality such as moving to different pages related to this one
 function ReviewerAllocatedPaper() {
     const navigate = useNavigate();
     const [ rows, setRows ] = useState<Data[]>([]);
+    const [countdowns, setCountdowns] = useState<ReviewerAllocatedPaperProps[]>([]);
+    const [currentCountdownIndex, setCurrentCountdownIndex] = useState(0);
+    const [time, setTime] = useState<{ phase: string; hours: number; minutes: number; seconds: number }>({
+        phase: "Loading ...",
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+    });
+
+
+    useEffect(() => {
+        getConferenceInfo().then((data) => {
+            const { submissiondeadline, biddingdeadline, reviewdeadline, announcementtime } = data;
+            const countdownData: ReviewerAllocatedPaperProps[] = [
+                { phase: "Submission", deadline: new Date(submissiondeadline) },
+                { phase: "Bidding", deadline: new Date(biddingdeadline) },
+                { phase: "Reviewing", deadline: new Date(reviewdeadline) },
+                { phase: "Announcement", deadline: new Date(announcementtime) },
+            ];
+
+            setCountdowns(countdownData);
+        })
+    }, [])
+
+    useEffect(() => {
+        const countdownInterval = setInterval(() => {
+            const now = new Date();
+            const diff = countdowns[currentCountdownIndex].deadline.getTime() - now.getTime();
+
+            if (diff <= 0) {
+                clearInterval(countdownInterval);
+                if (currentCountdownIndex < countdowns.length - 1) {
+                    setCurrentCountdownIndex(currentCountdownIndex + 1);
+                }
+                return;
+            }
+
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            setTime({ phase: countdowns[currentCountdownIndex].phase, hours, minutes, seconds });
+        }, 1000);
+
+
+
+        return () => clearInterval(countdownInterval);
+
+    }, [countdowns, currentCountdownIndex]);
 
     //gets all papers from backend and creates paper objects out of them
     useEffect(() => {
@@ -41,7 +95,7 @@ function ReviewerAllocatedPaper() {
                     else {
                         value.paperstatus = "Reviewed"
                     }
-                    return createPaper(value.id, value.title, value.username, value.coauthors, value.paperstatus)
+                    return createPaper(value.id, value.title, value.author_name, value.coauthors, value.paperstatus)
                 })
                 setRows(rows ?? [])
             })
@@ -116,6 +170,15 @@ function ReviewerAllocatedPaper() {
     };
 
     //Renders all allocated papers
+    if (time.phase !== "Reviewing") {
+        return (
+            <Box marginTop={4}>
+                <Typography variant="h6">
+                    You currently have no papers allocated.
+                </Typography>
+            </Box>
+        );
+    }
     return (
         <Box sx={{ display: "flex", flexDirection: "column" }}>
             <TableView

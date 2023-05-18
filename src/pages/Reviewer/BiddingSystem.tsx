@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from "react";
-import { Button, TableCell, TableRow, TextField, Box } from "@mui/material";
+import {Button, TableCell, TableRow, TextField, Box, Typography} from "@mui/material";
 import createStatusMessage from "../../components/TableView/TableUtilContent";
 import TableView, { Data, HeadCell } from "../../components/TableView/TableView";
 import DropdownBid from "../../components/DropdownBid/DropdownBid";
 import getAllPaper from "../../services/getAllPaper";
 import addBid from "../../services/addBid";
 import {GenericForm} from "../../types/GenericForm";
+import getConferenceInfo from "../../services/admin/getConferenceInfo";
 
 //Defines a function to create paper data types
 function createPaper(
@@ -25,7 +26,12 @@ function createPaper(
         status
     };
 }
-// TODO :: implement a way to stop pages showing up in the Review phase
+
+interface BiddingSystemProps {
+    phase: string;
+    deadline: Date;
+}
+
 //This function renders the page as well as dealing with any functionality needed for the rendering and submissions
 function BiddingSystem() {
     const [ userPoints, setUserPoints ] = useState<number>(5);
@@ -34,6 +40,55 @@ function BiddingSystem() {
     const [ selectedValue, setSelectedValue ] = useState<Record<string, number>>({});
     const [ inputError, setInputError ] = useState<boolean>(true);
     const [ rows, setRows ] = useState<Data[]>([]);
+    const [countdowns, setCountdowns] = useState<BiddingSystemProps[]>([]);
+    const [currentCountdownIndex, setCurrentCountdownIndex] = useState(0);
+    const [time, setTime] = useState<{ phase: string; hours: number; minutes: number; seconds: number }>({
+        phase: "Loading ...",
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+    });
+
+
+    useEffect(() => {
+        getConferenceInfo().then((data) => {
+            const { submissiondeadline, biddingdeadline, reviewdeadline, announcementtime } = data;
+            const countdownData: BiddingSystemProps[] = [
+                { phase: "Submission", deadline: new Date(submissiondeadline) },
+                { phase: "Bidding", deadline: new Date(biddingdeadline) },
+                { phase: "Reviewing", deadline: new Date(reviewdeadline) },
+                { phase: "Announcement", deadline: new Date(announcementtime) },
+            ];
+
+            setCountdowns(countdownData);
+        })
+    }, [])
+
+    useEffect(() => {
+        const countdownInterval = setInterval(() => {
+            const now = new Date();
+            const diff = countdowns[currentCountdownIndex].deadline.getTime() - now.getTime();
+
+            if (diff <= 0) {
+                clearInterval(countdownInterval);
+                if (currentCountdownIndex < countdowns.length - 1) {
+                    setCurrentCountdownIndex(currentCountdownIndex + 1);
+                }
+                return;
+            }
+
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            setTime({ phase: countdowns[currentCountdownIndex].phase, hours, minutes, seconds });
+        }, 1000);
+
+
+
+        return () => clearInterval(countdownInterval);
+
+    }, [countdowns, currentCountdownIndex]);
 
     //Gets papers from the backend and then creates paper objects with them
     useEffect(() => {
@@ -152,7 +207,15 @@ function BiddingSystem() {
             </TableRow>
         );
     };
-
+    if (time.phase !== "Bidding") {
+        return (
+            <Box marginTop={4}>
+                <Typography variant="h6">
+                    Bidding is not taking place currently.
+                </Typography>
+            </Box>
+        );
+    }
     //Renders the page
     return (
         <Box sx={{ display: "flex", flexDirection: "column" }}>
