@@ -14,12 +14,8 @@ async function verifyAccount(token: string | null, password: string) {
         }
         const { data } = await axios.post("/verify", {
             password: password,
-        },
-            {
-                headers: headers
-            });
-        console.log(data)
-
+        }, { headers: headers })
+        return data;
     } catch (error) { errorHandler(error) }
 }
 

@@ -1,7 +1,5 @@
 import { useEffect } from "react";
 import { useLoading, useSnackbar } from "../context/FeedbackContext";
-import getAllPaper from "../services/getAllPaper";
-import { GenericForm } from "../types/GenericForm";
 
 export default function useHttpRequest(httpRequest: Promise<any>, callback: (value: any) => void, dependencyList?: React.DependencyList | undefined) {
     const { isLoading, setIsLoading } = useLoading()

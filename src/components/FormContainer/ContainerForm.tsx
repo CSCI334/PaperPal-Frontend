@@ -1,6 +1,6 @@
 import { Theme } from "@emotion/react";
 import { Box, Button, SxProps, TextField, Typography, Link as MuiLink } from "@mui/material";
-import { FormEventHandler, ReactNode } from "react";
+import { FormEvent, FormEventHandler, ReactNode } from "react";
 
 interface Props {
   title: string;
@@ -28,13 +28,18 @@ export default function ContainerForm({
   sx,
   onSubmit,
 }: Props) {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (onSubmit) onSubmit(event)
+  }
+
   // TODO: change the linkText to the relevant one
   return (
     <Box sx={[ defaultStyles, ...(Array.isArray(sx) ? sx : [ sx ]) ]}>
       <Typography fontWeight={"bold"} variant="h5" marginY={"20px"} >
         {title}
       </Typography>
-      <form onSubmit={onSubmit} className="w-full">
+      <form onSubmit={handleSubmit} className="w-full">
         <Box
           sx={{
             width: "100%",

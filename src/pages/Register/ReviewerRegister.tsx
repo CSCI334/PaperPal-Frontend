@@ -13,6 +13,7 @@ import { usePasswordInput } from "../../hooks/Register";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import verifyAccount from "../../services/account/verifyAccount";
 import { useLoading, useSnackbar } from "../../context/FeedbackContext";
+import httpOnClick from "../../hooks/httpOnClick";
 
 function ReviewerRegister() {
   const navigate = useNavigate();
@@ -22,37 +23,22 @@ function ReviewerRegister() {
     passwordError,
     matchError,
   } = usePasswordInput("");
-  const [searchParams, setSearchParams] = useSearchParams({});
+  const [ searchParams, setSearchParams ] = useSearchParams({});
 
   const { isLoading, setIsLoading } = useLoading()
   const { snackbar, setSnackbar } = useSnackbar()
 
-
-
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const onClick = httpOnClick(() => {
     if (passwordError || matchError) {
-      return;
+      return Promise.reject()
     }
     const token = searchParams.get("token")
+    return verifyAccount(token, passwordInputProps.value)
+  }, value => {
+    console.log("verify success")
+    navigate("/login")
+  }, "Succesfully verified account")
 
-    console.log(searchParams.get("token"))
-    console.log(passwordInputProps.value)
-
-    verifyAccount(token, passwordInputProps.value)
-      .then(() => navigate("/"))
-      .catch((value) => {
-        const severity = value.status >= 500 ? "error" : "warning"
-        setSnackbar({ message: value.message, severity: severity })
-      })
-      .finally(() => {
-        setIsLoading(false)
-      })
-    navigate("/login");
-
-  }
   return (
     <Box
       sx={{
@@ -62,7 +48,7 @@ function ReviewerRegister() {
       }}
     >
       <LeftBanner></LeftBanner>
-      <ContainerForm title={"Create reviewer account"} buttonText="Create account" onSubmit={handleSubmit}  >
+      <ContainerForm title={"Create reviewer account"} buttonText="Create account" onSubmit={onClick}  >
         <PasswordForm name="password" {...passwordInputProps}></PasswordForm>
         {passwordError && (
           <span style={{ color: "red" }}>
