@@ -39,6 +39,7 @@ import {
   ReviewerProtectedRoute,
 } from "./services/utility/routeGuard";
 import { FeedbackProvider } from "./context/FeedbackContext";
+import AdminRegister from "./pages/Register/AdminRegister";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
@@ -77,6 +78,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
               <Route path="/register-author" element={<AuthorRegister />} />
               <Route path="/register-reviewer" element={<ReviewerRegister />} />
               <Route path="/register-chair" element={<ChairRegister />} />
+              <Route path="/register-admin" element={<AdminRegister />} />
 
               <Route path="*" element={<NotFound />} />
             </Routes>

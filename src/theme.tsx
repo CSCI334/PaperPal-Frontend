@@ -23,10 +23,10 @@ declare module "@mui/material/styles" {
   }
 
   interface Palette {
-    button: Palette["primary"];
+    button: Palette[ "primary" ];
   }
   interface PaletteOptions {
-    button: PaletteOptions["primary"];
+    button: PaletteOptions[ "primary" ];
   }
 }
 
@@ -52,7 +52,6 @@ const theme = createTheme({
     button: {
       main: "#72BAD1",
       contrastText: "white",
-      
     },
   },
 
@@ -66,7 +65,7 @@ const theme = createTheme({
     },
   },
   status: {
-    danger: red[500],
+    danger: red[ 500 ],
     action: "#72BAD1",
   },
 });
