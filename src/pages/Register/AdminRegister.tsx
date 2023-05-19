@@ -55,7 +55,7 @@ function AdminRegister() {
             }}
         >
             <LeftBanner></LeftBanner>
-            <ContainerForm title={"Create admin account"} buttonText="Create account" onSubmit={onClick}>
+            <ContainerForm title={"Create Admin account"} buttonText="Create account" onSubmit={onClick}>
                 <PasswordForm name="password" {...passwordInputProps}></PasswordForm>
                 {passwordError && (
                     <span style={{ color: "red" }}>
