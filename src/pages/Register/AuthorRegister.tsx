@@ -20,8 +20,8 @@ import { useNavigate } from "react-router-dom";
 
 function Register() {
   const { setAuthState } = useAuth();
-  const [ { email, password, username }, setForm ] = useState({ email: "", password: "", username: "" });
-  const [ { confirmPassword, errorMessage }, setConfirmPassword ] = useState({
+  const [{ email, password, username }, setForm] = useState({ email: "", password: "", username: "" });
+  const [{ confirmPassword, errorMessage }, setConfirmPassword] = useState({
     confirmPassword: "",
     errorMessage: "",
   });
@@ -30,7 +30,7 @@ function Register() {
     const name = e.target.name;
     const value = e.target.value;
 
-    setForm((form) => ({ ...form, [ name ]: value }));
+    setForm((form) => ({ ...form, [name]: value }));
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -41,7 +41,7 @@ function Register() {
     // }
     authorRegister({ email, password, username }).then((value) => {
       setAuthState(AuthState.createFromString(localStorage.getItem("loggedUser") || ""));
-    }).then(() => navigate("/"))
+    }).then(() => navigate("/")).then(() => alert("Please verify your email and then login with your credential"))
 
     // Submit form
   };
