@@ -62,6 +62,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
                 {/* Author */}
                 <Route path="/AuthorViewRatings" element={<AuthorProtectedRoute><AuthorViewRatings /></AuthorProtectedRoute>} />
                 <Route path="/authorsubmittedpaper" element={<AuthorProtectedRoute><AuthorSubmittedPaper /></AuthorProtectedRoute>} />
+                <Route path="/AuthorRateReview" element={<AuthorProtectedRoute><AuthorRateReview /></AuthorProtectedRoute>} />
 
                 {/* Conference Chair */}
                 <Route path="/allpaperslist" element={<ChairProtectedRoute><AllPapersList /></ChairProtectedRoute>} />

@@ -1,29 +1,23 @@
-import React, { BaseSyntheticEvent } from "react";
+import React, { BaseSyntheticEvent, useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
+import getComments from "../../../services/getComments";
 
 interface ICommentFormProps {
+    paperId: any;
     canAddComment: boolean;
     handleSubmit?: (event: BaseSyntheticEvent) => void;
 }
 
 function CommentForm(props: ICommentFormProps) {
-    const [ state, setState ] = React.useState(false);
+    const [state, setState] = React.useState(false);
+    const [rows, setRows] = useState<any[]>([]);
 
-    // TODO:: connect to backend and DB
-    const mockData = [
-        {
-            commentId: 1,
-            comment: "Comment One"
-        },
-        {
-            commentId: 2,
-            comment: "Comment Two"
-        },
-        {
-            commentId: 3,
-            comment: "Comment Three"
-        }
-    ]
+    React.useEffect(() => {
+        getComments(props.paperId)
+            .then((value) => {
+                setRows(value ?? [])
+            })
+    }, [])
 
     const addComment = () => {
         setState(true)
@@ -35,9 +29,12 @@ function CommentForm(props: ICommentFormProps) {
 
     return (
         <div style={{ marginBottom: "8px" }}>
-            {mockData.map((x, index) => (
+            {rows.map((x, index) => (
                 <textarea key={`comment-key-${index}`} style={{ resize: "none" }} id="comments" name={`comment-name-${index}`} value={x.comment} disabled cols={30} />
             ))}
+            {rows.length == 0 && (
+                <div style={{ color: "white" }}>No Comments</div>
+            )}
             {props.canAddComment && (
                 <>
                     <br />

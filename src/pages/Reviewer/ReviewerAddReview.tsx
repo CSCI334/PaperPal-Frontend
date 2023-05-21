@@ -5,6 +5,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import TabMenu, { ITabs } from "../../components/TabMenu/TabMenu";
 import addPaperReview from "../../services/addPaperReview";
 import RatingPaperForm from "../../components/TabMenu/Content/RatingPaperForm";
+import getReviews from "../../services/getReviews";
+import getUser from "../../services/account/getUser";
 
 
 //This class Renders the Reviewer add review page and deals with all components necessary for render
@@ -13,11 +15,11 @@ const ReviewerAddReview: React.FC = () => {
     const { state } = useLocation()
     const { data } = state
     const navigate = useNavigate()
+    const [rating, setRating] = useState()
 
     console.log(state);
     useEffect(() => {
         if ((Object.keys(data).length == 0)) navigate("/")
-
     }, [])
 
     const handleFormSubmission = useCallback((event: React.BaseSyntheticEvent) => {
@@ -35,52 +37,38 @@ const ReviewerAddReview: React.FC = () => {
             });
     }, [textInput, data.id, navigate]);
 
-    const example: ITabs[] = [
-        { label: "My Review", content: <RatingPaperForm handleFormSubmission={handleFormSubmission} /> }
-    ];
-
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTextInput(event.target.value);
     };
 
-    // TODO:: connect to backend and DB
-    const handleRatingForm = (event: BaseSyntheticEvent) => {
-        event?.preventDefault();
-        console.log("Event: ", event);
-    }
-
     const tabs: ITabs[] = [
-        { label: "My Review", content: <RatingPaperForm handleFormSubmission={handleRatingForm} /> }
+        { label: "My Review", content: <RatingPaperForm handleFormSubmission={handleFormSubmission} /> }
     ];
 
-    // TODO:: add a -3 - 3 scale and submission button as well as submitting that data to the backend.
     return (
-        <div style={{ display: "flex", height: "100%" }}>
-            <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-                <Box sx={{ marginLeft: "300px", display: "flex", flexDirection: "column", alignItems: "center" }}>
-                    <PDFView paperId={data.id} author={data.author} coAuthors={data.coauthors} />
-                    <Box
-                        sx={{
-                            marginTop: "100px",
-                            width: "100%"
-                        }}>
-                        <TextField
-                            label="Your Review"
-                            multiline
-                            fullWidth
-                            value={textInput}
-                            onChange={handleInputChange}
-                            variant="outlined"
-                            margin="normal"
-                        />
-                    </Box>
-                </Box>
-                <Box sx={{ marginLeft: "0px" }}>
-                    <TabMenu tabs={example} />
+        <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+            <Box sx={{ marginLeft: "300px", display: "flex", flexDirection: "column", alignItems: "center" }}>
+                <PDFView paperId={data.id} author={data.author} coAuthors={data.coauthors} />
+                <Box
+                    sx={{
+                        marginTop: "100px",
+                        width: "100%"
+                    }}>
+                    <TextField
+                        label="Your Review"
+                        multiline
+                        fullWidth
+                        value={textInput}
+                        onChange={handleInputChange}
+                        variant="outlined"
+                        margin="normal"
+                    />
                 </Box>
             </Box>
-            <TabMenu tabs={tabs} />
-        </div>
+            <Box sx={{ marginLeft: "0px" }}>
+                <TabMenu tabs={tabs} />
+            </Box>
+        </Box>
     );
 };
 export default ReviewerAddReview;
