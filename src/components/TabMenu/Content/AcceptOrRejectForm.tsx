@@ -5,7 +5,6 @@ interface IAcceptOrRejectFormProps {
 }
 
 function AcceptOrRejectForm({ handleFormSubmission }: IAcceptOrRejectFormProps) {
-	{/* TODO:: add functionlity to load as edit form */ }
 	return (
 		<div>
 			<form onSubmit={handleFormSubmission}>

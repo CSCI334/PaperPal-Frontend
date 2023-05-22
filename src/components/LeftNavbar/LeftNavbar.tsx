@@ -50,13 +50,13 @@ function LeftNavbar({ buttons }: LeftNavbarProps) {
   // still hard coded need to change this
   const { authState, setAuthState } = useAuth();
   const accountType = authState.userData.accountType ?? ""
-  const navBarButtonList = buttonLists[ accountType.toLowerCase() as keyof ButtonLists ] ?? [ { title: " " } ];
-  const [ selectedButton, setSelectedButton ] = useState(localStorage.getItem("selectedButton") || navBarButtonList[ 0 ].title);
+  const navBarButtonList = buttonLists[accountType.toLowerCase() as keyof ButtonLists] ?? [{ title: " " }];
+  const [selectedButton, setSelectedButton] = useState(localStorage.getItem("selectedButton") || navBarButtonList[0].title);
 
   // When the button clicked, it will navigate to the relevant page
   const handleButtonClick = (title: string) => {
     setSelectedButton(title);
-    const path = buttonRoutes[ title ];
+    const path = buttonRoutes[title];
     if (path) {
       navigate(path);
     }
@@ -74,7 +74,7 @@ function LeftNavbar({ buttons }: LeftNavbarProps) {
 
   useEffect(() => {
     localStorage.setItem("selectedButton", selectedButton);
-  }, [ selectedButton ]);
+  }, [selectedButton]);
 
   return (
     <Drawer

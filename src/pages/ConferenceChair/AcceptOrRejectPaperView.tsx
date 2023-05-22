@@ -1,5 +1,5 @@
 import { Box, Container, Tab, Tabs, Typography } from "@mui/material";
-import React, { BaseSyntheticEvent, useEffect } from "react";
+import React, { BaseSyntheticEvent, useEffect, useState } from "react";
 import TabMenu, { ITabs } from "../../components/TabMenu/TabMenu";
 import AcceptOrRejectForm from "../../components/TabMenu/Content/AcceptOrRejectForm";
 import ReviewForm from "../../components/TabMenu/Content/ReviewForm";
@@ -10,6 +10,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 function AcceptOrRejectPaperView() {
 	const { state } = useLocation()
 	const { data } = state
+	const [tabs, setTabs] = useState<ITabs[]>([])
 
 	const navigate = useNavigate()
 
@@ -18,11 +19,13 @@ function AcceptOrRejectPaperView() {
 		console.log("Event: ", event);
 	}
 
-	const example: ITabs[] = [
-		{ label: "Accept / Reject", content: <AcceptOrRejectForm handleFormSubmission={handleAcceptOrReject} /> },
-		{ label: "Reviews", content: <ReviewForm /> },
-		{ label: "Comments", content: <CommentForm canAddComment={true} /> }
-	];
+	useEffect(() => {
+		setTabs([
+			{ label: "Accept / Reject", content: <AcceptOrRejectForm handleFormSubmission={handleAcceptOrReject} /> },
+			{ label: "Reviews", content: <ReviewForm paperId={data.id} /> },
+			{ label: "Comments", content: <CommentForm paperId={data.id} canAddComment={false} /> }
+		]);
+	}, [data])
 
 	useEffect(() => {
 		if ((Object.keys(data).length == 0)) navigate("/")
@@ -31,7 +34,7 @@ function AcceptOrRejectPaperView() {
 	return (
 		<Box sx={{ display: "flex", flexDirection: "row" }}>
 			<PDFView paperId={data.id} author={data.author} coAuthors={data.coauthors} />
-			<TabMenu tabs={example} />
+			<TabMenu tabs={tabs} />
 		</Box>
 	);
 }

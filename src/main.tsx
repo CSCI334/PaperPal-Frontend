@@ -18,6 +18,7 @@ import AddNewContact from "./pages/Admin/AddNewContact";
 import ContactList from "./pages/Admin/ContactList";
 import AuthorViewRatings from "./pages/Author/AuthorViewRatings";
 import AuthorSubmittedPaper from "./pages/Author/AuthorSubmittedPaper";
+import AuthorRateReview from "./pages/Author/AuthorRateReview";
 import AuthorRegister from "./pages/Register/AuthorRegister";
 import AuthProvider from "./context/AuthContext";
 import ReviewerRegister from "./pages/Register/ReviewerRegister";
@@ -64,6 +65,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
                 {/* Author */}
                 <Route path="/AuthorViewRatings" element={<AuthorProtectedRoute><AuthorViewRatings /></AuthorProtectedRoute>} />
                 <Route path="/authorsubmittedpaper" element={<AuthorProtectedRoute><AuthorSubmittedPaper /></AuthorProtectedRoute>} />
+                <Route path="/AuthorRateReview" element={<AuthorProtectedRoute><AuthorRateReview /></AuthorProtectedRoute>} />
 
                 {/* Conference Chair */}
                 <Route path="/allpaperslist" element={<ChairProtectedRoute><AllPapersList /></ChairProtectedRoute>} />

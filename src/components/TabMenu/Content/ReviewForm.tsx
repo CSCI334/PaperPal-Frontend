@@ -1,40 +1,42 @@
-interface IReviewFormProps { }
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import getReviews from "../../../services/getReviews";
+import getUser from "../../../services/account/getUser";
+
+interface IReviewFormProps {
+    paperId: any;
+}
 
 function ReviewForm(props: IReviewFormProps) {
+    const navigate = useNavigate();
+    const [rows, setRows] = useState<any[]>([]);
 
-    // TODO:: connect to backend and DB
-    const mockData = [
-        {
-            reviewId: 1,
-            reviewer: "Jerred Finch",
-            reviewSubmitted: "01/01/2023",
-            rating: "1"
-        },
-        {
-            reviewId: 2,
-            reviewer: "Jonathan C.",
-            reviewSubmitted: "01/01/2023",
-            rating: "2"
-        },
-        {
-            reviewId: 3,
-            reviewer: "Meghan Dickie",
-            reviewSubmitted: "01/01/2023",
-            rating: "1"
-        }
-    ]
+    // get reviews
+    React.useEffect(() => {
+        getReviews(props.paperId)
+            .then((value) => {
+                setRows(value ?? [])
+            })
+    }, [])
+
+    // handles review click - navigates to review view
+    const handleViewReviewClick = (data: any) => {
+        getUser().then((value) => console.log(value));
+        navigate(`/AuthorRateReview`, { state: { data: data } })
+    };
 
     return (
         <div style={{ marginBottom: "8px" }}>
-            {mockData.map((x, index) => (
+            {rows.map((x, index) => (
                 <div key={`review-${index}`} style={{ backgroundColor: "#D9D9D9", marginBottom: "8px", textAlign: "left", padding: "8px" }}>
-                    <label>Reviewer: </label><span>{x.reviewer}</span><br />
-                    <label>Review Submitted: </label><span>{x.reviewSubmitted}</span><br />
-                    <label>Rating: </label><span>{x.rating}</span><br />
-                    {/* TODO:: link to view review page */}
-                    <span style={{ textDecorationLine: "underline" }}>View Review</span>
+                    <label>Reviewer: </label><span>{x.reviewername}</span><br />
+                    <label>Rating: </label><span>{x.paperrating}</span><br />
+                    <span style={{ textDecorationLine: "underline", cursor: "pointer" }} onClick={() => handleViewReviewClick(x)}>View Review</span>
                 </div>
             ))}
+            {rows.length == 0 && (
+                <div style={{ color: "white" }}>No Reviews</div>
+            )}
         </div>
     )
 }
