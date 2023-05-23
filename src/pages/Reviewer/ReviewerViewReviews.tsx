@@ -6,8 +6,6 @@ import TabMenu, { ITabs } from "../../components/TabMenu/TabMenu";
 import ReviewForm from "../../components/TabMenu/Content/ReviewForm";
 import CommentForm from "../../components/TabMenu/Content/CommentForm";
 import addComments from "../../services/addComments";
-import { AuthContext, useAuth } from "../../context/AuthContext";
-
 
 //This class Renders the Reviewer view review page and deals with all components necessary for render
 const ReviewerViewReviews: React.FC = () => {
@@ -16,8 +14,6 @@ const ReviewerViewReviews: React.FC = () => {
     const navigate = useNavigate()
     const [tabs, setTabs] = useState<ITabs[]>([])
     const [triggerReload, setTriggerReload] = useState<number>(0)
-    // @meghan define auth state
-    const { authState } = useAuth();
 
     useEffect(() => {
         if ((Object.keys(data).length == 0)) navigate("/")
@@ -29,8 +25,6 @@ const ReviewerViewReviews: React.FC = () => {
     }
 
     useEffect(() => {
-        // get the current logged user account type
-        console.log(authState.userData.accountType);
         setTabs([
             { label: "Reviews", content: <ReviewForm paperId={data.id} /> },
             { label: "Comments", content: <CommentForm paperId={data.id} canAddComment={true} handleSubmit={handleCommentForm} /> }

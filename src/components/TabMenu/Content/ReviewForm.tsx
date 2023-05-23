@@ -21,7 +21,6 @@ function ReviewForm(props: IReviewFormProps) {
 
     // handles review click - navigates to review view
     const handleViewReviewClick = (data: any) => {
-        getUser().then((value) => console.log(value));
         navigate(`/AuthorRateReview`, { state: { data: data } })
     };
 

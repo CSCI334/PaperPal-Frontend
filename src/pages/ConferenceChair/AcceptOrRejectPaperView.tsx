@@ -6,6 +6,7 @@ import ReviewForm from "../../components/TabMenu/Content/ReviewForm";
 import CommentForm from "../../components/TabMenu/Content/CommentForm";
 import PDFView from "../../components/PDFView/PDFView";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import acceptReject from "../../services/acceptReject";
 
 function AcceptOrRejectPaperView() {
 	const { state } = useLocation()
@@ -16,12 +17,19 @@ function AcceptOrRejectPaperView() {
 
 	const handleAcceptOrReject = (event: BaseSyntheticEvent) => {
 		event?.preventDefault();
-		console.log("Event: ", event);
+		let status = event.target.elements.accept_reject.value == 'accept' ? "ACCEPTED" : event.target.elements.accept_reject.value == 'reject' ? "REJECTED" : "";
+		acceptReject(data.id, status)
+			.then(response => {
+				navigate(-1);
+			})
+			.catch(error => {
+				console.error(error);
+			});
 	}
 
 	useEffect(() => {
 		setTabs([
-			{ label: "Accept / Reject", content: <AcceptOrRejectForm handleFormSubmission={handleAcceptOrReject} /> },
+			{ label: "Accept / Reject", content: <AcceptOrRejectForm handleFormSubmission={handleAcceptOrReject} previousRating={data.paperstatus ? data.paperstatus.toString() : ''} /> },
 			{ label: "Reviews", content: <ReviewForm paperId={data.id} /> },
 			{ label: "Comments", content: <CommentForm paperId={data.id} canAddComment={false} /> }
 		]);
