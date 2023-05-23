@@ -7,6 +7,10 @@ import getAllPaper from "../../services/getAllPaper";
 import addBid from "../../services/addBid";
 import { GenericForm } from "../../types/GenericForm";
 import getConferenceInfo from "../../services/admin/getConferenceInfo";
+import getWorkload from "../../services/reviewer/getWorkload";
+import useWorkload from "../../hooks/useWorkload";
+import httpOnClick from "../../hooks/httpOnClick";
+import postWorkload from "../../services/reviewer/postWorkload";
 
 //Defines a function to create paper data types
 function createPaper(
@@ -34,12 +38,24 @@ interface BiddingSystemProps {
 
 //This function renders the page as well as dealing with any functionality needed for the rendering and submissions
 function BiddingSystem() {
-    const [userPoints, setUserPoints] = useState<number>(5);
-    const [userPapers, setUserPapers] = useState<number | string>(0);
+    const [userPoints, setUserPoints] = useState<number>(0);
+    const [userPapers, setUserPapers] = useState<number>(0);
     const [itemSelected, setItemSelected] = useState<boolean>(false);
     const [selectedValue, setSelectedValue] = useState<Record<string, number>>({});
-    const [inputError, setInputError] = useState<boolean>(true);
+    const [isWorkload, setIsWorkload] = useState<boolean>(true);
+    const [inputError, setInputError] = useState<boolean>(false)
+
     const [rows, setRows] = useState<Data[]>([]);
+    const updateAttribute = (id: number, attributeName: string, newValue: any) => {
+        setRows((prevRows) =>
+            prevRows.map((row) => {
+                if (row.id === id) {
+                    return { ...row, [attributeName]: newValue };
+                }
+                return row;
+            })
+        );
+    };
     const [countdowns, setCountdowns] = useState<BiddingSystemProps[]>([]);
     const [currentCountdownIndex, setCurrentCountdownIndex] = useState(0);
     const [time, setTime] = useState<{ phase: string; hours: number; minutes: number; seconds: number }>({
@@ -48,6 +64,8 @@ function BiddingSystem() {
         minutes: 0,
         seconds: 0,
     });
+
+
 
 
     useEffect(() => {
@@ -92,22 +110,36 @@ function BiddingSystem() {
 
     //Gets papers from the backend and then creates paper objects with them
     useEffect(() => {
+        // get workload in backend and set the text field
+        getWorkload().then((data) => {
+            data = data ?? []
+            if (data.paperworkload === null) {
+                setIsWorkload(false);
+            }
+            console.log(data.paperworkload)
+            setUserPapers(data.paperworkload)
+            setUserPoints(data.bidpoints)
+            console.log(data.bidpoints)
+        })
         getAllPaper()
             .then((value) => {
-                value = value ?? []
+                // value = value ?? []
                 let totalBids = 0;
                 const rows = value.map((value: GenericForm) => {
                     if (Number(value.bidamount) > 0) {
                         value.paperstatus = "Already Bid";
+                        // totalBids += Number(value.bidamount)
+                        // setUserPoints(userPoints - value.bidamount)
                     }
                     else {
                         value.paperstatus = "Ready to Bid";
                     }
-                    totalBids += (Number(value.bidamount) || 0);
+                    // totalBids += (Number(value.bidamount) || 0);
                     return createPaper(value.id, value.title, value.username, value.coauthors, Number(value.bidamount), value.paperstatus)
                 })
-                setUserPoints(userPoints - totalBids);
+                // setUserPoints(userPoints - totalBids);
                 setRows(rows ?? [])
+                console.log(rows);
             })
     }, [])
     //This is a function that handles what happens when an item is selected in a dropdown menu
@@ -129,33 +161,68 @@ function BiddingSystem() {
 
         //If the parsed value is not a number within the range of 1-10 the submission button becomes disabled and an error appears on the TextField
         if (isNaN(parsedValue) || parsedValue < 1 || parsedValue > 10) {
-            setUserPapers(event.target.value);
+            setUserPapers(event.target.valueAsNumber);
             setInputError(true);
         } else {
             setInputError(false);
             setUserPapers(parsedValue);
         }
     };
+    const handleUpload = httpOnClick(() => {
+        const selectedPaperId = Object.keys(selectedValue).find((paperId) => selectedValue[paperId] > 0);
+        if (selectedPaperId !== undefined) {
+            return addBid(selectedPaperId, selectedValue[selectedPaperId].toString())
+        }
+        return new Promise<any>(() => { });
+
+    }, () => {
+        const selectedPaperId = Object.keys(selectedValue).find((paperId) => selectedValue[paperId] > 0);
+        if (selectedPaperId !== undefined) {
+            updateAttribute(Number.parseInt(selectedPaperId), "bid", selectedValue[selectedPaperId])
+            updateAttribute(Number.parseInt(selectedPaperId), "status", "Already Bid")
+            console.log(selectedPaperId)
+            setUserPoints(userPoints - selectedValue[selectedPaperId])
+            setItemSelected(false);
+            setSelectedValue({});
+        }
+
+    }, "Succesfully submit bid")
 
     //Handles what happens when the submission Button is clicked
-    const handleUpload = () => {
-        //Finds the paperId of the row that has a value selected in its dropDown menu
-        const selectedPaperId = Object.keys(selectedValue).find((paperId) => selectedValue[paperId] > 0);
-        if (selectedPaperId != undefined) {
-            addBid(selectedPaperId, selectedValue[selectedPaperId].toString())
-                .then(response => {
-                    console.log(response);
-                    window.location.reload();
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-        }
-    }
+    // const handleUpload = () => {
+    //     //Finds the paperId of the row that has a value selected in its dropDown menu
+    //     const selectedPaperId = Object.keys(selectedValue).find((paperId) => selectedValue[paperId] > 0);
 
-    const handlePapers = () => {
-        console.log(userPapers)
-    }
+    //     if (selectedPaperId != undefined) {
+    //         console.log(selectedPaperId)
+    //         console.log(selectedValue)
+    //         updateAttribute(Number.parseInt(selectedPaperId), "bid", selectedValue[selectedPaperId])
+    //         updateAttribute(Number.parseInt(selectedPaperId), "status", "Already Bid")
+    //         console.log(selectedPaperId)
+    //         setUserPoints(userPoints - selectedValue[selectedPaperId])
+    //         setItemSelected(false);
+    //         setSelectedValue({});
+    //         // addBid(selectedPaperId, selectedValue[selectedPaperId].toString())
+    //         //     .then(response => {
+    //         //         console.log(response);
+    //         //         updateAttribute(Number.parseInt(selectedPaperId), "bidamount", selectedValue[selectedPaperId])
+    //         //         updateAttribute(Number.parseInt(selectedPaperId), "status", "Already Bid")
+    //         //         setUserPoints(userPoints - selectedValue[selectedPaperId])
+    //         //     })
+    //         //     .catch(error => {
+    //         //         console.error(error);
+    //         //     });
+    //     }
+    // }
+
+    const handlePapers = httpOnClick(() => {
+
+        return postWorkload(userPapers)
+    }, value => {
+        // not recommended
+        setUserPoints(userPapers * 3)
+        setIsWorkload(true);
+    }, "Succesfully set maximum paper")
 
     //Creates the headers of a table
     const headCells: readonly HeadCell[] = [
@@ -190,6 +257,7 @@ function BiddingSystem() {
                 <TableCell>{row.coauthors}</TableCell>
                 <TableCell>
                     {row.status === 'Ready to Bid' ? (//If the paper has already been bid on then it will show the bid value instead of a dropdown menu
+
                         <DropdownBid
                             key={row.id}
                             points={userPoints}
@@ -224,26 +292,45 @@ function BiddingSystem() {
                     <p style={{ marginBottom: '0px', marginRight: '20px' }}>Remaining Bidding points: {userPoints}</p>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                         <p>Maximum number of papers you would like to take: </p>
-                        <TextField
-                            type="text"
-                            value={userPapers}
-                            onChange={handleTextInputChange}
-                            variant="standard"
-                            size="small"
-                            sx={{ marginLeft: '8px', width: '80px', height: '25px' }}
-                            error={inputError}
-                            helperText={inputError ? "Invalid input (1-10)" : ""}
-                        />
+                        {isWorkload && (
+                            <p style={{ marginLeft: '4px' }}>{userPapers}</p>
+                        )}
+                        {!isWorkload && (
+                            <TextField
+                                type="number"
+                                InputProps={{
+                                    inputProps: {
+                                        min: 1, // Minimum value
+                                        max: 10, // Maximum value
+                                    },
+                                }}
+                                defaultValue={0}
+                                onChange={handleTextInputChange}
+                                variant="standard"
+                                size="small"
+                                sx={{ marginLeft: '8px', width: '80px', height: '25px' }}
+                                error={inputError}
+                                helperText={inputError ? "Invalid input (1-10)" : ""}
+
+
+                            />
+                        )}
+
                     </div>
-                    <Button variant="contained" color="button"
-                        sx={{
-                            marginLeft: "2%"
-                        }}
-                        onClick={handlePapers}
-                        disabled={inputError}
-                    >
-                        Submit Max Papers
-                    </Button>
+
+                    {!isWorkload && (
+                        <Button variant="contained" color="button"
+                            sx={{
+                                marginLeft: "2%"
+                            }}
+                            onClick={handlePapers}
+                            disabled={inputError}
+                        >
+                            Submit Max Papers
+                        </Button>
+                    )}
+
+
                 </div>
 
             </Box>

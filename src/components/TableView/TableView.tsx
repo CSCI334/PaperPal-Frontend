@@ -109,14 +109,13 @@ export default function EnhancedTable({
     (event: unknown, newPage: number) => {
       setPage(newPage);
 
+      const startIndex = newPage * rowsPerPage;
+      const endIndex = startIndex + rowsPerPage;
       const sortedRows = rows.slice().sort(getComparator(order, orderBy));
-      const updatedRows = sortedRows.slice(
-        newPage * rowsPerPage,
-        newPage * rowsPerPage + rowsPerPage
-      );
+      const updatedRows = sortedRows.slice(startIndex, endIndex);
       setVisibleRows(updatedRows);
     },
-    [order, orderBy, rowsPerPage]
+    [order, orderBy, rows, rowsPerPage]
   );
 
   const handleChangeRowsPerPage = useCallback(
