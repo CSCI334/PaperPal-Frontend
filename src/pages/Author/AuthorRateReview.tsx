@@ -1,5 +1,5 @@
 import React, { BaseSyntheticEvent, useEffect, useState } from "react";
-import { Container, Box } from "@mui/material";
+import { Container } from "@mui/material";
 import TabMenu, { ITabs } from "../../components/TabMenu/TabMenu";
 import RatingReviewForm from "../../components/TabMenu/Content/RatingReviewForm";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -19,7 +19,7 @@ const AuthorRateReview: React.FC = () => {
 
     useEffect(() => {
         setTabs([
-            { label: "Rating of Review", content: <RatingReviewForm handleFormSubmission={handleRatingForm} /> }
+            { label: "Rating of Review", content: <RatingReviewForm handleFormSubmission={handleRatingForm} previousRating={data.reviewrating ? data.reviewrating.toString() : '0'} /> }
         ]);
     }, [data])
 
@@ -33,7 +33,7 @@ const AuthorRateReview: React.FC = () => {
             })
             .catch(error => {
                 console.error(error);
-            });;
+            });
     }
 
     return (
