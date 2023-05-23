@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from "react";
-import {Button, TableCell, TableRow, TextField, Box, Typography} from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Button, TableCell, TableRow, TextField, Box, Typography } from "@mui/material";
 import createStatusMessage from "../../components/TableView/TableUtilContent";
 import TableView, { Data, HeadCell } from "../../components/TableView/TableView";
 import DropdownBid from "../../components/DropdownBid/DropdownBid";
 import getAllPaper from "../../services/getAllPaper";
 import addBid from "../../services/addBid";
-import {GenericForm} from "../../types/GenericForm";
+import { GenericForm } from "../../types/GenericForm";
 import getConferenceInfo from "../../services/admin/getConferenceInfo";
 
 //Defines a function to create paper data types
@@ -34,12 +34,12 @@ interface BiddingSystemProps {
 
 //This function renders the page as well as dealing with any functionality needed for the rendering and submissions
 function BiddingSystem() {
-    const [ userPoints, setUserPoints ] = useState<number>(5);
-    const [ userPapers, setUserPapers ] = useState<number | string>(0);
-    const [ itemSelected, setItemSelected ] = useState<boolean>(false);
-    const [ selectedValue, setSelectedValue ] = useState<Record<string, number>>({});
-    const [ inputError, setInputError ] = useState<boolean>(true);
-    const [ rows, setRows ] = useState<Data[]>([]);
+    const [userPoints, setUserPoints] = useState<number>(5);
+    const [userPapers, setUserPapers] = useState<number | string>(0);
+    const [itemSelected, setItemSelected] = useState<boolean>(false);
+    const [selectedValue, setSelectedValue] = useState<Record<string, number>>({});
+    const [inputError, setInputError] = useState<boolean>(true);
+    const [rows, setRows] = useState<Data[]>([]);
     const [countdowns, setCountdowns] = useState<BiddingSystemProps[]>([]);
     const [currentCountdownIndex, setCurrentCountdownIndex] = useState(0);
     const [time, setTime] = useState<{ phase: string; hours: number; minutes: number; seconds: number }>({
@@ -112,7 +112,7 @@ function BiddingSystem() {
     }, [])
     //This is a function that handles what happens when an item is selected in a dropdown menu
     const handleItemSelected = (paperId: string, value: number) => {
-        let newSelectedValue = {...selectedValue, [paperId]: value};
+        let newSelectedValue = { ...selectedValue, [paperId]: value };
         //If an item is set back to its initial state, all dropdown menus become usable again
         if (value === 0) {
             setItemSelected(Object.values(newSelectedValue).some(v => v > 0));
@@ -140,9 +140,9 @@ function BiddingSystem() {
     //Handles what happens when the submission Button is clicked
     const handleUpload = () => {
         //Finds the paperId of the row that has a value selected in its dropDown menu
-        const selectedPaperId = Object.keys(selectedValue).find((paperId) => selectedValue[ paperId ] > 0);
+        const selectedPaperId = Object.keys(selectedValue).find((paperId) => selectedValue[paperId] > 0);
         if (selectedPaperId != undefined) {
-            addBid(selectedPaperId, selectedValue[ selectedPaperId ].toString())
+            addBid(selectedPaperId, selectedValue[selectedPaperId].toString())
                 .then(response => {
                     console.log(response);
                     window.location.reload();
@@ -168,8 +168,8 @@ function BiddingSystem() {
             label: "Author"
         },
         {
-        id: "coauthors",
-        label: "Co-author(s)",
+            id: "coauthors",
+            label: "Co-author(s)",
         },
         {
             id: "bids",
@@ -194,8 +194,8 @@ function BiddingSystem() {
                             key={row.id}
                             points={userPoints}
                             onItemSelected={(value) => handleItemSelected(row.id.toString(), value)}
-                            disabled={itemSelected && !selectedValue[ row.id ]}
-                            selectedValue={selectedValue[ row.id ] || 0}
+                            disabled={itemSelected && !selectedValue[row.id]}
+                            selectedValue={selectedValue[row.id] || 0}
                         />
                     ) : (
                         row.bid
@@ -235,43 +235,41 @@ function BiddingSystem() {
                             helperText={inputError ? "Invalid input (1-10)" : ""}
                         />
                     </div>
+                    <Button variant="contained" color="button"
+                        sx={{
+                            marginLeft: "2%"
+                        }}
+                        onClick={handlePapers}
+                        disabled={inputError}
+                    >
+                        Submit Max Papers
+                    </Button>
                 </div>
+
             </Box>
             <TableView
+
                 rows={rows}
                 defaultOrderBy="title"
                 headCells={headCells}
                 rowComponent={rowComponent}
             />
-            <Box>
-                <Button
+
+
+            <Button
                 sx={{
                     backgroundColor: "#72BAD1",
                     boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.075)",
                     borderRadius: "20px",
-                    margin: "16px 100px 0 auto",
+                    marginLeft: "auto",
                     width: "150px",
                     color: "white"
                 }}
-                onClick={handlePapers}
-                disabled={inputError}
+                onClick={handleUpload}
             >
-                Submit Max Papers
+                Submit Bids
             </Button>
-                <Button
-                    sx={{
-                        backgroundColor: "#72BAD1",
-                        boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.075)",
-                        borderRadius: "20px",
-                        margin: "16px 0 0 auto",
-                        width: "150px",
-                        color: "white"
-                    }}
-                    onClick={handleUpload}
-                >
-                    Submit Bids
-                </Button>
-            </Box>
+
         </Box>
     );
 }

@@ -18,7 +18,7 @@ import EnhancedTableHead from "./TableHeader";
 import React from "react";
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
-  const result = String(b[ orderBy ]).localeCompare(String(a[ orderBy ]), "en", { numeric: true })
+  const result = String(b[orderBy]).localeCompare(String(a[orderBy]), "en", { numeric: true })
   if (result < 0) {
     return -1;
   }
@@ -33,8 +33,8 @@ function getComparator<Key extends keyof any>(
   order: "asc" | "desc",
   orderBy: Key
 ): (
-  a: { [ key in Key ]: number | string },
-  b: { [ key in Key ]: number | string }
+  a: { [key in Key]: number | string },
+  b: { [key in Key]: number | string }
 ) => number {
   return order === "desc"
     ? (a, b) => descendingComparator(a, b, orderBy)
@@ -42,7 +42,7 @@ function getComparator<Key extends keyof any>(
 }
 
 export interface Data {
-  [ key: string ]: string | number;
+  [key: string]: string | number;
 }
 
 export interface HeadCell {
@@ -67,11 +67,11 @@ export default function EnhancedTable({
   defaultOrderBy,
   rowComponent,
 }: TableProps) {
-  const [ order, setOrder ] = useState<"asc" | "desc">(DEFAULT_ORDER);
-  const [ orderBy, setOrderBy ] = useState<keyof Data>(defaultOrderBy);
-  const [ page, setPage ] = useState(0);
-  const [ visibleRows, setVisibleRows ] = useState<Data[] | null>(null);
-  const [ rowsPerPage, setRowsPerPage ] = useState(DEFAULT_ROWS_PER_PAGE);
+  const [order, setOrder] = useState<"asc" | "desc">(DEFAULT_ORDER);
+  const [orderBy, setOrderBy] = useState<keyof Data>(defaultOrderBy);
+  const [page, setPage] = useState(0);
+  const [visibleRows, setVisibleRows] = useState<Data[] | null>(null);
+  const [rowsPerPage, setRowsPerPage] = useState(DEFAULT_ROWS_PER_PAGE);
 
   useEffect(() => {
     let rowsOnMount = rows
@@ -83,7 +83,7 @@ export default function EnhancedTable({
     );
 
     setVisibleRows(rowsOnMount);
-  }, [ rows, defaultOrderBy ]);
+  }, [rows, defaultOrderBy]);
 
   const handleRequestSort = useCallback(
     (event: MouseEvent<unknown>, newOrderBy: keyof Data) => {
@@ -102,7 +102,7 @@ export default function EnhancedTable({
       );
       setVisibleRows(updatedRows);
     },
-    [ order, orderBy, page, rowsPerPage, rows ]
+    [order, orderBy, page, rowsPerPage, rows]
   );
 
   const handleChangePage = useCallback(
@@ -116,7 +116,7 @@ export default function EnhancedTable({
       );
       setVisibleRows(updatedRows);
     },
-    [ order, orderBy, rowsPerPage ]
+    [order, orderBy, rowsPerPage]
   );
 
   const handleChangeRowsPerPage = useCallback(
@@ -133,13 +133,13 @@ export default function EnhancedTable({
       );
       setVisibleRows(updatedRows);
     },
-    [ order, orderBy, rows ]
+    [order, orderBy, rows]
   );
 
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
-        <TableContainer sx={{ minHeight: "80vh" }} >
+        <TableContainer  >
           <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
             <EnhancedTableHead
               order={order}
@@ -160,7 +160,8 @@ export default function EnhancedTable({
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[ 5, 10, 25 ]}
+          sx={{ maxHeight: "1hv" }}
+          rowsPerPageOptions={[5, 10, 25]}
           component="div"
           count={rows.length}
           rowsPerPage={rowsPerPage}
