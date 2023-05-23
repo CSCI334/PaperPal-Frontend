@@ -11,7 +11,7 @@ import {
   ListItemText,
   Toolbar,
 } from "@mui/material";
-import { Add, Inbox, Mail, NoteAdd, SkipNext } from "@mui/icons-material";
+import { Add, Inbox, Mail, MarkEmailRead, NoteAdd, SkipNext } from "@mui/icons-material";
 import { Props as NavbarButtonProps } from "./NavbarButton";
 import NavbarButton from "./NavbarButton";
 import { useEffect, useState } from "react";
@@ -82,6 +82,9 @@ function LeftNavbar({ buttons }: LeftNavbarProps) {
   const allocateAllPaperClick = httpOnClick(() => allocateAllPapers()
     , () => { }, "Succesfully allocated all paper")
 
+  const sendAnnouncementEmailClick = httpOnClick(() => allocateAllPapers()
+    , () => { }, "Succesfully sent email")
+
   return (
     <Drawer
       sx={{
@@ -128,6 +131,10 @@ function LeftNavbar({ buttons }: LeftNavbarProps) {
           <Button sx={{ m: "12px" }} onClick={allocateAllPaperClick} variant="contained" endIcon={<NoteAdd />}
             color="button" >
             Allocate all paper
+          </Button>
+          <Button sx={{ m: "12px" }} onClick={sendAnnouncementEmailClick} variant="contained" endIcon={<MarkEmailRead />}
+            color="button" >
+            Send announcement email
           </Button>
         </>
       }

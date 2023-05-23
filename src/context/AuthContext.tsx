@@ -8,12 +8,12 @@ import React, {
 import getUser from "../services/account/getUser";
 import AuthState from "../types/AuthData";
 import axios from "axios";
-import { HTTP } from "../data/HttpConfig";
+import { baseUrl } from "../data/HttpConfig";
 import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "./FeedbackContext";
 
 axios.defaults.headers.common[ "Content-Type" ] = "application/json";
-axios.defaults.baseURL = HTTP.dev.BASE_URL;
+axios.defaults.baseURL = baseUrl;
 
 interface Props {
   children?: ReactNode;
