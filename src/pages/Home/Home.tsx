@@ -1,15 +1,10 @@
-
-import { Container } from '@mui/material';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import AddNewContact from '../Admin/AddNewContact';
-import ContactList from '../Admin/ContactList';
 import AuthorSubmittedPaper from '../Author/AuthorSubmittedPaper';
 import ConferenceDetail from '../Admin/ConferenceDetail';
 import Login from '../Login/Login';
 import AllPapersList from '../ConferenceChair/AllPapersListView';
-import BiddingSystem from '../Reviewer/BiddingSystem';
 import ReviewerAllocatedPaper from '../Reviewer/ReviewerAllocatedPaper';
 
 const Home = () => {

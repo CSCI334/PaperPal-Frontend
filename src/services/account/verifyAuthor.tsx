@@ -7,7 +7,7 @@ async function verifyAuthor(token: string | null) {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token ?? ""}`
         }
-        const { data } = await axios.post("/verify", {
+        const { data } = await axios.post("/verify-author", {
 
         }, { headers: headers })
         return data;
