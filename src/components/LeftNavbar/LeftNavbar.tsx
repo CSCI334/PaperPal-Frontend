@@ -23,6 +23,7 @@ import AuthState from "../../types/AuthData";
 import httpOnClick from "../../hooks/httpOnClick";
 import allocateAllPapers from "../../services/admin/allocateAllPapers";
 import moveToNextPhase from "../../services/admin/moveToNextPhase";
+import sendAnnouncementEmail from "../../services/admin/sendAnnouncementEmail";
 
 
 interface ButtonLists {
@@ -82,7 +83,7 @@ function LeftNavbar({ buttons }: LeftNavbarProps) {
   const allocateAllPaperClick = httpOnClick(() => allocateAllPapers()
     , () => { }, "Succesfully allocated all paper")
 
-  const sendAnnouncementEmailClick = httpOnClick(() => allocateAllPapers()
+  const sendAnnouncementEmailClick = httpOnClick(() => sendAnnouncementEmail()
     , () => { }, "Succesfully sent email")
 
   return (
