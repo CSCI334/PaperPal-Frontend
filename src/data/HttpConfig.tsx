@@ -1,5 +1,1 @@
-export const HTTP = {
-    dev: {
-        BASE_URL: "http://localhost:8000",
-    },
-};
+export const baseUrl = process.env.NODE_ENV === "production" ? "https://paperpal.arichernando.com/backend" : "http://localhost:8000"

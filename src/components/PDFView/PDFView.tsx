@@ -4,7 +4,7 @@ import { Document, Page, pdfjs } from "react-pdf";
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import { useAuth } from "../../context/AuthContext";
-import { HTTP } from "../../data/HttpConfig";
+import { baseUrl } from "../../data/HttpConfig";
 
 // Set workerSrc to load PDF files
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
@@ -17,11 +17,11 @@ interface PDFViewerProps {
 }
 
 // This class deals with the actual rendering of PDFView and anything else it needs to render
-const PDFView: React.FC<PDFViewerProps> = React.memo(({ paperId , author, coAuthors}) => {
+const PDFView: React.FC<PDFViewerProps> = React.memo(({ paperId, author, coAuthors }) => {
     const [ numPages, setNumPages ] = useState<number | null>(null);
     const [ pageNumber, setPageNumber ] = useState<number>(1);
     const { authState, setAuthState } = useAuth()
-    const paperLink = `${HTTP.dev.BASE_URL}/paper/${paperId}`;
+    const paperLink = `${baseUrl}/paper/${paperId}`;
     //Function to set the number of pages upon a successful PDF load
     function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
         setNumPages(numPages);

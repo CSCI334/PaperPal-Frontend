@@ -4,10 +4,10 @@ import errorHandler from "../utility/errorHandler";
 import jwtDecode from "jwt-decode";
 import { authenticatedClient } from "../authenticatedClient";
 
-async function allocateAllPaper() {
+async function sendAnnouncementEmail() {
     try {
         const { data } = await authenticatedClient()({
-            url: "allocate-papers",
+            url: "send-announcement",
             method: "GET",
         });
         return data
@@ -16,4 +16,4 @@ async function allocateAllPaper() {
     }
 }
 
-export default allocateAllPaper;
+export default sendAnnouncementEmail;

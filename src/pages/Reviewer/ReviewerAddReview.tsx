@@ -17,7 +17,6 @@ const ReviewerAddReview: React.FC = () => {
     const navigate = useNavigate()
     const [rating, setRating] = useState()
 
-    console.log(state);
     useEffect(() => {
         if ((Object.keys(data).length == 0)) navigate("/")
     }, [])
@@ -29,7 +28,6 @@ const ReviewerAddReview: React.FC = () => {
 
         addPaperReview(rating, data.id, textInput)
             .then(response => {
-                console.log(response);
                 navigate(-1);
             })
             .catch(error => {
@@ -42,7 +40,7 @@ const ReviewerAddReview: React.FC = () => {
     };
 
     const tabs: ITabs[] = [
-        { label: "My Review", content: <RatingPaperForm handleFormSubmission={handleFormSubmission} /> }
+        { label: "My Review", content: <RatingPaperForm handleFormSubmission={handleFormSubmission} previousRating={data.paperrating ? data.paperrating.toString() : ''} /> }
     ];
 
     return (

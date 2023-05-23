@@ -1,10 +1,10 @@
 import axios from "axios";
-import { HTTP } from "../data/HttpConfig";
+import { baseUrl } from "../data/HttpConfig";
 
 // Different than a default axios client, use when you need to make an authenticated request
 export function authenticatedClient() {
     const defaultOptions = {
-        baseUrl: HTTP.dev.BASE_URL,
+        baseURL: baseUrl,
         headers: {
             'Content-Type': "application/json",
         }
