@@ -27,7 +27,7 @@ function ChairRegister() {
   } = usePasswordInput("");
   const navigate = useNavigate();
   const { authState, setAuthState } = useAuth();
-  const [searchParams, setSearchParams] = useSearchParams({});
+  const [ searchParams, setSearchParams ] = useSearchParams({});
   const onClick = httpOnClick(() => {
     if (passwordError || matchError) {
       return Promise.reject()
@@ -36,7 +36,6 @@ function ChairRegister() {
     return verifyAccount(token, passwordInputProps.value)
   }, value => {
     const decodedJWT = jwtDecode(value.token);
-    console.log(value.token)
     const headers = { Authorization: `Bearer ${value.token}` };
     const loggedIn = { headers, isAuth: true, userData: decodedJWT };
     localStorage.setItem("loggedUser", JSON.stringify(loggedIn));

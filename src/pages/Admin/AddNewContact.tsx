@@ -10,17 +10,16 @@ export default function AddNewContact() {
   const navigate = useNavigate();
   const { isLoading, setIsLoading } = useLoading()
   const { snackbar, setSnackbar } = useSnackbar()
-  const [{ email, username }, setForm] = useState({ email: "", username: "" });
+  const [ { email, username }, setForm ] = useState({ email: "", username: "" });
   const inputHandler = (e: { target: { name: any; value: any; }; }) => {
     const name = e.target.name;
     const value = e.target.value;
 
-    setForm((form) => ({ ...form, [name]: value }));
+    setForm((form) => ({ ...form, [ name ]: value }));
   };
 
   const handleSubmit = (event: { preventDefault: () => void; }) => {
     event.preventDefault();
-    console.log("test")
     setIsLoading(true);
     inviteReviewer({ email, username })
       .then(() => navigate("/contactlist"))

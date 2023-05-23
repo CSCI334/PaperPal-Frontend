@@ -13,10 +13,9 @@ interface CountdownTimerProps {
 
 
 function CountdownTimer() {
-
-  const [countdowns, setCountdowns] = useState<CountdownTimerProps[]>([]);
-  const [currentCountdownIndex, setCurrentCountdownIndex] = useState(0);
-  const [time, setTime] = useState<{ phase: string; hours: number; minutes: number; seconds: number }>({
+  const [ countdowns, setCountdowns ] = useState<CountdownTimerProps[]>([]);
+  const [ currentCountdownIndex, setCurrentCountdownIndex ] = useState(0);
+  const [ time, setTime ] = useState<{ phase: string; hours: number; minutes: number; seconds: number }>({
     phase: "Loading ...",
     hours: 0,
     minutes: 0,
@@ -34,7 +33,7 @@ function CountdownTimer() {
         { phase: "Announcement", deadline: new Date(announcementtime) },
       ];
 
-      setCountdowns(countdownData);
+      setCountdowns((prev) => ([ ...prev, ...countdownData ]))
     })
     // data = data ?? []
 
@@ -59,7 +58,7 @@ function CountdownTimer() {
     }
     const countdownInterval = setInterval(() => {
       const now = new Date();
-      const diff = countdowns[currentCountdownIndex].deadline.getTime() - now.getTime();
+      const diff = countdowns[ currentCountdownIndex ].deadline.getTime() - now.getTime();
 
       if (diff <= 0) {
         clearInterval(countdownInterval);
@@ -73,14 +72,12 @@ function CountdownTimer() {
       const minutes = Math.floor((diff / (1000 * 60)) % 60);
       const seconds = Math.floor((diff / 1000) % 60);
 
-      setTime({ phase: countdowns[currentCountdownIndex].phase, hours, minutes, seconds });
+      setTime({ phase: countdowns[ currentCountdownIndex ].phase, hours, minutes, seconds });
     }, 1000);
-
-
 
     return () => clearInterval(countdownInterval);
 
-  }, [countdowns, currentCountdownIndex]);
+  }, [ countdowns, currentCountdownIndex ]);
 
   if (time.phase === "Loading ...") {
     return (

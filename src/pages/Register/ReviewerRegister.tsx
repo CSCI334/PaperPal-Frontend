@@ -28,7 +28,7 @@ function ReviewerRegister() {
     passwordError,
     matchError,
   } = usePasswordInput("");
-  const [searchParams, setSearchParams] = useSearchParams({});
+  const [ searchParams, setSearchParams ] = useSearchParams({});
 
   const { isLoading, setIsLoading } = useLoading()
   const { snackbar, setSnackbar } = useSnackbar()
@@ -41,7 +41,6 @@ function ReviewerRegister() {
     return verifyAccount(token, passwordInputProps.value)
   }, value => {
     const decodedJWT = jwtDecode(value.token);
-    console.log(value.token)
     const headers = { Authorization: `Bearer ${value.token}` };
     const loggedIn = { headers, isAuth: true, userData: decodedJWT };
     localStorage.setItem("loggedUser", JSON.stringify(loggedIn));

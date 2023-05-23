@@ -30,7 +30,6 @@ function Header() {
               fontSize: "18px",
             }}
           >
-            Header Title
           </Button>
         </Box>
 
