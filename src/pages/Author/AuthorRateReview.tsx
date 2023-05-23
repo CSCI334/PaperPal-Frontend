@@ -42,8 +42,9 @@ const AuthorRateReview: React.FC = () => {
         <div style={{ display: "flex", height: "100%" }}>
             <Container maxWidth="md" sx={{ display: "flex", flexDirection: "column", minHeight: "100%" }}>
                 <div style={{ display: 'flex' }}>
-                    <p style={{ marginRight: '10px' }}>Reviewer: {data.reviewerid}</p>
-                    <p>Paper Rating: {data.paperrating}</p>
+                    <p style={{ marginRight: '10px' }}>Reviewer: {data.reviewername} </p>
+
+                    <p style={{ marginLeft: 'auto' }}>Paper Rating: {data.paperrating}</p>
                 </div>
                 <textarea key={`comment-keys`} style={{ resize: "none" }} id="review" value={data.review} name={`review`} disabled cols={30} rows={30} />
             </Container>
