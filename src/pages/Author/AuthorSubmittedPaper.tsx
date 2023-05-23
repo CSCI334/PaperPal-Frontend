@@ -9,6 +9,8 @@ import getAllPaper from "../../services/getAllPaper";
 import { GenericForm } from "../../types/GenericForm";
 import uploadPaper from "../../services/author/uploadPaper";
 import { useAuth } from "../../context/AuthContext";
+import httpOnClick from "../../hooks/httpOnClick";
+import { useLoading, useSnackbar } from "../../context/FeedbackContext";
 
 function createPaper(
     id: string,
@@ -34,6 +36,8 @@ const AuthorSubmittedPaper: React.FC = () => {
     const username = authState.userData.username;
     const [rows, setRows] = useState<Data[]>([]);
     const [triggerReload, setTriggerReload] = useState<number>(0);
+    const { isLoading, setIsLoading } = useLoading()
+    const { snackbar, setSnackbar } = useSnackbar()
 
     // gets all papers from backend and creates paper objects out of them
     React.useEffect(() => {
@@ -59,11 +63,20 @@ const AuthorSubmittedPaper: React.FC = () => {
         setOpen(false);
     };
 
+
+
+
     //Deals with what happens when files are uploaded in a DragDrop component
     const handleUpload = (file: File | null, paperName: string, coAuthors: string[]) => {
         uploadPaper(file!, paperName, coAuthors.join(', '))
             .then((value) => {
+                let message = "Submit Paper Success"
+                setSnackbar({ message: message, severity: "success" })
                 console.log(value)
+            })
+            .catch((value) => {
+                const severity = value.status >= 500 ? "error" : "warning"
+                setSnackbar({ message: value.message, severity: severity })
             })
 
         setTriggerReload(triggerReload + 1)
