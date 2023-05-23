@@ -26,7 +26,7 @@ function createContact(
 }
 
 export default function ContactList() {
-  const [rows, setRows] = useState<Data[]>([]);
+  const [ rows, setRows ] = useState<Data[]>([]);
   const location = useLocation();
   const navigate = useNavigate();
   useEffect(() => {
@@ -48,7 +48,6 @@ export default function ContactList() {
         setRows(contactList ?? [])
       })
       .catch(() => {
-        console.log("sadf")
       })
   }, [])
 

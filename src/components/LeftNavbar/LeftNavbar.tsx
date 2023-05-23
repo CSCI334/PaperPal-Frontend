@@ -11,7 +11,7 @@ import {
   ListItemText,
   Toolbar,
 } from "@mui/material";
-import { Inbox, Mail } from "@mui/icons-material";
+import { Add, Inbox, Mail, NoteAdd, SkipNext } from "@mui/icons-material";
 import { Props as NavbarButtonProps } from "./NavbarButton";
 import NavbarButton from "./NavbarButton";
 import { useEffect, useState } from "react";
@@ -20,6 +20,9 @@ import { adminButtonList, authorButtonList, buttonRoutes, chairButtonList, revie
 import { useAuth } from "../../context/AuthContext";
 import CountdownTimer from "./Timer";
 import AuthState from "../../types/AuthData";
+import httpOnClick from "../../hooks/httpOnClick";
+import allocateAllPapers from "../../services/admin/allocateAllPapers";
+import moveToNextPhase from "../../services/admin/moveToNextPhase";
 
 
 interface ButtonLists {
@@ -33,12 +36,8 @@ interface LeftNavbarProps {
   buttons: NavbarButtonProps[];
 }
 
-const drawerWidth = 300;
-
 function LeftNavbar({ buttons }: LeftNavbarProps) {
-
   const navigate = useNavigate();
-
   const buttonLists: ButtonLists = {
     admin: adminButtonList,
     reviewer: reviewerButtonList,
@@ -50,13 +49,13 @@ function LeftNavbar({ buttons }: LeftNavbarProps) {
   // still hard coded need to change this
   const { authState, setAuthState } = useAuth();
   const accountType = authState.userData.accountType ?? ""
-  const navBarButtonList = buttonLists[accountType.toLowerCase() as keyof ButtonLists] ?? [{ title: " " }];
-  const [selectedButton, setSelectedButton] = useState(localStorage.getItem("selectedButton") || navBarButtonList[0].title);
+  const navBarButtonList = buttonLists[ accountType.toLowerCase() as keyof ButtonLists ] ?? [ { title: " " } ];
+  const [ selectedButton, setSelectedButton ] = useState(localStorage.getItem("selectedButton") || navBarButtonList[ 0 ].title);
 
   // When the button clicked, it will navigate to the relevant page
   const handleButtonClick = (title: string) => {
     setSelectedButton(title);
-    const path = buttonRoutes[title];
+    const path = buttonRoutes[ title ];
     if (path) {
       navigate(path);
     }
@@ -74,7 +73,14 @@ function LeftNavbar({ buttons }: LeftNavbarProps) {
 
   useEffect(() => {
     localStorage.setItem("selectedButton", selectedButton);
-  }, [selectedButton]);
+  }, [ selectedButton ]);
+
+
+  const moveToNextPhaseClick = httpOnClick(() => moveToNextPhase(),
+    () => { }, "Succesfully moved to next phase")
+
+  const allocateAllPaperClick = httpOnClick(() => allocateAllPapers()
+    , () => { }, "Succesfully allocated all paper")
 
   return (
     <Drawer
@@ -113,6 +119,18 @@ function LeftNavbar({ buttons }: LeftNavbarProps) {
         <CountdownTimer></CountdownTimer>
         {/* TODO: add remaining phase timer */}
       </List>
+      {accountType === "ADMIN" &&
+        <>
+          <Button sx={{ m: "12px" }} onClick={moveToNextPhaseClick} variant="contained" endIcon={<SkipNext />}
+            color="button" >
+            Move to next phase
+          </Button>
+          <Button sx={{ m: "12px" }} onClick={allocateAllPaperClick} variant="contained" endIcon={<NoteAdd />}
+            color="button" >
+            Allocate all paper
+          </Button>
+        </>
+      }
     </Drawer>
   );
 }
