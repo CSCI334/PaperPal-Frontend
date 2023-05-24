@@ -1,12 +1,13 @@
-import {TableCell, TableRow, IconButton, Box, Typography} from "@mui/material";
-import React, {useEffect, useState} from "react";
+import { TableCell, TableRow, IconButton, Box, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import TableView, { Data, HeadCell } from "../../components/TableView/TableView";
 import createStatusMessage from "../../components/TableView/TableUtilContent";
 import getAllPaper from "../../services/getAllPaper";
 import getConferenceInfo from "../../services/admin/getConferenceInfo";
 import { EditNote, Visibility } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
-import {GenericForm} from "../../types/GenericForm";
+import { GenericForm } from "../../types/GenericForm";
+import useHttpRequest from "../../hooks/useHttpRequest";
 
 //A function to create papers
 function createPaper(
@@ -32,7 +33,7 @@ interface ReviewerAllocatedPaperProps {
 //This deals with rendering all the allocated papers a reviewer has and other functionality such as moving to different pages related to this one
 function ReviewerAllocatedPaper() {
     const navigate = useNavigate();
-    const [ rows, setRows ] = useState<Data[]>([]);
+    const [rows, setRows] = useState<Data[]>([]);
     const [countdowns, setCountdowns] = useState<ReviewerAllocatedPaperProps[]>([]);
     const [currentCountdownIndex, setCurrentCountdownIndex] = useState(0);
     const [time, setTime] = useState<{ phase: string; hours: number; minutes: number; seconds: number }>({
@@ -82,6 +83,7 @@ function ReviewerAllocatedPaper() {
         return () => clearInterval(countdownInterval);
 
     }, [countdowns, currentCountdownIndex]);
+
 
     //gets all papers from backend and creates paper objects out of them
     useEffect(() => {
@@ -151,7 +153,7 @@ function ReviewerAllocatedPaper() {
                 </TableCell>
                 <TableCell>
                     <IconButton
-                        disabled={row.status === "Reviewed"}
+                        // disabled={row.status === "Reviewed"}
                         onClick={() => handleReviewClick(row)}
                     >
                         <EditNote />
