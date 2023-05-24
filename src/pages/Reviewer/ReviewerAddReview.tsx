@@ -44,28 +44,25 @@ const ReviewerAddReview: React.FC = () => {
     ];
 
     return (
-        <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-            <Box sx={{ marginLeft: "300px", display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <Box sx={{ display: "flex", flexDirection: "row" }}>
+            <Box sx={{ display: "flex", flexDirection: "column", flexGrow: 1 }}>
                 <PDFView paperId={data.id} author={data.author} coAuthors={data.coauthors} />
-                <Box
-                    sx={{
-                        marginTop: "100px",
-                        width: "100%"
-                    }}>
-                    <TextField
-                        label="Your Review"
-                        multiline
-                        fullWidth
-                        value={textInput}
-                        onChange={handleInputChange}
-                        variant="outlined"
-                        margin="normal"
-                    />
-                </Box>
+                <TextField
+                    label="Your Review"
+                    multiline
+                    size="medium"
+                    inputProps={{ style: { minHeight: '30vh', minWidth: '50vh' } }}
+                    value={textInput}
+                    onChange={handleInputChange}
+                    variant="outlined"
+                    margin="normal"
+                />
             </Box>
-            <Box sx={{ marginLeft: "0px" }}>
-                <TabMenu tabs={tabs} />
-            </Box>
+
+
+
+            <TabMenu tabs={tabs} />
+
         </Box>
     );
 };
