@@ -29,7 +29,7 @@ function createPaper(
 }
 
 export default function AllPapersList() {
-    const [ rows, setRows ] = useState<Data[]>([]);
+    const [rows, setRows] = useState<Data[]>([]);
     const { isLoading, setIsLoading } = useLoading()
     const navigate = useNavigate()
     const handleAcceptRejectButtonClick = (id: string, data: Data) => {
@@ -62,7 +62,7 @@ export default function AllPapersList() {
     useAllPaper((value) => {
         value = value ?? []
         const rows = value.map((value: GenericForm) => {
-            if (value.paperstatus === "TBD") value.paperstatus = "Pending"
+            if (value.paperstatus === "TBD") value.paperstatus = "PENDING"
             return createPaper(value.id, value.title, value.coauthors, value.author, value.paperstatus)
         })
         setRows(rows ?? [])
