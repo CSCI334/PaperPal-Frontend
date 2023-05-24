@@ -6,7 +6,7 @@ import errorHandler from "./utility/errorHandler";
 async function acceptReject(paperId: string, status: string) {
     try {
         const requestData = {
-            "status": status
+            "paperStatus": status
         };
 
         const { data } = await authenticatedClient()({
