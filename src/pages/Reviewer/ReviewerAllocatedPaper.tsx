@@ -93,6 +93,7 @@ function ReviewerAllocatedPaper() {
                 const rows = value.map((value: GenericForm) => {
                     if (value.paperrating === null) {
                         value.paperstatus = "Ready for Review"
+
                     }
                     else {
                         value.paperstatus = "Reviewed"
@@ -153,7 +154,7 @@ function ReviewerAllocatedPaper() {
                 </TableCell>
                 <TableCell>
                     <IconButton
-                        // disabled={row.status === "Reviewed"}
+                        disabled={time.phase !== "Reviewing"}
                         onClick={() => handleReviewClick(row)}
                     >
                         <EditNote />
@@ -172,7 +173,7 @@ function ReviewerAllocatedPaper() {
     };
 
     //Renders all allocated papers
-    if (time.phase !== "Reviewing") {
+    if (time.phase === "Submission" || time.phase === "Bidding" || time.phase === "Loading ...") {
         return (
             <Box marginTop={4}>
                 <Typography variant="h6">

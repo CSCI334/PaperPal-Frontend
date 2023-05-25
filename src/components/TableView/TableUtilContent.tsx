@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 
 export default function createStatusMessage(message: string) {
-  const bgColorMap: { [ key: string ]: string } = {
+  const bgColorMap: { [key: string]: string } = {
     "accepted": "green",
     "rejected": "red",
     "pending": "#E7DD00",
@@ -11,13 +11,14 @@ export default function createStatusMessage(message: string) {
     "reviewed": "red",
     "ready for review": "green",
     "denied": "red",
-    "in review": "#E7DD00"
+    "in review": "#E7DD00",
+    "deadline passed": "red"
   }
 
   return (
     <Box
       sx={{
-        backgroundColor: bgColorMap[ message.toLowerCase() ],
+        backgroundColor: bgColorMap[message.toLowerCase()],
         color: 'white',
         display: 'inline-block',
         padding: '4px 8px',
