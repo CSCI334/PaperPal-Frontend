@@ -28,8 +28,9 @@ const AuthorRateReview: React.FC = () => {
 
     const handleRatingForm = (event: BaseSyntheticEvent) => {
         event?.preventDefault();
+        console.log("test")
         const rating = event.target.elements.rating_review.value;
-        rateReview(rating, data.paperid)
+        rateReview(rating, data.id)
             .then(response => {
                 navigate(-1);
             })

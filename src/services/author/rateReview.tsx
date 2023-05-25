@@ -9,10 +9,15 @@ async function rateReview(rate: any, id: any) {
             reviewId: id
         };
 
-        const { data } = await authenticatedClient().post(
-            "/paper/review/rating",
-            requestData
-        );
+        const { data } = await authenticatedClient()({
+            url: "paper/review/rating",
+            method: "POST",
+            data: requestData
+        })
+        // const { data } = await authenticatedClient().post(
+        //     "/paper/review/rating",
+        //     requestData
+        // );
 
         return data;
     } catch (error) {
