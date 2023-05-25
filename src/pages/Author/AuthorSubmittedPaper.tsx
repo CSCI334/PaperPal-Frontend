@@ -132,36 +132,36 @@ const AuthorSubmittedPaper: React.FC = () => {
 
     //Renders a page that a user can see previously submitted files and allows for the submission of new files
     return (
-        <Container >
-            <Box sx={{
-                marginTop: "50px",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-end"
-            }}
+
+        <Box sx={{
+            marginTop: "50px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-end"
+        }}
+        >
+            <DragDrop open={open} onClose={handleClose} onUpload={handleUpload} />
+            <TableView
+                rows={rows}
+                defaultOrderBy="title"
+                headCells={headCells}
+                rowComponent={rowComponent}
+            />
+            <Button
+                sx={{
+                    backgroundColor: "#72BAD1",
+                    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.075)",
+                    borderRadius: "20px",
+                    margin: "16px 0 0 0",
+                    width: "150px",
+                    color: "white"
+                }}
+                onClick={handleOpen}
             >
-                <DragDrop open={open} onClose={handleClose} onUpload={handleUpload} />
-                <TableView
-                    rows={rows}
-                    defaultOrderBy="title"
-                    headCells={headCells}
-                    rowComponent={rowComponent}
-                />
-                <Button
-                    sx={{
-                        backgroundColor: "#72BAD1",
-                        boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.075)",
-                        borderRadius: "20px",
-                        margin: "16px 0 0 0",
-                        width: "150px",
-                        color: "white"
-                    }}
-                    onClick={handleOpen}
-                >
-                    Submit new paper
-                </Button>
-            </Box>
-        </Container>
+                Submit new paper
+            </Button>
+        </Box>
+
     );
 };
 export default AuthorSubmittedPaper;
